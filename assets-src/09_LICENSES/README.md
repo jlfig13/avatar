@@ -1,0 +1,43 @@
+# 09_LICENSES — licenças de assets de terceiros
+
+Registro de origem e licença de **todo** asset de terceiros usado no jogo (ART-01).
+
+## Regras
+
+1. **Um asset só entra no repositório depois de ter linha no `LICENSES.csv`.**
+2. A licença verificada é a do **download específico** (o arquivo `License.txt` ou equivalente que vem no pacote), não só a página da loja ou do autor.
+3. Proibido qualquer asset cuja licença impeça uso comercial (ex.: CC BY-NC, "free for personal use"). Licenças aceitas: CC0; CC BY (exige crédito no jogo); licenças comerciais compradas, com o comprovante guardado fora do repositório.
+4. Guarde uma cópia do arquivo de licença do pacote nesta pasta: `<autor>-<pacote>-LICENSE.txt`.
+5. Assets modificados continuam com a linha do original; anote a modificação na coluna `usage`.
+
+## Colunas do `LICENSES.csv`
+
+| Coluna | Conteúdo | Exemplo |
+| --- | --- | --- |
+| `asset` | Pacote e, se útil, arquivo usado | `Nature Kit / rock_largeA.glb` |
+| `author` | Autor ou estúdio | `Kenney` |
+| `source_url` | Página oficial do download (sem parâmetros de rastreio) | `https://kenney.nl/assets/nature-kit` |
+| `license` | Identificador da licença | `CC0-1.0` |
+| `date` | Data do download e da verificação (AAAA-MM-DD) | `2026-11-03` |
+| `usage` | Onde é usado e o que foi alterado | `test-arena props; recolored` |
+
+## Checklist de verificação de um pacote
+
+- [ ] Licença lida no arquivo do download, cópia salva nesta pasta.
+- [ ] Uso comercial permitido; exigência de atribuição anotada.
+- [ ] Formato utilizável (GLB/GLTF preferido; FBX aceitável).
+- [ ] Para personagens: rig e animações necessárias presentes (idle, walk, run, cast, hit, defeat ou próximas).
+- [ ] Estilo visual compatível com o conjunto principal.
+
+## Candidatos em avaliação (ainda NÃO aprovados)
+
+Nenhum destes está no `LICENSES.csv` até passar no checklist acima.
+
+| Necessidade | Candidato | Fonte | Situação |
+| --- | --- | --- | --- |
+| Humanoide | KayKit Adventurers | <https://kaylousberg.itch.io/kaykit-adventurers> | Candidato principal; verificar licença do download |
+| Animações do humanoide | KayKit Character Animations | <https://kaylousberg.itch.io/kaykit-character-animations> | Candidato principal; confirmar compatibilidade de rig com Adventurers |
+| Natureza | KayKit Forest Nature Pack **ou** Kenney Nature Kit | <https://kenney.nl/assets/nature-kit> | Comparar estilo com KayKit antes de escolher |
+| Animações (alternativa) | Quaternius Universal Animation Library | <https://quaternius.itch.io/universal-animation-library> | Só se faltar animação no KayKit; exige retarget de rig |
+| Quadrúpede | — | — | **Pendente:** nenhum candidato validado |
+| Texturas de terreno | Kenney ou KayKit | — | Baixa prioridade: a arena da fatia 1 usa cor por terreno (ADR-011) |
