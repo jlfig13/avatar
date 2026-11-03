@@ -74,13 +74,13 @@
   - [x] Todo evento emitido recebe `seq` crescente.
   - [x] Ação com `actorId` que não é o do turno retorna `not_your_turn`.
 
-### [ ] CORE-02 — RNG determinístico com seed
+### [x] CORE-02 — RNG determinístico com seed
 - **Epic:** core · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** CORE-01
 - **Descrição:** PRNG pequeno e rápido (mulberry32 ou sfc32) com estado serializável em `BattleState.rngState`. Funções puras: `next(state) → [valor, novoEstado]`, `nextInt(state, min, max)`, `pick`.
 - **Critérios de aceite:**
-  - [ ] Mesma seed gera a mesma sequência em 1.000 chamadas.
-  - [ ] Distribuição de `nextInt(1,100)` em 100.000 amostras dentro de ±2% do esperado por faixa de 10.
-  - [ ] Nenhum `Math.random` no pacote (checagem no lint/teste).
+  - [x] Mesma seed gera a mesma sequência em 1.000 chamadas.
+  - [x] Distribuição de `nextInt(1,100)` em 100.000 amostras dentro de ±2% do esperado por faixa de 10.
+  - [x] Nenhum `Math.random` no pacote (checagem no lint/teste).
 
 ### [ ] CORE-14 — Schemas Zod e dados de técnicas de água e fogo
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-01

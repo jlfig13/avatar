@@ -11,7 +11,7 @@
     "build": "pnpm -r run build",
     "test": "pnpm -r run test",
     "test:sim": "echo \"test:sim: not implemented yet (QA-01)\"",
-    "lint": "biome check .",
+    "lint": "biome check . && node tools/checkNoMathRandom.mjs",
     "format": "biome format --write .",
     "typecheck": "pnpm -r run typecheck",
     "validate:data": "pnpm --filter @elemental/game-data run validate:data",
