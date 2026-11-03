@@ -7,6 +7,7 @@ export {
   createBattle,
   maxEnergyFor,
 } from './createBattle.ts';
+export { predictTurnOrder, speedOf } from './ct/ct.ts';
 export type { ApplyResult, BattleEvent, BattleEventBody } from './events.ts';
 export {
   DIRECTIONS,

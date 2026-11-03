@@ -1,5 +1,6 @@
 import type { GameData } from '@elemental/shared';
 import { type ApplyResult, type BattleEvent, reject, type StepResult } from './events.ts';
+import { handleAdvance } from './turn/advance.ts';
 import type { Action, ActorAction, BattleState } from './types.ts';
 
 export type ActionHandler<A extends Action> = (
@@ -14,7 +15,7 @@ type HandlerMap = { [K in Action['type']]: ActionHandler<Extract<Action, { type:
 const notImplemented = (): StepResult => reject('invalid_target');
 
 const handlers: HandlerMap = {
-  advance: notImplemented,
+  advance: handleAdvance,
   move: notImplemented,
   technique: notImplemented,
   defend: notImplemented,

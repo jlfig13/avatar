@@ -126,13 +126,13 @@
   - [x] Pode atravessar aliado mas não parar nele; inimigo bloqueia.
   - [x] `getReachableCells` numa arena 10 × 10 leva < 2 ms (benchmark simples no teste).
 
-### [ ] CORE-05 — Barra de tempo (CT)
+### [x] CORE-05 — Barra de tempo (CT)
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-01
 - **Descrição:** ação `advance` soma ticks até alguém atingir o limiar; desempate determinístico; ajuste de `ct` no fim do turno com `ctDelay`; controle de rodada; `predictTurnOrder`.
 - **Critérios de aceite:**
-  - [ ] Com 3 combatentes de mobilidade 10, 15 e 20, a ordem dos 6 primeiros turnos bate com uma tabela calculada à mão no teste.
-  - [ ] Técnica com `ctDelay: 30` atrasa o próximo turno do usuário em relação a quem não usou.
-  - [ ] Evento `roundStarted` quando todos os vivos agiram.
+  - [x] Com 3 combatentes de mobilidade 10, 15 e 20, a ordem dos 6 primeiros turnos bate com uma tabela calculada à mão no teste.
+  - [x] Técnica com `ctDelay: 30` atrasa o próximo turno do usuário em relação a quem não usou.
+  - [x] Evento `roundStarted` quando todos os vivos agiram.
 
 ### [ ] CORE-06 — Fluxo do turno: movimento + 1 ação, defender e timeout
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-04, CORE-05

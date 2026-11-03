@@ -337,7 +337,7 @@ applyAction(state: BattleState, action: Action, data: GameData): ApplyResult
 getReachableCells(state: BattleState, actorId: string, data: GameData): Position[]
 getTechniqueTargets(state: BattleState, actorId: string, techniqueId: string, from?: Position, data?: GameData): Position[]
 getAffectedCells(state: BattleState, actorId: string, techniqueId: string, target: Position, data: GameData): Position[]
-predictTurnOrder(state: BattleState, count: number): string[]
+predictTurnOrder(state: BattleState, count: number, data: GameData): string[]   // data: speed vem de rules.json
 hasLineOfSight(grid: Grid, from: Position, to: Position): boolean
 sliceArena(grid: Grid, center: Position, size: number): Grid
 gridFromFile(file: GridFile): Grid                 // *.grid.json validado → Grid (marca células de fuga)
