@@ -14,11 +14,16 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "dev": "echo \"server dev: not implemented yet (SRV-01)\""
+    "dev": "echo \"server dev: not implemented yet (SRV-01)\"",
+    "db:ping": "node --env-file-if-exists=../../.env scripts/dbPing.ts"
   },
   "dependencies": {
     "@elemental/combat-core": "workspace:*",
     "@elemental/game-data": "workspace:*",
-    "@elemental/shared": "workspace:*"
+    "@elemental/shared": "workspace:*",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1"
   }
 }

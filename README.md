@@ -25,7 +25,14 @@ pnpm install
 cp .env.example .env  # ajuste se necessário; .env nunca é commitado
 ```
 
-Verificação (deve passar sempre):
+Banco local (PostgreSQL 18 via Docker):
+
+```bash
+docker compose up -d   # sobe o banco (healthcheck incluso)
+pnpm db:ping           # imprime a versão do PostgreSQL
+```
+
+Verificação (deve passar sempre; o CI em `.github/workflows/ci.yml` roda a mesma sequência):
 
 ```bash
 pnpm lint && pnpm typecheck && pnpm validate:data && pnpm test && pnpm build
@@ -45,7 +52,9 @@ pnpm lint && pnpm typecheck && pnpm validate:data && pnpm test && pnpm build
 
 Os pacotes se importam pelo nome (`workspace:*`). Em typecheck e testes, a condição de export `@elemental/source` aponta para `src/`, então não é preciso buildar antes; o `pnpm build` gera `dist/` em ordem topológica.
 
-Scripts ainda sem implementação (`dev`, `test:sim`, `validate:data`, `db:*`) apenas imprimem a issue que os implementará.
+Assets binários usam Git LFS: veja `assets-src/README.md`.
+
+Scripts ainda sem implementação (`dev`, `test:sim`, `db:generate`, `db:migrate`) apenas imprimem a issue que os implementará.
 
 ## Onde está cada coisa
 

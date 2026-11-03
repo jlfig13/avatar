@@ -1,0 +1,22 @@
+# Local PostgreSQL for development (INF-04). Credentials match .env.example.
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: elemental-postgres
+    environment:
+      POSTGRES_USER: elemental
+      POSTGRES_PASSWORD: elemental
+      POSTGRES_DB: elemental
+    ports:
+      - "5432:5432"
+    volumes:
+      - elemental-pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U elemental -d elemental"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  elemental-pgdata:

@@ -49,22 +49,22 @@
 - **Epic:** infra · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** INF-01
 - **Descrição:** `.github/workflows/ci.yml` conforme `docs/04`, seção 10, com cache do pnpm.
 - **Critérios de aceite:**
-  - [ ] Roda em PR e push na `main`: install (frozen lockfile) → lint → typecheck → validate:data → test → build.
-  - [ ] Um erro de tipo proposital faz o job falhar (verificar e reverter).
+  - [x] Roda em PR e push na `main`: install (frozen lockfile) → lint → typecheck → validate:data → test → build.
+  - [ ] Um erro de tipo proposital faz o job falhar (verificar e reverter). — *verificado localmente (`pnpm typecheck` sai com código 1); falta confirmar no GitHub Actions no primeiro PR para a `main`.*
 
-### [ ] INF-03 — Git LFS para assets binários
+### [x] INF-03 — Git LFS para assets binários
 - **Epic:** infra · **Estimativa:** 1 h · **Executor:** Claude · **Depende de:** INF-01
 - **Descrição:** `.gitattributes` com `*.blend *.glb *.gltf *.ktx2 *.png *.jpg *.wav *.ogg *.mp3 *.fbx` em LFS. Pastas `assets-src/` e `apps/client/public/assets/` com `README.md` explicando o uso.
 - **Critérios de aceite:**
-  - [ ] `git lfs track` lista os padrões.
-  - [ ] README explica como instalar o Git LFS e que `.blend` vai em `assets-src/`, exports em `apps/client/public/assets/`.
+  - [x] `git lfs track` lista os padrões.
+  - [x] README explica como instalar o Git LFS e que `.blend` vai em `assets-src/`, exports em `apps/client/public/assets/`.
 
-### [ ] INF-04 — PostgreSQL local com Docker Compose
+### [x] INF-04 — PostgreSQL local com Docker Compose
 - **Epic:** infra · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** INF-01
 - **Descrição:** `docker-compose.yml` com PostgreSQL (versão estável atual), volume nomeado, healthcheck e credenciais de desenvolvimento iguais às do `.env.example`.
 - **Critérios de aceite:**
-  - [ ] `docker compose up -d` sobe o banco saudável.
-  - [ ] Um script `pnpm db:ping` (no server) conecta e imprime a versão do Postgres.
+  - [x] `docker compose up -d` sobe o banco saudável.
+  - [x] Um script `pnpm db:ping` (no server) conecta e imprime a versão do Postgres.
 
 ### [ ] CORE-01 — Tipos base e `applyAction` imutável
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** INF-01
