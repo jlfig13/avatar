@@ -23,7 +23,7 @@ export type BattleEventBody =
       readonly targetId: string;
       readonly amount: number;
       readonly hpAfter: number;
-      readonly source: 'technique' | 'terrain' | 'reaction' | 'status';
+      readonly source: 'technique' | 'terrain' | 'reaction';
     }
   | {
       readonly type: 'healed';

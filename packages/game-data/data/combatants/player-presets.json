@@ -1,0 +1,34 @@
+[
+  {
+    "id": "preset.water",
+    "nameKey": "preset.water.name",
+    "element": "water",
+    "maxHp": 100,
+    "attributes": {
+      "power": 10,
+      "control": 14,
+      "resistance": 10,
+      "mobility": 12,
+      "spirit": 12,
+      "focus": 12
+    },
+    "techniqueIds": ["water.whip", "water.shield", "water.freeze", "water.glide"],
+    "passiveIds": ["water.backflow"]
+  },
+  {
+    "id": "preset.fire",
+    "nameKey": "preset.fire.name",
+    "element": "fire",
+    "maxHp": 95,
+    "attributes": {
+      "power": 14,
+      "control": 10,
+      "resistance": 9,
+      "mobility": 13,
+      "spirit": 10,
+      "focus": 10
+    },
+    "techniqueIds": ["fire.blast", "fire.wall", "fire.burst", "fire.surge"],
+    "passiveIds": ["fire.ember"]
+  }
+]

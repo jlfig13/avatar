@@ -58,3 +58,8 @@
 - **Contexto:** os pacotes se importam pelo nome (`workspace:*`); exigir build antes de typecheck/testes deixaria o ciclo lento e frágil.
 - **Decisão:** cada pacote exporta a condição `@elemental/source` → `src/index.ts`, usada por `tsc --noEmit` (`customConditions`) e pelo Vitest. O `pnpm build` ignora essa condição e consome `dist/` dos pacotes já compilados (ordem topológica do `pnpm -r`). O isolamento do `combat-core` é garantido pelo Biome (`noRestrictedImports` + `noNodejsModules`).
 - **Consequências:** typecheck e testes sem build prévio; build real valida a resolução via `dist/`. Quando o cliente virar app Vite (CLI-01), configurar a mesma condição no Vite.
+
+## ADR-014 — `GameData` em `@elemental/shared` e validação pura no `game-data` (CORE-14)
+- **Contexto:** `applyAction` recebe `data: GameData`, mas o `combat-core` não pode depender do `game-data`.
+- **Decisão:** os schemas Zod e o tipo `GameData` (inferido dos schemas) ficam em `@elemental/shared`; o core importa só tipos (`import type`), então o Zod não entra no runtime do core. O `game-data` tem `buildGameData(files)` puro (schema + IDs duplicados + referências cruzadas), usado pelo `index.ts` (imports JSON, funciona no navegador e no servidor) e pelo `pnpm validate:data` (lê do disco e acusa JSON malformado e arquivos fora da lista `src/files.ts`). Schemas usam `z.strictObject` para recusar campos desconhecidos (erros de digitação nos dados).
+- **Consequências:** um só caminho de validação; o build do `game-data` emite `dist/src` e `dist/data`.

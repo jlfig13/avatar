@@ -300,6 +300,13 @@ Monstros usam energia igual aos jogadores (`maxEnergy = 40 + spirit*2`).
 | `preset.water` | água | 100 | 10 | 14 | 10 | 12 | 12 | 12 | as 4 de água | `water.backflow` |
 | `preset.fire` | fogo | 95 | 14 | 10 | 9 | 13 | 10 | 10 | as 4 de fogo | `fire.ember` |
 
+Schema (`PresetSchema` em `@elemental/shared`): `id`, `nameKey` (i18n, ex.: `preset.water.name`), `element`, `maxHp`, `attributes`, `techniqueIds`, `passiveIds`. Arquivo: `packages/game-data/data/combatants/player-presets.json` (lista).
+
+Notas de preenchimento dos dados (CORE-14):
+- `fire.wall` tem papel "defesa/controle"; como `role` aceita um único valor, o dado usa `defense`.
+- `nameKey` das técnicas e passivas segue `technique.<id>.name` / `passive.<id>.name`.
+- Passivas ficam em `packages/game-data/data/passives.json` (lista).
+
 A batalha de teste da fatia 1 aceita escolher **um preset** (1 jogador contra 1 ou 2 Feras de garra, configurável por query string `?enemies=2` em dev).
 
 ## 8. IA por utilidade — contrato

@@ -6,17 +6,18 @@
   "exports": {
     ".": {
       "@elemental/source": "./src/index.ts",
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "validate:data": "echo \"validate:data: no data yet (CORE-14)\""
+    "validate:data": "node --conditions=@elemental/source scripts/validate.ts"
   },
   "dependencies": {
-    "@elemental/shared": "workspace:*"
+    "@elemental/shared": "workspace:*",
+    "zod": "4.6.7"
   }
 }

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "water.backflow",
+    "nameKey": "passive.water.backflow.name",
+    "reaction": {
+      "trigger": "hitByMelee",
+      "effect": {
+        "kind": "push",
+        "cells": 1
+      }
+    }
+  },
+  {
+    "id": "fire.ember",
+    "nameKey": "passive.fire.ember.name",
+    "reaction": {
+      "trigger": "hitByMelee",
+      "effect": {
+        "kind": "status",
+        "statusId": "burning",
+        "rounds": 2,
+        "magnitude": 4
+      }
+    }
+  },
+  {
+    "id": "monster.counter",
+    "nameKey": "passive.monster.counter.name",
+    "reaction": {
+      "trigger": "hitByMelee",
+      "effect": {
+        "kind": "counterAttack",
+        "damageMultiplier": 0.5
+      }
+    }
+  }
+]

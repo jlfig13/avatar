@@ -1,4 +1,4 @@
-import type { GameData } from '@elemental/shared';
+import type { GameData, Rules, Technique } from '@elemental/shared';
 import type { BattleState, Cell, Combatant, Grid, Position } from '../src/types.ts';
 
 // Minimal test data with round numbers: each test declares only what matters.
@@ -69,7 +69,84 @@ export function makeBattle(overrides: Partial<BattleState> = {}): BattleState {
   };
 }
 
-export const emptyData: GameData = {};
+/** Test rules: same shape as rules.json, round numbers chosen for readable expectations. */
+export const testRules: Rules = {
+  movement: {
+    base: 3,
+    mobilityDivisor: 10,
+    jumpUp: 2,
+    jumpDown: 3,
+    extraCost: { shallow_water: 1, ice: 1 },
+    waterUsersIgnoreWater: true,
+  },
+  ct: { threshold: 100, speedBase: 4, speedMobilityDivisor: 5 },
+  turn: {
+    timeoutSeconds: 60,
+    afkTimeoutSeconds: 10,
+    afkAfterConsecutive: 3,
+    defendDamageMultiplier: 0.5,
+  },
+  accuracy: { min: 5, max: 95, controlVsMobilityFactor: 0.5 },
+  height: {
+    rangeBonusMinDiff: 2,
+    accuracyPerStep: 10,
+    accuracyStepMinDiff: 2,
+    maxAccuracyBonus: 20,
+  },
+  flank: { side: { accuracy: 10, damage: 1.5 }, back: { accuracy: 20, damage: 2 } },
+  damage: { resistanceFactor: 0.5, minDamage: 1, waterOnShallowWaterBonus: 1.5 },
+  energy: {
+    maxBase: 40,
+    maxPerSpirit: 2,
+    regenBase: 2,
+    regenSpiritDivisor: 10,
+    regenFocusDivisor: 10,
+    focusCostReductionCap: 30,
+  },
+  cellEffects: {
+    ice: { rounds: 2, moveExtraCost: 1, accuracyBonusAgainstOccupant: 10 },
+    fire: { rounds: 2, damage: 10, vegetationExtraRounds: 1 },
+    earth_wall: { rounds: 3 },
+    gust: { rounds: 2, pushCells: 1 },
+  },
+  flee: { base: 30, perMobility: 2, perAdjacentEnemy: 10, min: 10, max: 90 },
+  disconnect: { graceRounds: 3, allDisconnectedPauseSeconds: 300 },
+  arena: { common: 10, boss: 16, masterTrial: 12 },
+};
+
+export function makeTechnique(overrides: Partial<Technique> & { id: string }): Technique {
+  return {
+    element: 'water',
+    nameKey: `technique.${overrides.id}.name`,
+    role: 'attack',
+    target: 'enemy',
+    range: { min: 1, max: 3 },
+    rangeBonusFromHeight: false,
+    requiresLineOfSight: false,
+    area: { shape: 'single' },
+    energyCost: 10,
+    ctDelay: 0,
+    accuracy: 100,
+    power: 10,
+    powerScaling: 1,
+    effects: [{ kind: 'damage' }],
+    ...overrides,
+  };
+}
+
+export function makeData(overrides: Partial<GameData> = {}): GameData {
+  return {
+    rules: testRules,
+    techniques: {},
+    passives: {},
+    monsters: {},
+    presets: {},
+    maps: {},
+    ...overrides,
+  };
+}
+
+export const emptyData: GameData = makeData();
 
 /** Recursively freezes a value so any mutation in the code under test throws. */
 export function deepFreeze<T>(value: T): T {

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "fire.blast",
+    "element": "fire",
+    "nameKey": "technique.fire.blast.name",
+    "role": "attack",
+    "target": "enemy",
+    "range": {
+      "min": 1,
+      "max": 4
+    },
+    "rangeBonusFromHeight": true,
+    "requiresLineOfSight": true,
+    "area": {
+      "shape": "single"
+    },
+    "energyCost": 8,
+    "ctDelay": 0,
+    "accuracy": 85,
+    "power": 12,
+    "powerScaling": 0.9,
+    "effects": [
+      {
+        "kind": "damage"
+      }
+    ]
+  },
+  {
+    "id": "fire.wall",
+    "element": "fire",
+    "nameKey": "technique.fire.wall.name",
+    "role": "defense",
+    "target": "cell",
+    "range": {
+      "min": 1,
+      "max": 3
+    },
+    "rangeBonusFromHeight": true,
+    "requiresLineOfSight": true,
+    "area": {
+      "shape": "line",
+      "length": 3
+    },
+    "energyCost": 12,
+    "ctDelay": 0,
+    "accuracy": 100,
+    "power": 0,
+    "powerScaling": 0,
+    "effects": [
+      {
+        "kind": "cellEffect",
+        "effect": "fire"
+      }
+    ]
+  },
+  {
+    "id": "fire.burst",
+    "element": "fire",
+    "nameKey": "technique.fire.burst.name",
+    "role": "attack",
+    "target": "cell",
+    "range": {
+      "min": 2,
+      "max": 4
+    },
+    "rangeBonusFromHeight": true,
+    "requiresLineOfSight": true,
+    "area": {
+      "shape": "cross",
+      "radius": 1
+    },
+    "energyCost": 20,
+    "ctDelay": 30,
+    "accuracy": 80,
+    "power": 16,
+    "powerScaling": 1.0,
+    "effects": [
+      {
+        "kind": "damage"
+      }
+    ]
+  },
+  {
+    "id": "fire.surge",
+    "element": "fire",
+    "nameKey": "technique.fire.surge.name",
+    "role": "mobility",
+    "target": "cell",
+    "range": {
+      "min": 1,
+      "max": 3
+    },
+    "rangeBonusFromHeight": true,
+    "requiresLineOfSight": true,
+    "area": {
+      "shape": "single"
+    },
+    "energyCost": 10,
+    "ctDelay": 0,
+    "accuracy": 90,
+    "power": 6,
+    "powerScaling": 0.5,
+    "effects": [
+      {
+        "kind": "dash",
+        "maxCells": 3,
+        "ignoresTerrainCost": false
+      },
+      {
+        "kind": "damage"
+      }
+    ]
+  }
+]

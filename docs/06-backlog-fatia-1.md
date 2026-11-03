@@ -82,13 +82,13 @@
   - [x] Distribuição de `nextInt(1,100)` em 100.000 amostras dentro de ±2% do esperado por faixa de 10.
   - [x] Nenhum `Math.random` no pacote (checagem no lint/teste).
 
-### [ ] CORE-14 — Schemas Zod e dados de técnicas de água e fogo
+### [x] CORE-14 — Schemas Zod e dados de técnicas de água e fogo
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-01
 - **Descrição:** schemas de `docs/05` (técnica, passiva, monstro, preset, `rules.json`, grade) em `@elemental/shared`. Arquivos em `packages/game-data/data/` com os valores PROVISÓRIOS das seções 2, 4, 5 e 7. `packages/game-data/src/index.ts` carrega, valida e exporta `GameData` tipado. Script `pnpm validate:data`.
 - **Critérios de aceite:**
-  - [ ] As 8 técnicas, 3 passivas e 2 presets carregam sem erro.
-  - [ ] Um arquivo inválido (campo faltando) falha o `validate:data` com mensagem indicando arquivo e campo.
-  - [ ] IDs referenciados (técnicas em presets/monstros) são verificados: ID inexistente falha a validação.
+  - [x] As 8 técnicas, 3 passivas e 2 presets carregam sem erro.
+  - [x] Um arquivo inválido (campo faltando) falha o `validate:data` com mensagem indicando arquivo e campo.
+  - [x] IDs referenciados (técnicas em presets/monstros) são verificados: ID inexistente falha a validação.
 
 ### [ ] CORE-15 — Dados do monstro corpo a corpo
 - **Epic:** core · **Estimativa:** 1 h · **Executor:** Claude · **Depende de:** CORE-14
