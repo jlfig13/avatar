@@ -19,6 +19,14 @@ export {
   sliceOrigin,
   step,
 } from './grid/grid.ts';
+export {
+  findPath,
+  getReachableCells,
+  isHostile,
+  type MoveOptions,
+  movementPoints,
+  stepCost,
+} from './pathfinding/pathfinding.ts';
 export { next, nextInt, pick, type RngState, rollInt, seedRng } from './rng.ts';
 export {
   cellIndex,

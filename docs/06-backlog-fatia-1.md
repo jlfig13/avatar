@@ -117,14 +117,14 @@
   - [x] Recorte perto da borda do mapa é deslocado para caber (sem células fora do mapa).
   - [x] `test-arena` atende aos requisitos da seção 3 de `docs/05`.
 
-### [ ] CORE-04 — Pathfinding A* com custos de altura e terreno
+### [x] CORE-04 — Pathfinding A* com custos de altura e terreno
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-03
 - **Descrição:** A* em 4 direções com regras de `docs/02`, seção 3.1 (custos, subida/descida, ocupação). `getReachableCells` (todas as células alcançáveis com os pontos de movimento) e `findPath`.
 - **Critérios de aceite:**
-  - [ ] Desvia de obstáculo; não sobe 3 níveis num passo; desce até 3.
-  - [ ] Água rasa custa 2 para fogo e 1 para água.
-  - [ ] Pode atravessar aliado mas não parar nele; inimigo bloqueia.
-  - [ ] `getReachableCells` numa arena 10 × 10 leva < 2 ms (benchmark simples no teste).
+  - [x] Desvia de obstáculo; não sobe 3 níveis num passo; desce até 3.
+  - [x] Água rasa custa 2 para fogo e 1 para água.
+  - [x] Pode atravessar aliado mas não parar nele; inimigo bloqueia.
+  - [x] `getReachableCells` numa arena 10 × 10 leva < 2 ms (benchmark simples no teste).
 
 ### [ ] CORE-05 — Barra de tempo (CT)
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-01
