@@ -63,3 +63,8 @@
 - **Contexto:** `applyAction` recebe `data: GameData`, mas o `combat-core` não pode depender do `game-data`.
 - **Decisão:** os schemas Zod e o tipo `GameData` (inferido dos schemas) ficam em `@elemental/shared`; o core importa só tipos (`import type`), então o Zod não entra no runtime do core. O `game-data` tem `buildGameData(files)` puro (schema + IDs duplicados + referências cruzadas), usado pelo `index.ts` (imports JSON, funciona no navegador e no servidor) e pelo `pnpm validate:data` (lê do disco e acusa JSON malformado e arquivos fora da lista `src/files.ts`). Schemas usam `z.strictObject` para recusar campos desconhecidos (erros de digitação nos dados).
 - **Consequências:** um só caminho de validação; o build do `game-data` emite `dist/src` e `dist/data`.
+
+## ADR-015 — Técnicas de monstro sem elemento (CORE-15)
+- **Contexto:** o `TechniqueSchema` de `docs/05` §4 exigia `element`, mas os monstros podem não ter elemento (`Combatant.element: Element | null`) e `monster.claw`/`monster.pounce` não têm um.
+- **Decisão:** `element` da técnica passa a ser anulável; técnicas de monstro usam `null`. `CombatantInput` (citado em `docs/05` §9 sem forma) foi definido com `template: { kind: 'preset' | 'monster', id }` e `facing` obrigatório.
+- **Consequências:** regras ligadas a elemento (ex.: bônus de água em água rasa) simplesmente não se aplicam a técnicas sem elemento. Mudança pendente de confirmação do dono (registrada em `docs/09`).

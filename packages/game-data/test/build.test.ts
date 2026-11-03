@@ -8,12 +8,14 @@ import { buildGameData, dataFiles, gameData } from '../src/index.ts';
 const clone = <T>(value: T): T => structuredClone(value);
 
 describe('game data', () => {
-  it('loads the 8 techniques, 3 passives and 2 presets of slice 1', () => {
+  it('loads the 8 techniques, 3 passives and 2 presets of slice 1 (+ monster data)', () => {
     expect(Object.keys(gameData.techniques).sort()).toEqual([
       'fire.blast',
       'fire.burst',
       'fire.surge',
       'fire.wall',
+      'monster.claw',
+      'monster.pounce',
       'water.freeze',
       'water.glide',
       'water.shield',
@@ -25,6 +27,7 @@ describe('game data', () => {
       'water.backflow',
     ]);
     expect(Object.keys(gameData.presets).sort()).toEqual(['preset.fire', 'preset.water']);
+    expect(Object.keys(gameData.monsters)).toEqual(['monster.clawbeast']);
     expect(gameData.rules.ct.threshold).toBe(100);
   });
 

@@ -197,7 +197,7 @@ Todo evento tem `seq` (inteiro crescente na batalha) e `type`.
 ```ts
 export const TechniqueSchema = z.object({
   id: z.string(),                         // 'water.whip'
-  element: z.enum(['water','earth','fire','air']),
+  element: z.enum(['water','earth','fire','air']).nullable(),  // null: técnica de monstro sem elemento (ADR-015)
   nameKey: z.string(),                    // i18n
   role: z.enum(['attack','defense','control','mobility']),
   target: z.enum(['enemy','ally','self','cell']),
@@ -293,6 +293,8 @@ Lembrete: máximo de 1 reação por combatente por rodada; reação não provoca
 
 Monstros usam energia igual aos jogadores (`maxEnergy = 40 + spirit*2`).
 
+Dados: `packages/game-data/data/monsters/clawbeast.json` e `packages/game-data/data/techniques/monster.json`. As técnicas do monstro têm `element: null`. `monster.claw` (alcance 1) não exige linha de visão nem ganha alcance por altura; `monster.pounce` (alcance 2–3) segue a regra das técnicas de alcance ≥ 2 (`requiresLineOfSight` e `rangeBonusFromHeight` = `true`), com `dash` de até 3 células seguido de `damage`.
+
 ## 7. Presets de personagem da fatia 1 — PROVISÓRIO
 
 | id | Elemento | maxHp | power | control | resistance | mobility | spirit | focus | Técnicas | Passiva |
@@ -326,6 +328,10 @@ export function chooseActions(ctx: AiContext): Action[];   // sequência do turn
 ## 9. API pública do `combat-core`
 
 ```ts
+interface CombatantInput {
+  id: string; team: Team; controller: 'player' | 'ai'; position: Position; facing: Facing;
+  template: { kind: 'preset' | 'monster'; id: string };   // de onde vêm hp, atributos, técnicas e passivas
+}
 createBattle(input: { id: string; seed: number; grid: Grid; combatants: CombatantInput[]; data: GameData }): BattleState
 applyAction(state: BattleState, action: Action, data: GameData): ApplyResult
 getReachableCells(state: BattleState, actorId: string, data: GameData): Position[]

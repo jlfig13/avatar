@@ -41,4 +41,4 @@
 
 | Data | Issue | Dúvida | Resposta |
 | --- | --- | --- | --- |
-| | | | |
+| 2026-11-03 | CORE-15 | `TechniqueSchema.element` era obrigatório, mas técnicas de monstro não têm elemento. Adotado `element: null` (ADR-015). Confirmar. | Pendente |

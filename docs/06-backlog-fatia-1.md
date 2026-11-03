@@ -90,11 +90,11 @@
   - [x] Um arquivo inválido (campo faltando) falha o `validate:data` com mensagem indicando arquivo e campo.
   - [x] IDs referenciados (técnicas em presets/monstros) são verificados: ID inexistente falha a validação.
 
-### [ ] CORE-15 — Dados do monstro corpo a corpo
+### [x] CORE-15 — Dados do monstro corpo a corpo
 - **Epic:** core · **Estimativa:** 1 h · **Executor:** Claude · **Depende de:** CORE-14
 - **Descrição:** `monster.clawbeast`, `monster.claw`, `monster.pounce` e `monster.counter` conforme `docs/05`, seção 6.
 - **Critérios de aceite:**
-  - [ ] Monstro carrega dos dados e pode ser passado a `createBattle`.
+  - [x] Monstro carrega dos dados e pode ser passado a `createBattle`.
 
 ### [ ] ART-01 — Selecionar packs CC0 e registrar licenças
 - **Epic:** art · **Estimativa:** 2 h · **Executor:** Misto · **Depende de:** —

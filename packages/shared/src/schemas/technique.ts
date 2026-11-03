@@ -31,7 +31,8 @@ export const TechniqueEffectSchema = z.discriminatedUnion('kind', [
 
 export const TechniqueSchema = z.strictObject({
   id: z.string(),
-  element: ElementSchema,
+  /** null for monster techniques without an element (docs/05 §4, ADR-015) */
+  element: ElementSchema.nullable(),
   nameKey: z.string(),
   role: z.enum(['attack', 'defense', 'control', 'mobility']),
   target: z.enum(['enemy', 'ally', 'self', 'cell']),

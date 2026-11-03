@@ -1,6 +1,12 @@
 import { SHARED_PACKAGE } from '@elemental/shared';
 
 export { applyAction } from './apply.ts';
+export {
+  type CombatantInput,
+  type CreateBattleInput,
+  createBattle,
+  maxEnergyFor,
+} from './createBattle.ts';
 export type { ApplyResult, BattleEvent, BattleEventBody } from './events.ts';
 export { next, nextInt, pick, type RngState, rollInt, seedRng } from './rng.ts';
 export {

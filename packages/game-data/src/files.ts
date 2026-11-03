@@ -1,7 +1,9 @@
 import presets from '../data/combatants/player-presets.json' with { type: 'json' };
+import clawbeast from '../data/monsters/clawbeast.json' with { type: 'json' };
 import passives from '../data/passives.json' with { type: 'json' };
 import rules from '../data/rules.json' with { type: 'json' };
 import fire from '../data/techniques/fire.json' with { type: 'json' };
+import monsterTechniques from '../data/techniques/monster.json' with { type: 'json' };
 import water from '../data/techniques/water.json' with { type: 'json' };
 import type { RawDataFiles } from './build.ts';
 
@@ -14,5 +16,7 @@ export const dataFiles: RawDataFiles = {
   'passives.json': passives,
   'techniques/water.json': water,
   'techniques/fire.json': fire,
+  'techniques/monster.json': monsterTechniques,
+  'monsters/clawbeast.json': clawbeast,
   'combatants/player-presets.json': presets,
 };

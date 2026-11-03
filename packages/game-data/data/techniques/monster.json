@@ -1,0 +1,59 @@
+[
+  {
+    "id": "monster.claw",
+    "element": null,
+    "nameKey": "technique.monster.claw.name",
+    "role": "attack",
+    "target": "enemy",
+    "range": {
+      "min": 1,
+      "max": 1
+    },
+    "rangeBonusFromHeight": false,
+    "requiresLineOfSight": false,
+    "area": {
+      "shape": "single"
+    },
+    "energyCost": 0,
+    "ctDelay": 0,
+    "accuracy": 90,
+    "power": 10,
+    "powerScaling": 0.8,
+    "effects": [
+      {
+        "kind": "damage"
+      }
+    ]
+  },
+  {
+    "id": "monster.pounce",
+    "element": null,
+    "nameKey": "technique.monster.pounce.name",
+    "role": "attack",
+    "target": "enemy",
+    "range": {
+      "min": 2,
+      "max": 3
+    },
+    "rangeBonusFromHeight": true,
+    "requiresLineOfSight": true,
+    "area": {
+      "shape": "single"
+    },
+    "energyCost": 10,
+    "ctDelay": 10,
+    "accuracy": 80,
+    "power": 8,
+    "powerScaling": 0.6,
+    "effects": [
+      {
+        "kind": "dash",
+        "maxCells": 3,
+        "ignoresTerrainCost": false
+      },
+      {
+        "kind": "damage"
+      }
+    ]
+  }
+]
