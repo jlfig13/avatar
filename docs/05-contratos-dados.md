@@ -335,7 +335,7 @@ interface CombatantInput {
 createBattle(input: { id: string; seed: number; grid: Grid; combatants: CombatantInput[]; data: GameData }): BattleState
 applyAction(state: BattleState, action: Action, data: GameData): ApplyResult
 getReachableCells(state: BattleState, actorId: string, data: GameData): Position[]
-getTechniqueTargets(state: BattleState, actorId: string, techniqueId: string, from?: Position, data?: GameData): Position[]
+getTechniqueTargets(state: BattleState, actorId: string, techniqueId: string, data: GameData, from?: Position): Position[]
 getAffectedCells(state: BattleState, actorId: string, techniqueId: string, target: Position, data: GameData): Position[]
 predictTurnOrder(state: BattleState, count: number, data: GameData): string[]   // data: speed vem de rules.json
 hasLineOfSight(grid: Grid, from: Position, to: Position): boolean

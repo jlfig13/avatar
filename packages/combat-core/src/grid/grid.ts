@@ -27,6 +27,15 @@ export function neighbors4(grid: Grid, pos: Position): Position[] {
   return (['N', 'E', 'S', 'W'] as const).map((f) => step(pos, f)).filter((p) => inBounds(grid, p));
 }
 
+/** Direction from `from` toward `to` along the dominant axis (ties favour E/W). */
+export function facingOf(from: Position, to: Position, fallback: Facing): Facing {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  if (Math.abs(dx) >= Math.abs(dy) && dx !== 0) return dx > 0 ? 'E' : 'W';
+  if (dy !== 0) return dy > 0 ? 'S' : 'N';
+  return fallback;
+}
+
 export const manhattan = (a: Position, b: Position): number =>
   Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
 

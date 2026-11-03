@@ -1,22 +1,14 @@
 import type { GameData } from '@elemental/shared';
 import { finishTurn } from '../ct/ct.ts';
 import { accept, type BattleEventBody, reject, type StepResult } from '../events.ts';
+import { facingOf } from '../grid/grid.ts';
 import { findPath } from '../pathfinding/pathfinding.ts';
 import { requireCombatant, updateCombatant } from '../state.ts';
-import type { Action, BattleState, Facing, Position, TurnState } from '../types.ts';
+import type { Action, BattleState, TurnState } from '../types.ts';
 
 type Of<T extends Action['type']> = Extract<Action, { type: T }>;
 
 export const DEFENDING = 'defending';
-
-/** Direction of a single step from `from` to the adjacent `to`. */
-export function facingOf(from: Position, to: Position, fallback: Facing): Facing {
-  const dx = to.x - from.x;
-  const dy = to.y - from.y;
-  if (Math.abs(dx) >= Math.abs(dy) && dx !== 0) return dx > 0 ? 'E' : 'W';
-  if (dy !== 0) return dy > 0 ? 'S' : 'N';
-  return fallback;
-}
 
 const activeTurn = (state: BattleState): TurnState => {
   if (!state.turn) throw new Error('no active turn'); // applyAction checks this before dispatch

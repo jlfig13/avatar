@@ -11,6 +11,7 @@ export { predictTurnOrder, speedOf } from './ct/ct.ts';
 export type { ApplyResult, BattleEvent, BattleEventBody } from './events.ts';
 export {
   DIRECTIONS,
+  facingOf,
   getCell,
   gridFromFile,
   inBounds,
@@ -37,6 +38,12 @@ export {
   updateCombatant,
   updateGridCell,
 } from './state.ts';
+export {
+  getAffectedCells,
+  getTechniqueTargets,
+  hasLineOfSight,
+  lineCells,
+} from './targeting/targeting.ts';
 export { turnTimeoutSeconds } from './turn/handlers.ts';
 export type * from './types.ts';
 

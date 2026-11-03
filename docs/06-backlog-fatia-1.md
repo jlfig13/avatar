@@ -143,14 +143,14 @@
   - [x] `facing` atualizado na direção do último passo.
   - [x] Defender reduz dano recebido em 30% até o próximo turno do defensor.
 
-### [ ] CORE-07 — Alcance, área e linha de visão
+### [x] CORE-07 — Alcance, área e linha de visão
 - **Epic:** core · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CORE-03
 - **Descrição:** `getTechniqueTargets`, `getAffectedCells` (single, cross, line, self) e `hasLineOfSight` com o algoritmo de `docs/02`, seção 6.2. Bônus de alcance por altura (seção 6.3).
 - **Critérios de aceite:**
-  - [ ] Rocha entre atacante e alvo bloqueia técnica com `requiresLineOfSight`.
-  - [ ] Atacante 2 níveis acima ganha +1 de alcance em técnica com `rangeBonusFromHeight`.
-  - [ ] `line` sai perpendicular à direção do usuário, centrada no alvo (testes por direção N/E/S/W).
-  - [ ] Área não inclui células fora da grade.
+  - [x] Rocha entre atacante e alvo bloqueia técnica com `requiresLineOfSight`.
+  - [x] Atacante 2 níveis acima ganha +1 de alcance em técnica com `rangeBonusFromHeight`.
+  - [x] `line` sai perpendicular à direção do usuário, centrada no alvo (testes por direção N/E/S/W).
+  - [x] Área não inclui células fora da grade.
 
 ### [ ] CORE-08 — Modificadores de altura e de flanco/costas
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-07
