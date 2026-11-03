@@ -8,6 +8,17 @@ export {
   maxEnergyFor,
 } from './createBattle.ts';
 export type { ApplyResult, BattleEvent, BattleEventBody } from './events.ts';
+export {
+  DIRECTIONS,
+  getCell,
+  gridFromFile,
+  inBounds,
+  manhattan,
+  neighbors4,
+  sliceArena,
+  sliceOrigin,
+  step,
+} from './grid/grid.ts';
 export { next, nextInt, pick, type RngState, rollInt, seedRng } from './rng.ts';
 export {
   cellIndex,

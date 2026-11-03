@@ -1,17 +1,12 @@
-import { createBattle, type Grid } from '@elemental/combat-core';
+import { createBattle, gridFromFile } from '@elemental/combat-core';
 import { gameData } from '@elemental/game-data';
 import { describe, expect, it } from 'vitest';
 
-const grid: Grid = {
-  width: 10,
-  height: 10,
-  cells: Array.from({ length: 100 }, () => ({
-    height: 0,
-    terrain: 'ground' as const,
-    blocked: false,
-    escape: false,
-  })),
-};
+const arena = gameData.maps['test-arena'];
+if (!arena) throw new Error('test-arena missing');
+const grid = gridFromFile(arena);
+const [playerSpawn] = arena.spawns.players;
+const [enemySpawn1, enemySpawn2] = arena.spawns.enemies;
 
 describe('slice 1 data + combat-core', () => {
   it('loads the clawbeast and its techniques/passive from the data files', () => {
@@ -28,7 +23,7 @@ describe('slice 1 data + combat-core', () => {
     });
   });
 
-  it('passes a preset and two clawbeasts to createBattle', () => {
+  it('passes a preset and two clawbeasts to createBattle on test-arena', () => {
     const state = createBattle({
       id: 'b',
       seed: 1,
@@ -39,7 +34,7 @@ describe('slice 1 data + combat-core', () => {
           id: 'p1',
           team: 'players',
           controller: 'player',
-          position: { x: 1, y: 8 },
+          position: playerSpawn ?? { x: 0, y: 0 },
           facing: 'N',
           template: { kind: 'preset', id: 'preset.fire' },
         },
@@ -47,7 +42,7 @@ describe('slice 1 data + combat-core', () => {
           id: 'e1',
           team: 'enemies',
           controller: 'ai',
-          position: { x: 8, y: 1 },
+          position: enemySpawn1 ?? { x: 0, y: 0 },
           facing: 'S',
           template: { kind: 'monster', id: 'monster.clawbeast' },
         },
@@ -55,7 +50,7 @@ describe('slice 1 data + combat-core', () => {
           id: 'e2',
           team: 'enemies',
           controller: 'ai',
-          position: { x: 7, y: 1 },
+          position: enemySpawn2 ?? { x: 0, y: 0 },
           facing: 'S',
           template: { kind: 'monster', id: 'monster.clawbeast' },
         },

@@ -1,4 +1,5 @@
 import presets from '../data/combatants/player-presets.json' with { type: 'json' };
+import testArena from '../data/maps/test-arena.grid.json' with { type: 'json' };
 import clawbeast from '../data/monsters/clawbeast.json' with { type: 'json' };
 import passives from '../data/passives.json' with { type: 'json' };
 import rules from '../data/rules.json' with { type: 'json' };
@@ -19,4 +20,5 @@ export const dataFiles: RawDataFiles = {
   'techniques/monster.json': monsterTechniques,
   'monsters/clawbeast.json': clawbeast,
   'combatants/player-presets.json': presets,
+  'maps/test-arena.grid.json': testArena,
 };

@@ -340,6 +340,7 @@ getAffectedCells(state: BattleState, actorId: string, techniqueId: string, targe
 predictTurnOrder(state: BattleState, count: number): string[]
 hasLineOfSight(grid: Grid, from: Position, to: Position): boolean
 sliceArena(grid: Grid, center: Position, size: number): Grid
+gridFromFile(file: GridFile): Grid                 // *.grid.json validado → Grid (marca células de fuga)
 chooseActions(ctx: AiContext): Action[]
 ```
 

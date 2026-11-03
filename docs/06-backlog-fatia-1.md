@@ -108,14 +108,14 @@
 
 ## Onda 1 — Regras base
 
-### [ ] CORE-03 — Grade, carregamento de `*.grid.json` e recorte de arena
+### [x] CORE-03 — Grade, carregamento de `*.grid.json` e recorte de arena
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-01, CORE-14
 - **Descrição:** conversão `*.grid.json` → `Grid` (no `game-data`, usando tipos do core); funções de grade no core: `getCell`, `inBounds`, `neighbors4`, `manhattan`, `sliceArena(grid, center, size)` com marcação de células de fuga. Criar `packages/game-data/data/maps/test-arena.grid.json` conforme `docs/05`, seção 3.
 - **Critérios de aceite:**
-  - [ ] Recorte 10 × 10 de uma grade 30 × 30 preserva alturas, terrenos e bloqueios da origem (teste com grade gerada).
-  - [ ] Células de fuga = borda externa transitável.
-  - [ ] Recorte perto da borda do mapa é deslocado para caber (sem células fora do mapa).
-  - [ ] `test-arena` atende aos requisitos da seção 3 de `docs/05`.
+  - [x] Recorte 10 × 10 de uma grade 30 × 30 preserva alturas, terrenos e bloqueios da origem (teste com grade gerada).
+  - [x] Células de fuga = borda externa transitável.
+  - [x] Recorte perto da borda do mapa é deslocado para caber (sem células fora do mapa).
+  - [x] `test-arena` atende aos requisitos da seção 3 de `docs/05`.
 
 ### [ ] CORE-04 — Pathfinding A* com custos de altura e terreno
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-03
