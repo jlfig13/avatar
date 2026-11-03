@@ -1,0 +1,23 @@
+{
+  "name": "@elemental/client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@elemental/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dev": "echo \"client dev: not implemented yet (CLI-01)\""
+  },
+  "dependencies": {
+    "@elemental/combat-core": "workspace:*",
+    "@elemental/game-data": "workspace:*"
+  }
+}

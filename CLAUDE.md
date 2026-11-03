@@ -81,4 +81,4 @@ Algumas issues não podem ser concluídas só pelo Claude Code (estão marcadas 
 ## 8. Estado atual
 
 - Etapas de design concluídas: GDD v1.1, regras de combate, escopo do protótipo, backlog técnico da fatia 1.
-- Código: **nenhum ainda.** A primeira issue é `INF-01`.
+- Código: monorepo base pronto (INF-01). Próximas issues: onda 0 do backlog.

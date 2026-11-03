@@ -53,3 +53,8 @@
 - **Contexto:** o design definiu as regras, não os números.
 - **Decisão:** fórmulas e números marcados PROVISÓRIO em `docs/02` e `docs/05` destravam a implementação e ficam em `rules.json`.
 - **Consequências:** calibração por simulador (QA-01) e playtest (QA-03); toda mudança registrada aqui.
+
+## ADR-013 — Pacotes do monorepo resolvidos pela fonte em dev e por `dist/` no build (INF-01)
+- **Contexto:** os pacotes se importam pelo nome (`workspace:*`); exigir build antes de typecheck/testes deixaria o ciclo lento e frágil.
+- **Decisão:** cada pacote exporta a condição `@elemental/source` → `src/index.ts`, usada por `tsc --noEmit` (`customConditions`) e pelo Vitest. O `pnpm build` ignora essa condição e consome `dist/` dos pacotes já compilados (ordem topológica do `pnpm -r`). O isolamento do `combat-core` é garantido pelo Biome (`noRestrictedImports` + `noNodejsModules`).
+- **Consequências:** typecheck e testes sem build prévio; build real valida a resolução via `dist/`. Quando o cliente virar app Vite (CLI-01), configurar a mesma condição no Vite.

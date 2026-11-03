@@ -36,14 +36,14 @@
 
 ## Onda 0 — Fundação
 
-### [ ] INF-01 — Monorepo pnpm com TypeScript estrito e Biome
+### [x] INF-01 — Monorepo pnpm com TypeScript estrito e Biome
 - **Epic:** infra · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** —
 - **Descrição:** criar a estrutura de `docs/04-arquitetura.md`, seção 3: `apps/client`, `apps/server`, `packages/combat-core`, `packages/shared`, `packages/game-data`, `tools/`, `assets-src/`. `tsconfig.base.json` com `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`. `biome.json`. Scripts raiz da seção 5 do `CLAUDE.md` (os que dependem de pacotes ainda vazios podem ser no-op).
 - **Critérios de aceite:**
-  - [ ] `pnpm install`, `pnpm build`, `pnpm lint`, `pnpm typecheck` e `pnpm test` passam com pacotes vazios (cada um com 1 teste trivial).
-  - [ ] Pacotes importam uns aos outros pelo nome (`@elemental/shared` etc.) via `workspace:*`.
-  - [ ] `.nvmrc`, `.gitignore` (inclui `.env`, `dist`, `node_modules`), `.env.example` e `README.md` com instruções de setup.
-  - [ ] Regra no Biome (ou script) que falha se `combat-core` importar `babylonjs`, `react`, `colyseus`, `node:*`.
+  - [x] `pnpm install`, `pnpm build`, `pnpm lint`, `pnpm typecheck` e `pnpm test` passam com pacotes vazios (cada um com 1 teste trivial).
+  - [x] Pacotes importam uns aos outros pelo nome (`@elemental/shared` etc.) via `workspace:*`.
+  - [x] `.nvmrc`, `.gitignore` (inclui `.env`, `dist`, `node_modules`), `.env.example` e `README.md` com instruções de setup.
+  - [x] Regra no Biome (ou script) que falha se `combat-core` importar `babylonjs`, `react`, `colyseus`, `node:*`.
 
 ### [ ] INF-02 — CI no GitHub Actions
 - **Epic:** infra · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** INF-01

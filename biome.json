@@ -1,0 +1,45 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": { "includes": ["**", "!**/*.md", "!**/dist", "!**/coverage", "!**/node_modules"] },
+  "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2, "lineWidth": 100 },
+  "javascript": { "formatter": { "quoteStyle": "single" } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "suspicious": { "noExplicitAny": "error" }
+    }
+  },
+  "assist": { "enabled": true, "actions": { "source": { "organizeImports": "on" } } },
+  "overrides": [
+    {
+      "includes": ["packages/combat-core/src/**"],
+      "linter": {
+        "rules": {
+          "correctness": { "noNodejsModules": "error" },
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "babylonjs": "combat-core must stay pure TypeScript (CLAUDE.md rule 4).",
+                  "react": "combat-core must stay pure TypeScript (CLAUDE.md rule 4).",
+                  "react-dom": "combat-core must stay pure TypeScript (CLAUDE.md rule 4).",
+                  "colyseus": "combat-core must stay pure TypeScript (CLAUDE.md rule 4).",
+                  "colyseus.js": "combat-core must stay pure TypeScript (CLAUDE.md rule 4)."
+                },
+                "patterns": [
+                  {
+                    "group": ["@babylonjs/*", "@colyseus/*", "react/*", "react-dom/*", "node:*"],
+                    "message": "combat-core must stay pure TypeScript (CLAUDE.md rule 4)."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -14,6 +14,39 @@ MMORPG 3D isométrico para navegador com combate tático por turnos. Este reposi
 5. Repita `/proxima-issue` a cada sessão. Cada execução implementa, testa, marca e commita uma issue.
 6. Opcional: `/criar-issues-github` cadastra o backlog no GitHub (pede confirmação antes).
 
+## Setup do ambiente
+
+Pré-requisitos: Node.js (versão em `.nvmrc`, mínimo 22), pnpm 10+ (`corepack enable` ativa a versão de `packageManager`), Docker e Git LFS.
+
+```bash
+nvm use               # ou instale a versão de .nvmrc
+corepack enable       # ativa o pnpm fixado em package.json
+pnpm install
+cp .env.example .env  # ajuste se necessário; .env nunca é commitado
+```
+
+Verificação (deve passar sempre):
+
+```bash
+pnpm lint && pnpm typecheck && pnpm validate:data && pnpm test && pnpm build
+```
+
+### Estrutura
+
+| Pasta | Pacote | Papel |
+| --- | --- | --- |
+| `packages/shared` | `@elemental/shared` | Schemas Zod e protocolo cliente ↔ servidor |
+| `packages/combat-core` | `@elemental/combat-core` | Regras de combate em TypeScript puro (sem Node, Babylon, React ou Colyseus — o Biome bloqueia) |
+| `packages/game-data` | `@elemental/game-data` | Dados de jogo em JSON validados |
+| `apps/server` | `@elemental/server` | Servidor Colyseus autoritativo |
+| `apps/client` | `@elemental/client` | Cliente Vite + Babylon.js + React |
+| `tools/` | — | Ferramentas (ex.: exportador do Blender) |
+| `assets-src/` | — | Fontes de arte (Git LFS) |
+
+Os pacotes se importam pelo nome (`workspace:*`). Em typecheck e testes, a condição de export `@elemental/source` aponta para `src/`, então não é preciso buildar antes; o `pnpm build` gera `dist/` em ordem topológica.
+
+Scripts ainda sem implementação (`dev`, `test:sim`, `validate:data`, `db:*`) apenas imprimem a issue que os implementará.
+
 ## Onde está cada coisa
 
 - `CLAUDE.md` — contexto e regras para o Claude Code.

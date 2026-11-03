@@ -1,0 +1,27 @@
+{
+  "name": "elemental",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @elemental/client --filter @elemental/server run dev",
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test",
+    "test:sim": "echo \"test:sim: not implemented yet (QA-01)\"",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "pnpm -r run typecheck",
+    "validate:data": "pnpm --filter @elemental/game-data run validate:data",
+    "db:generate": "echo \"db:generate: not implemented yet (SRV-05)\"",
+    "db:migrate": "echo \"db:migrate: not implemented yet (SRV-05)\""
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.4",
+    "@types/node": "^24.19.2",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  }
+}
