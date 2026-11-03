@@ -1,2 +1,3 @@
-// Placeholder until CORE-01 / CORE-14 define the real schemas and protocol.
+export type { GameData } from './gameData.ts';
+
 export const SHARED_PACKAGE = '@elemental/shared';

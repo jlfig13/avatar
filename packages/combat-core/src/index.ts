@@ -1,5 +1,16 @@
 import { SHARED_PACKAGE } from '@elemental/shared';
 
-// Placeholder until the first real issue for this package.
+export { applyAction } from './apply.ts';
+export type { ApplyResult, BattleEvent, BattleEventBody } from './events.ts';
+export {
+  cellIndex,
+  getCombatant,
+  samePosition,
+  updateCell,
+  updateCombatant,
+  updateGridCell,
+} from './state.ts';
+export type * from './types.ts';
+
 export const COMBAT_CORE_PACKAGE = '@elemental/combat-core';
 export const COMBAT_CORE_PACKAGE_DEPENDENCIES = [SHARED_PACKAGE] as const;

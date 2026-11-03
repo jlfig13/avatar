@@ -66,13 +66,13 @@
   - [x] `docker compose up -d` sobe o banco saudável.
   - [x] Um script `pnpm db:ping` (no server) conecta e imprime a versão do Postgres.
 
-### [ ] CORE-01 — Tipos base e `applyAction` imutável
+### [x] CORE-01 — Tipos base e `applyAction` imutável
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** INF-01
 - **Descrição:** implementar os tipos de `docs/05`, seções 1 e 1.1–1.3, e o esqueleto de `applyAction(state, action, data) → ApplyResult` com despacho por `action.type` (handlers ainda devolvem `rejected` onde não implementados). Utilitários de atualização imutável (`updateCombatant`, `updateCell`). Contador `eventSeq`.
 - **Critérios de aceite:**
-  - [ ] Teste confirma que o estado de entrada não é alterado (`Object.freeze` profundo em teste ou comparação por snapshot).
-  - [ ] Todo evento emitido recebe `seq` crescente.
-  - [ ] Ação com `actorId` que não é o do turno retorna `not_your_turn`.
+  - [x] Teste confirma que o estado de entrada não é alterado (`Object.freeze` profundo em teste ou comparação por snapshot).
+  - [x] Todo evento emitido recebe `seq` crescente.
+  - [x] Ação com `actorId` que não é o do turno retorna `not_your_turn`.
 
 ### [ ] CORE-02 — RNG determinístico com seed
 - **Epic:** core · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** CORE-01
