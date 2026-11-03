@@ -37,6 +37,7 @@ export {
   updateCombatant,
   updateGridCell,
 } from './state.ts';
+export { turnTimeoutSeconds } from './turn/handlers.ts';
 export type * from './types.ts';
 
 export const COMBAT_CORE_PACKAGE = '@elemental/combat-core';

@@ -1,6 +1,7 @@
 import type { GameData } from '@elemental/shared';
 import { type ApplyResult, type BattleEvent, reject, type StepResult } from './events.ts';
 import { handleAdvance } from './turn/advance.ts';
+import { handleDefend, handleEndTurn, handleMove, handleTimeout } from './turn/handlers.ts';
 import type { Action, ActorAction, BattleState } from './types.ts';
 
 export type ActionHandler<A extends Action> = (
@@ -16,12 +17,12 @@ const notImplemented = (): StepResult => reject('invalid_target');
 
 const handlers: HandlerMap = {
   advance: handleAdvance,
-  move: notImplemented,
+  move: handleMove,
   technique: notImplemented,
-  defend: notImplemented,
+  defend: handleDefend,
   flee: notImplemented,
-  endTurn: notImplemented,
-  timeout: notImplemented,
+  endTurn: handleEndTurn,
+  timeout: handleTimeout,
 };
 
 /** Stamps increasing `seq` on events and stores the last one in `state.eventSeq`. */

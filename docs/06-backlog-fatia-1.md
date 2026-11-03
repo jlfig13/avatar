@@ -134,14 +134,14 @@
   - [x] Técnica com `ctDelay: 30` atrasa o próximo turno do usuário em relação a quem não usou.
   - [x] Evento `roundStarted` quando todos os vivos agiram.
 
-### [ ] CORE-06 — Fluxo do turno: movimento + 1 ação, defender e timeout
+### [x] CORE-06 — Fluxo do turno: movimento + 1 ação, defender e timeout
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-04, CORE-05
 - **Descrição:** handlers de `move`, `defend`, `endTurn`, `timeout` e controle de `hasMoved`/`hasActed`. Início de turno: regeneração de energia (stub até CORE-10), remoção do `defending` anterior. `timeout` aplica `defend` e incrementa `consecutiveTimeouts`; qualquer ação manual zera.
 - **Critérios de aceite:**
-  - [ ] Pode mover e agir em qualquer ordem, uma vez cada; segunda tentativa retorna `already_moved`/`already_acted`.
-  - [ ] Destino fora do alcançável retorna `unreachable`.
-  - [ ] `facing` atualizado na direção do último passo.
-  - [ ] Defender reduz dano recebido em 30% até o próximo turno do defensor.
+  - [x] Pode mover e agir em qualquer ordem, uma vez cada; segunda tentativa retorna `already_moved`/`already_acted`.
+  - [x] Destino fora do alcançável retorna `unreachable`.
+  - [x] `facing` atualizado na direção do último passo.
+  - [x] Defender reduz dano recebido em 30% até o próximo turno do defensor.
 
 ### [ ] CORE-07 — Alcance, área e linha de visão
 - **Epic:** core · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CORE-03
