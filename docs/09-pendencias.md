@@ -42,3 +42,4 @@
 | Data | Issue | Dúvida | Resposta |
 | --- | --- | --- | --- |
 | 2026-11-03 | CORE-15 | `TechniqueSchema.element` era obrigatório, mas técnicas de monstro não têm elemento. Adotado `element: null` (ADR-015). Confirmar. | Pendente |
+| 2026-11-03 | CORE-08 | `docs/02` §6.4 não define flanco para atacante na diagonal exata do alvo (ex.: alcance 2 em diagonal). Adotado: componente dominante do vetor alvo→atacante; diagonal exata = lado. Confirmar. | Pendente |

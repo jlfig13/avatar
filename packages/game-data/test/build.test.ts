@@ -29,6 +29,8 @@ describe('game data', () => {
     expect(Object.keys(gameData.presets).sort()).toEqual(['preset.fire', 'preset.water']);
     expect(Object.keys(gameData.monsters)).toEqual(['monster.clawbeast']);
     expect(gameData.rules.ct.threshold).toBe(100);
+    // docs/02 §6.4 — back attack: +30% accuracy and ×1.25 damage (PROVISÓRIO, from rules.json)
+    expect(gameData.rules.flank.back).toEqual({ accuracy: 30, damage: 1.25 });
   });
 
   it('reports file and field when a required field is missing', () => {

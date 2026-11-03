@@ -22,6 +22,13 @@ export {
   step,
 } from './grid/grid.ts';
 export {
+  type FlankModifiers,
+  type FlankPosition,
+  flankModifiers,
+  flankPosition,
+  heightAccuracyBonus,
+} from './modifiers/position.ts';
+export {
   findPath,
   getReachableCells,
   isHostile,

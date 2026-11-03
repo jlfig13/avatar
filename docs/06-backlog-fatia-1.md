@@ -152,12 +152,12 @@
   - [x] `line` sai perpendicular à direção do usuário, centrada no alvo (testes por direção N/E/S/W).
   - [x] Área não inclui células fora da grade.
 
-### [ ] CORE-08 — Modificadores de altura e de flanco/costas
+### [x] CORE-08 — Modificadores de altura e de flanco/costas
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-07
 - **Descrição:** funções puras `heightAccuracyBonus`, `flankPosition(attacker, target)` (`front`/`side`/`back`) e multiplicadores, lendo `rules.json`.
 - **Critérios de aceite:**
-  - [ ] Ataque pelas costas aplica +30% de precisão e ×1,25 de dano (valores vindos de `rules.json`, não do código).
-  - [ ] Tabela de testes cobre as 4 direções do alvo × 4 posições do atacante.
+  - [x] Ataque pelas costas aplica +30% de precisão e ×1,25 de dano (valores vindos de `rules.json`, não do código).
+  - [x] Tabela de testes cobre as 4 direções do alvo × 4 posições do atacante.
 
 ---
 
