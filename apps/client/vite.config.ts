@@ -7,6 +7,7 @@ const conditions = ['@elemental/source', 'module', 'browser', 'development|produ
 export default defineConfig({
   plugins: [react()],
   resolve: { conditions },
+  ssr: { resolve: { conditions: ['@elemental/source'] } },
   server: { port: 5173 },
   test: { environment: 'node' },
 });

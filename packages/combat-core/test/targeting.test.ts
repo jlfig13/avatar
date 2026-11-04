@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   getAffectedCells,
+  getTargetingPreview,
   getTechniqueTargets,
   hasLineOfSight,
   lineCells,
@@ -213,5 +214,26 @@ describe('area', () => {
       { x: 0, y: 0 },
       { x: 1, y: 0 },
     ]);
+  });
+});
+
+describe('targeting preview', () => {
+  it('splits the range into valid targets, no line of sight and plain in-range cells', () => {
+    const grid = makeGrid(10, 10, ({ x, y }) => ({ blocked: x === 3 && y === 1 }));
+    const state = makeBattle({
+      grid,
+      combatants: [
+        makeCombatant({ id: 'p1', position: { x: 1, y: 1 } }),
+        makeCombatant({ id: 'e1', team: 'enemies', position: { x: 2, y: 2 } }),
+        makeCombatant({ id: 'e2', team: 'enemies', position: { x: 4, y: 1 } }),
+      ],
+    });
+    const preview = getTargetingPreview(state, 'p1', 't.ranged', data);
+    expect(preview.valid).toEqual([{ x: 2, y: 2 }]);
+    expect(has(preview.noLineOfSight, { x: 4, y: 1 })).toBe(true);
+    expect(has(preview.inRange, { x: 1, y: 2 })).toBe(true);
+    // the rock cell is visible (its own cell is an end point of the line) but holds no enemy
+    expect(has(preview.inRange, { x: 3, y: 1 })).toBe(true);
+    expect(preview.valid).toEqual(getTechniqueTargets(state, 'p1', 't.ranged', data));
   });
 });

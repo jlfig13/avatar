@@ -51,9 +51,11 @@ export {
 } from './state.ts';
 export {
   getAffectedCells,
+  getTargetingPreview,
   getTechniqueTargets,
   hasLineOfSight,
   lineCells,
+  type TargetingPreview,
 } from './targeting/targeting.ts';
 export {
   basePower,

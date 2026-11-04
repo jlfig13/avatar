@@ -29,5 +29,42 @@
       "right": "#284e25"
     }
   },
-  "markerColor": "#ffd966"
+  "markerColor": "#ffd966",
+  "highlight": {
+    "reachable": {
+      "fill": "#4aa3ff",
+      "alpha": 0.35,
+      "line": "#9fd0ff"
+    },
+    "inRange": {
+      "fill": "#ffe08a",
+      "alpha": 0.18,
+      "line": "#ffe08a"
+    },
+    "noLineOfSight": {
+      "fill": "#5a5a66",
+      "alpha": 0.55,
+      "line": "#b0b0bb"
+    },
+    "target": {
+      "fill": "#ff9f40",
+      "alpha": 0.4,
+      "line": "#ffd0a0"
+    },
+    "area": {
+      "fill": "#ff4d4d",
+      "alpha": 0.55,
+      "line": "#ffffff"
+    },
+    "hover": {
+      "fill": "#ffffff",
+      "alpha": 0.12,
+      "line": "#ffffff"
+    }
+  },
+  "combatantColors": {
+    "players": "#f1ede3",
+    "enemies": "#c0392b",
+    "third_party": "#8e44ad"
+  }
 }

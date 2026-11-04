@@ -134,6 +134,40 @@ export function getTechniqueTargets(
   return result;
 }
 
+export interface TargetingPreview {
+  /** valid targets for the technique */
+  readonly valid: Position[];
+  /** within range but blocked by line of sight */
+  readonly noLineOfSight: Position[];
+  /** within range and visible, but not a valid target kind (e.g. an empty cell for an enemy technique) */
+  readonly inRange: Position[];
+}
+
+/** UI preview of a technique's range from `from` (docs/02 §6.1–6.3), using the same checks as the core. */
+export function getTargetingPreview(
+  state: BattleState,
+  actorId: string,
+  techniqueId: string,
+  data: GameData,
+  from?: Position,
+): TargetingPreview {
+  const preview: TargetingPreview = { valid: [], noLineOfSight: [], inRange: [] };
+  const user = requireCombatant(state, actorId);
+  const technique = findTechnique(data, techniqueId);
+  if (!technique) return preview;
+  const origin = from ?? user.position;
+  const reach = technique.range.max + (technique.rangeBonusFromHeight ? 1 : 0);
+  for (let y = origin.y - reach; y <= origin.y + reach; y++) {
+    for (let x = origin.x - reach; x <= origin.x + reach; x++) {
+      const check = checkTarget(state, user, technique, { x, y }, data, origin);
+      if (check === 'ok') preview.valid.push({ x, y });
+      else if (check === 'no_line_of_sight') preview.noLineOfSight.push({ x, y });
+      else if (check === 'invalid_target') preview.inRange.push({ x, y });
+    }
+  }
+  return preview;
+}
+
 const PERPENDICULAR: Readonly<Record<Facing, Facing>> = { N: 'E', S: 'E', E: 'S', W: 'S' };
 
 /** Cells hit by the technique's area, clipped to the grid. */

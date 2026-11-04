@@ -9,3 +9,4 @@ export { dataFiles } from './files.ts';
 export const gameData: GameData = loadGameData(dataFiles);
 
 export const GAME_DATA_PACKAGE = '@elemental/game-data';
+export type { GameData } from '@elemental/shared';

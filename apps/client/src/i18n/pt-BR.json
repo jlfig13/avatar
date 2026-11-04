@@ -5,5 +5,20 @@
   "debug.drawCalls": "Chamadas de desenho/quadro",
   "debug.memory": "Memória JS",
   "debug.lastAiDecision": "Última decisão da IA",
-  "debug.sample": "Amostra"
+  "debug.sample": "Amostra",
+  "technique.water.whip.name": "Chicote d'água",
+  "technique.water.shield.name": "Véu de água",
+  "technique.water.freeze.name": "Corrente gélida",
+  "technique.water.glide.name": "Deslize",
+  "technique.fire.blast.name": "Rajada",
+  "technique.fire.wall.name": "Cortina de chamas",
+  "technique.fire.burst.name": "Explosão",
+  "technique.fire.surge.name": "Impulso ígneo",
+  "technique.monster.claw.name": "Garra",
+  "technique.monster.pounce.name": "Bote",
+  "preset.water.name": "Usuário de água",
+  "preset.fire.name": "Usuário de fogo",
+  "monster.clawbeast.name": "Fera de garra",
+  "hud.techniques": "Técnicas",
+  "hud.move": "Mover"
 }

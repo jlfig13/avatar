@@ -346,6 +346,7 @@ getTechniqueTargets(state: BattleState, actorId: string, techniqueId: string, da
 getAffectedCells(state: BattleState, actorId: string, techniqueId: string, target: Position, data: GameData): Position[]
 predictTurnOrder(state: BattleState, count: number, data: GameData): string[]   // data: speed vem de rules.json
 hasLineOfSight(grid: Grid, from: Position, to: Position): boolean
+getTargetingPreview(state, actorId, techniqueId, data, from?): { valid; noLineOfSight; inRange }   // prévia de UI (CLI-04)
 sliceArena(grid: Grid, center: Position, size: number): Grid
 gridFromFile(file: GridFile): Grid                 // *.grid.json validado → Grid (marca células de fuga)
 chooseActions(ctx: AiContext): Action[]

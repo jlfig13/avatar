@@ -17,6 +17,13 @@ export interface RenderConfig {
   readonly zoom: { readonly min: number; readonly max: number };
   readonly terrain: Readonly<Record<Terrain, TerrainColors>>;
   readonly markerColor: string;
+  readonly highlight: Readonly<
+    Record<
+      'reachable' | 'inRange' | 'noLineOfSight' | 'target' | 'area' | 'hover',
+      { fill: string; alpha: number; line: string }
+    >
+  >;
+  readonly combatantColors: Readonly<Record<'players' | 'enemies' | 'third_party', string>>;
 }
 
 export const RENDER: RenderConfig = render;

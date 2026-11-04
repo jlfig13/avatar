@@ -318,12 +318,12 @@
   - [x] Células do arquivo alinham com o desenho (marcador de debug em `(0,0)` e `(9,9)`).
   - [x] Funciona sem nenhum mapa do Tiled nem imagem no repositório.
 
-### [ ] CLI-04 — Overlay da grade: movimento, alcance e área
+### [x] CLI-04 — Overlay da grade: movimento, alcance e área
 - **Epic:** client · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CLI-03, CORE-07
 - **Descrição:** usando o `combat-core` no cliente para previews: destacar células alcançáveis, alvos válidos da técnica selecionada e área afetada sob o cursor. Picking de célula pelo mouse com a projeção inversa (respeitando altura). Cores distintas por tipo de destaque, legíveis sobre todos os terrenos.
 - **Critérios de aceite:**
-  - [ ] Passar o mouse numa célula-alvo mostra as células afetadas pela técnica.
-  - [ ] Células sem linha de visão aparecem diferenciadas.
+  - [x] Passar o mouse numa célula-alvo mostra as células afetadas pela técnica.
+  - [x] Células sem linha de visão aparecem diferenciadas.
 
 ### [ ] CLI-06 — Conexão com a sala e envio de intenções
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CLI-01, SRV-02, SRV-04

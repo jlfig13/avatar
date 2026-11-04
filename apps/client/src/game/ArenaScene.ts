@@ -4,8 +4,11 @@ import * as Phaser from 'phaser';
 import { RENDER } from '../config/render.ts';
 import { type ClientStore, watch } from '../store/store.ts';
 import { arenaShapes, type CellShape, maxHeightOf } from './arenaGeometry.ts';
+import { CombatantTokens } from './CombatantTokens.ts';
 import { CameraController } from './cameraController.ts';
-import { cellToScreen, depthOf, gridBounds, LAYER } from './iso.ts';
+import { cellToScreen, depthOf, gridBounds, LAYER, screenToCell } from './iso.ts';
+import { OverlayLayer } from './OverlayLayer.ts';
+import { computeOverlay } from './overlay.ts';
 
 const ARENA_ID = 'test-arena';
 const TILED_KEY = 'arena-tiled';
@@ -40,13 +43,41 @@ export class ArenaScene extends Phaser.Scene {
       this,
       gridBounds(this.grid.width, this.grid.height, maxHeightOf(this.grid) + 1, RENDER),
     );
-    const unwatch = watch(
-      this.store,
-      (s) => s.debug.visible,
-      (visible) => this.markers?.setVisible(visible),
-    );
+    const overlay = new OverlayLayer(this, this.grid);
+    const tokens = new CombatantTokens(this, this.grid);
+    const maxHeight = maxHeightOf(this.grid);
+    const heightAt = (c: { x: number; y: number }) =>
+      this.grid.cells[c.y * this.grid.width + c.x]?.height ?? -1;
+    // CLI-04 — picking with the inverse projection (respects heights).
+    this.input.on(Phaser.Input.Events.POINTER_MOVE, (p: Phaser.Input.Pointer) => {
+      const cell = screenToCell(
+        { sx: p.worldX, sy: p.worldY },
+        this.grid,
+        heightAt,
+        maxHeight,
+        RENDER,
+      );
+      this.store.getState().setHoverCell(cell);
+    });
+    this.input.on(Phaser.Input.Events.GAME_OUT, () => this.store.getState().setHoverCell(null));
+    const redraw = () => {
+      const { battle, actorId, selectedTechniqueId, hoverCell } = this.store.getState();
+      tokens.render(battle);
+      if (battle)
+        overlay.render(computeOverlay(battle, actorId, selectedTechniqueId, hoverCell, gameData));
+    };
+    const unwatchers = [
+      watch(
+        this.store,
+        (s) => s.debug.visible,
+        (visible) => this.markers?.setVisible(visible),
+      ),
+      watch(this.store, (s) => s.battle, redraw),
+      watch(this.store, (s) => s.selectedTechniqueId, redraw),
+      watch(this.store, (s) => s.hoverCell, redraw),
+    ];
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      unwatch();
+      for (const unwatch of unwatchers) unwatch();
       camera.destroy();
     });
   }

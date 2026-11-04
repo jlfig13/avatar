@@ -1,3 +1,4 @@
+import type { BattleState, Position } from '@elemental/combat-core';
 import { createStore } from 'zustand/vanilla';
 
 // Zustand is the bridge (docs/04 §8): network writes state, React reads it for the HUD,
@@ -15,6 +16,15 @@ export interface DebugStats {
 }
 
 export interface ClientState {
+  /** Current battle as known by the client (server snapshot; local preview until CLI-06). */
+  readonly battle: BattleState | null;
+  /** Combatant controlled by this client. */
+  readonly actorId: string;
+  readonly selectedTechniqueId: string | null;
+  readonly hoverCell: Position | null;
+  setBattle(battle: BattleState | null): void;
+  selectTechnique(id: string | null): void;
+  setHoverCell(cell: Position | null): void;
   /** CLI-11 — debug panel (F3). */
   readonly debug: {
     readonly visible: boolean;
@@ -27,7 +37,23 @@ export interface ClientState {
 }
 
 export function createClientStore() {
-  return createStore<ClientState>()((set) => ({
+  return createStore<ClientState>()((set, get) => ({
+    battle: null,
+    actorId: 'player',
+    selectedTechniqueId: null,
+    hoverCell: null,
+    setBattle(battle) {
+      set({ battle });
+    },
+    selectTechnique(id) {
+      set({ selectedTechniqueId: get().selectedTechniqueId === id ? null : id });
+    },
+    setHoverCell(cell) {
+      const current = get().hoverCell;
+      if (current === cell || (current && cell && current.x === cell.x && current.y === cell.y))
+        return;
+      set({ hoverCell: cell });
+    },
     debug: { visible: false, stats: null, lastAiDecision: null },
     toggleDebug() {
       set((s) => ({ debug: { ...s.debug, visible: !s.debug.visible } }));
