@@ -280,11 +280,11 @@
   - [x] Cada batalha gera 2 linhas.
   - [x] Consulta SQL de exemplo em `docs/` ou `apps/server/README.md` para duração média e taxa de vitória.
 
-### [ ] SRV-07 — Testes de integração da sala
+### [x] SRV-07 — Testes de integração da sala
 - **Epic:** server · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** SRV-02, SRV-03
 - **Descrição:** teste que sobe o servidor em memória (ou porta aleatória), conecta um cliente de teste e joga uma batalha inteira com ações scriptadas até o fim.
 - **Critérios de aceite:**
-  - [ ] Batalha completa passa no CI com PostgreSQL de serviço.
+  - [x] Batalha completa passa no CI com PostgreSQL de serviço.
 
 ---
 
