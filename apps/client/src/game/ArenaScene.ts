@@ -1,10 +1,15 @@
 import * as Phaser from 'phaser';
+import { RENDER } from '../config/render.ts';
 import { type ClientStore, watch } from '../store/store.ts';
+import { CameraController } from './cameraController.ts';
+import { cellToScreen, gridBounds } from './iso.ts';
 
-/** CLI-01 placeholder scene: one isometric diamond whose color comes from the store. */
+const SIZE = 10;
+
+/** Flat 10 × 10 isometric grid (CLI-02); the store colour still tints it (CLI-01 smoke test). */
 export class ArenaScene extends Phaser.Scene {
   private readonly store: ClientStore;
-  private diamond: Phaser.GameObjects.Graphics | null = null;
+  private grid: Phaser.GameObjects.Graphics | null = null;
   private color = 0xffffff;
 
   constructor(store: ClientStore) {
@@ -13,7 +18,8 @@ export class ArenaScene extends Phaser.Scene {
   }
 
   create() {
-    this.diamond = this.add.graphics();
+    this.grid = this.add.graphics();
+    const camera = new CameraController(this, gridBounds(SIZE, SIZE, 0, RENDER));
     const unwatch = watch(
       this.store,
       (s) => s.diamondColor,
@@ -22,28 +28,35 @@ export class ArenaScene extends Phaser.Scene {
         this.draw();
       },
     );
-    this.scale.on(Phaser.Scale.Events.RESIZE, this.draw, this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       unwatch();
-      this.scale.off(Phaser.Scale.Events.RESIZE, this.draw, this);
+      camera.destroy();
     });
   }
 
   private draw() {
-    if (!this.diamond) return;
-    const { width, height } = this.scale.gameSize;
-    const cx = Math.round(width / 2);
-    const cy = Math.round(height / 2);
-    this.diamond.clear();
-    this.diamond.fillStyle(this.color, 1);
-    this.diamond.fillPoints(
-      [
-        new Phaser.Math.Vector2(cx, cy - 32),
-        new Phaser.Math.Vector2(cx + 64, cy),
-        new Phaser.Math.Vector2(cx, cy + 32),
-        new Phaser.Math.Vector2(cx - 64, cy),
-      ],
-      true,
-    );
+    const g = this.grid;
+    if (!g) return;
+    g.clear();
+    const hw = RENDER.tileWidth / 2;
+    const hh = RENDER.tileHeight / 2;
+    for (let y = 0; y < SIZE; y++) {
+      for (let x = 0; x < SIZE; x++) {
+        const { sx, sy } = cellToScreen({ x, y }, 0, RENDER);
+        const points = [
+          new Phaser.Math.Vector2(sx, sy - hh),
+          new Phaser.Math.Vector2(sx + hw, sy),
+          new Phaser.Math.Vector2(sx, sy + hh),
+          new Phaser.Math.Vector2(sx - hw, sy),
+        ];
+        g.fillStyle(
+          (x + y) % 2 === 0
+            ? this.color
+            : Phaser.Display.Color.ValueToColor(this.color).darken(15).color,
+          1,
+        );
+        g.fillPoints(points, true);
+      }
+    }
   }
 }

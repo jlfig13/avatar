@@ -297,12 +297,12 @@
   - [x] Botão React altera algo na cena via store (ex.: cor de um losango).
   - [x] Redimensionar a janela ajusta o canvas sem distorção nem borrão (pixels nítidos).
 
-### [ ] CLI-02 — Projeção isométrica e câmera
+### [x] CLI-02 — Projeção isométrica e câmera
 - **Epic:** client · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** CLI-01
 - **Descrição:** funções puras de projeção conforme `docs/04`, seção 8 (célula + altura → tela e tela → célula), com testes Vitest; câmera Phaser sem rotação, pan e zoom pela roda do mouse em passos inteiros dentro de limites. Tamanho do tile e degrau de altura lidos de configuração (valores PROVISÓRIOS de `docs/01`, §7).
 - **Critérios de aceite:**
-  - [ ] Arena 10 × 10 inteira visível no zoom padrão em 1366 × 768.
-  - [ ] Projeção e projeção inversa são consistentes (teste com todas as células de uma grade 10 × 10 e 3 alturas).
+  - [x] Arena 10 × 10 inteira visível no zoom padrão em 1366 × 768.
+  - [x] Projeção e projeção inversa são consistentes (teste com todas as células de uma grade 10 × 10 e 3 alturas).
 
 
 ### [ ] CLI-11 — Painel de debug de desempenho

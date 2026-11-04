@@ -1,0 +1,6 @@
+{
+  "tileWidth": 64,
+  "tileHeight": 32,
+  "heightStep": 16,
+  "zoom": { "min": 1, "max": 4 }
+}
