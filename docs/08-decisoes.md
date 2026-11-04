@@ -97,3 +97,8 @@
 ## ADR-020 — IA por utilidade: pesos em `rules.json` e validação por simulação (IA-01)
 - **Decisão:** pesos por perfil em `rules.json` (`ai.profiles`), cada consideração é uma função pura registrada por id. A escolha final é validada simulando as ações com `applyAction` (o mesmo core do servidor), o que garante nunca devolver ação inválida sem duplicar regras de validação na IA. O desempate usa um RNG derivado do estado e não consome o RNG da batalha.
 - **Consequências:** a IA não altera a sequência aleatória da batalha; novos perfis/considerações entram por dados + registro.
+
+## ADR-021 — Monstro quadrúpede como placeholder na fatia 1 (ART-01)
+- **Contexto:** nenhum quadrúpede animado CC0 passou na verificação: os packs do Quaternius vêm sem arquivo de licença no download e não têm `attack`/`hit` (Farm Animals) ou não têm quadrúpede (Monster Pack); o Kenney não pôde ser verificado. A CLI-04 já prevê placeholder (caixa achatada) com animação procedural.
+- **Decisão:** na fatia 1, o `monster.clawbeast` usa o placeholder temporário. A ART-01 fecha com humanoide, animações e natureza KayKit (CC0). Kenney Nature Kit fica descartado; texturas de terreno seguem adiadas (ADR-011).
+- **Consequências:** a fatia 1 não depende de modelo de criatura; a escolha do quadrúpede volta junto com a ART-04 (produção) ou quando surgir um pack com licença comprovada no download.

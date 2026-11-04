@@ -49,12 +49,12 @@ Downloads feitos pela página oficial (tier gratuito, "pague quanto quiser" com 
 | Humanoide | KayKit Adventurers 2.0 (Free) | <https://kaylousberg.itch.io/kaykit-adventurers> | CC0 1.0; comercial ok; crédito opcional ("Kay Lousberg, www.kaylousberg.com") | GLB, glTF, FBX, OBJ | **Aprovado.** 6 personagens (Barbarian, Knight, Mage, Ranger, Rogue, Rogue_Hooded), rig `Rig_Medium` de 23 ossos |
 | Animações do humanoide | KayKit Character Animations 1.1 (Free) | <https://kaylousberg.itch.io/kaykit-character-animations> | CC0 1.0; comercial ok; crédito opcional | GLB (8 Rig_Medium + 6 Rig_Large + 2 manequins), FBX | **Aprovado.** Rig idêntico ao Adventurers (ver teste abaixo) |
 | Natureza | KayKit Forest Nature Pack 1.0 (Free) | <https://kaylousberg.itch.io/kaykit-forest> | CC0 1.0; comercial ok; crédito opcional | glTF + .bin (105), FBX, OBJ; 1 atlas `forest_texture.png` 1024² | **Aprovado e recomendado.** 14 árvores, 6 árvores secas, 22 arbustos, 43 pedras, 20 gramas |
-| Natureza (alternativa) | Kenney Nature Kit | <https://kenney.nl/assets/nature-kit> | — | — | **Não verificado:** o site `kenney.nl` recusa acesso automatizado (403 do próprio servidor). Descartado nesta fatia |
+| Natureza (alternativa) | Kenney Nature Kit | <https://kenney.nl/assets/nature-kit> | — | — | **Descartado (ADR-021):** o site `kenney.nl` recusa acesso automatizado (403 do próprio servidor) e o KayKit Forest já cobre a necessidade |
 | Animações (alternativa) | Quaternius Universal Animation Library (Standard) | <https://quaternius.itch.io/universal-animation-library> | CC0 1.0 (licença verificada) | GLB, FBX; rig próprio de 65 ossos, 43 animações | **Não necessário:** o KayKit cobre todas as animações; usar exigiria retarget. Fora do CSV |
 | Quadrúpede | Quaternius Farm Animals Animated (`lowpoly-animated-animals`) | <https://quaternius.itch.io/lowpoly-animated-animals> | **Sem arquivo de licença no download** (só a página diz CC0) | FBX, OBJ, .blend (sem GLB) | **Reprovado:** licença não comprovada no download; animações só idle/walk/run/jump/death, sem attack nem hit |
 | Quadrúpede | Quaternius Monster Pack Animated (`lowpoly-animated-monsters`) | <https://quaternius.itch.io/lowpoly-animated-monsters> | **Sem arquivo de licença no download** | FBX, OBJ, .blend | **Reprovado:** nenhuma criatura quadrúpede (Bat, Dragon voador, Skeleton, Slime) e licença não comprovada |
-| Quadrúpede | — | — | — | — | **Pendente.** Ver `docs/09-pendencias.md` |
-| Texturas de terreno | — | — | — | — | Baixa prioridade: a arena da fatia 1 usa cor por terreno (ADR-011) |
+| Quadrúpede | — | — | — | — | **Decidido (ADR-021):** placeholder temporário (caixa achatada) na fatia 1; reavaliar na ART-04 |
+| Texturas de terreno | — | — | — | — | **Adiado:** a arena da fatia 1 usa cor por terreno (ADR-011, ADR-021) |
 
 ### Teste de rig (Adventurers × Character Animations)
 

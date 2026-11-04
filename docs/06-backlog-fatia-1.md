@@ -96,14 +96,14 @@
 - **Critérios de aceite:**
   - [x] Monstro carrega dos dados e pode ser passado a `createBattle`.
 
-### [ ] ART-01 — Selecionar packs CC0 e registrar licenças
+### [x] ART-01 — Selecionar packs CC0 e registrar licenças
 - **Epic:** art · **Estimativa:** 2 h · **Executor:** Misto · **Depende de:** —
 - **Descrição:** o Claude Code cria `assets-src/09_LICENSES/README.md` e o modelo `LICENSES.csv` (asset, autor, origem/URL, licença, data, uso). O humano escolhe os packs (sugestões a avaliar: Quaternius, Kenney, KayKit — conferir licença de cada um) para: 1 humanoide com animações idle/walk/run/cast/hit/defeat (ou próximas), 1 criatura quadrúpede, props de natureza (pedras, árvores, arbustos) e texturas de terreno.
 - **Critérios de aceite:**
-  - [ ] Cada asset usado tem linha no `LICENSES.csv`.
-  - [ ] Nenhum asset com licença que proíba uso comercial.
+  - [x] Cada asset usado tem linha no `LICENSES.csv`.
+  - [x] Nenhum asset com licença que proíba uso comercial.
 - **Parada do Claude Code:** depois de criar os modelos, avisar o humano e seguir para outras issues; não baixar assets por conta própria.
-- **Situação (2026-11-04):** humanoide (KayKit Adventurers), animações (KayKit Character Animations) e natureza (KayKit Forest) verificados e no `LICENSES.csv`, todos CC0. Falta a criatura quadrúpede (ver `docs/09-pendencias.md`); texturas de terreno adiadas pela ADR-011.
+- **Situação (2026-11-04):** concluída. Humanoide (KayKit Adventurers), animações (KayKit Character Animations) e natureza (KayKit Forest) verificados e no `LICENSES.csv`, todos CC0. Quadrúpede: placeholder temporário na fatia 1; texturas de terreno adiadas (ADR-011, ADR-021).
 
 ---
 
