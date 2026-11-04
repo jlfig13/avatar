@@ -232,7 +232,7 @@ export const TechniqueSchema = z.object({
 
 | id | Nome provisório | Papel | Alvo | Alcance | Área | Custo | Atraso CT | Precisão | Poder | Escala | Efeitos |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `water.whip` | Chicote d'água | ataque | inimigo | 1–3 | single | 8 | 0 | 90 | 10 | 0,8 | dano; +20% em água rasa |
+| `water.whip` | Chicote d'água | ataque | inimigo | 1–3 | single | 8 | 0 | 90 | 14 | 0,8 | dano; +20% em água rasa |
 | `water.shield` | Véu de água | defesa | aliado/si | 0–2 | single | 10 | 0 | 100 | 0 | 0 | status `shielded` 2 rodadas, −30% dano recebido |
 | `water.freeze` | Corrente gélida | controle | célula | 2–4 | cross r1 | 14 | 10 | 85 | 6 | 0,4 | dano + `cellEffect: ice` em toda a área |
 | `water.glide` | Deslize | mobilidade | célula | 1–4 | single | 6 | 0 | 100 | 0 | 0 | `dash` até 4 células, ignora custo de água/gelo; não gasta o movimento do turno |
@@ -301,7 +301,7 @@ Dados: `packages/game-data/data/monsters/clawbeast.json` e `packages/game-data/d
 
 | id | Elemento | maxHp | power | control | resistance | mobility | spirit | focus | Técnicas | Passiva |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `preset.water` | água | 100 | 10 | 14 | 10 | 12 | 12 | 12 | as 4 de água | `water.backflow` |
+| `preset.water` | água | 140 | 10 | 14 | 10 | 12 | 12 | 12 | as 4 de água | `water.backflow` |
 | `preset.fire` | fogo | 95 | 14 | 10 | 9 | 13 | 10 | 10 | as 4 de fogo | `fire.ember` |
 
 Schema (`PresetSchema` em `@elemental/shared`): `id`, `nameKey` (i18n, ex.: `preset.water.name`), `element`, `maxHp`, `attributes`, `techniqueIds`, `passiveIds`. Arquivo: `packages/game-data/data/combatants/player-presets.json` (lista).
