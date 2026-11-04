@@ -1,5 +1,6 @@
 import { applyAction } from '../apply.ts';
-import { getReachableCells } from '../pathfinding/pathfinding.ts';
+import { manhattan } from '../grid/grid.ts';
+import { getReachableCells, isHostile } from '../pathfinding/pathfinding.ts';
 import { nextInt } from '../rng.ts';
 import { requireCombatant, samePosition, updateCombatant } from '../state.ts';
 import { areaCells, getTechniqueTargets } from '../targeting/targeting.ts';
@@ -63,16 +64,33 @@ export function planActions(plan: Plan, actorId: string): Action[] {
   return actions;
 }
 
+const active = (c: BattleState['combatants'][number]) => c.alive && !c.fled;
+
+/**
+ * A damaging dash to a cell (fire.surge) moves the user there and hits the enemies adjacent to the
+ * landing cell. Pure-mobility dashes (water.glide) keep being evaluated from the destination
+ * (ADR-022: evaluating them from the landing made the balanced AI throw away its tempo).
+ */
+const dashesToCell = (plan: Plan) =>
+  plan.act?.kind === 'technique' &&
+  plan.act.technique.target === 'cell' &&
+  plan.act.technique.effects.some((e) => e.kind === 'dash') &&
+  plan.act.technique.effects.some((e) => e.kind === 'damage');
+
 function view(ctx: AiContext, plan: Plan): PlanView {
-  const moved: BattleState = plan.destination
-    ? updateCombatant(ctx.state, ctx.actorId, (c) => ({
-        ...c,
-        position: plan.destination as Position,
-      }))
+  const landing =
+    plan.act?.kind === 'technique' && dashesToCell(plan) ? plan.act.target : plan.destination;
+  const moved: BattleState = landing
+    ? updateCombatant(ctx.state, ctx.actorId, (c) => ({ ...c, position: landing }))
     : ctx.state;
   const actor = requireCombatant(moved, ctx.actorId);
   let victims: PlanView['victims'] = [];
-  if (plan.act?.kind === 'technique') {
+  if (plan.act?.kind === 'technique' && dashesToCell(plan)) {
+    // mirrors techniques/resolve.ts victimsOf (docs/05 §4.2 fire.surge)
+    victims = moved.combatants.filter(
+      (c) => active(c) && isHostile(actor, c) && manhattan(c.position, actor.position) === 1,
+    );
+  } else if (plan.act?.kind === 'technique') {
     const cells = areaCells(
       moved.grid,
       plan.act.technique,
@@ -81,7 +99,7 @@ function view(ctx: AiContext, plan: Plan): PlanView {
       plan.act.target,
     );
     victims = moved.combatants.filter(
-      (c) => c.alive && !c.fled && cells.some((p) => samePosition(p, c.position)),
+      (c) => active(c) && cells.some((p) => samePosition(p, c.position)),
     );
   }
   return { ctx, plan, state: moved, actor, victims };

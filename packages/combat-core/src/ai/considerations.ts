@@ -1,7 +1,7 @@
 import { getCell, manhattan } from '../grid/grid.ts';
 import { flankPosition } from '../modifiers/position.ts';
 import { isHostile, movementPoints } from '../pathfinding/pathfinding.ts';
-import { damageAmount, effectiveCost, hitChance } from '../techniques/formulas.ts';
+import { damageAmount, effectiveCost, hitChance, SHIELDED } from '../techniques/formulas.ts';
 import type { Combatant } from '../types.ts';
 import type { Consideration, PlanView } from './types.ts';
 
@@ -74,6 +74,27 @@ export const killChance: Consideration = {
   },
 };
 
+/** Damage the enemies could expect to deal to `target` on its position next turn. */
+export function incomingDamage(view: PlanView, target: Combatant): number {
+  const { state, ctx } = view;
+  let risk = 0;
+  for (const enemy of state.combatants) {
+    if (!active(enemy) || !isHostile(target, enemy)) continue;
+    let best = 0;
+    for (const id of enemy.techniqueIds) {
+      const technique = ctx.data.techniques[id];
+      if (!technique?.effects.some((e) => e.kind === 'damage')) continue;
+      if (effectiveCost(technique, enemy, ctx.data) > enemy.energy) continue;
+      const reach = movementPoints(enemy, ctx.data) + technique.range.max;
+      if (manhattan(enemy.position, target.position) > reach) continue;
+      const chance = hitChance(state.grid, technique, enemy, target, ctx.data) / 100;
+      best = Math.max(best, chance * damageAmount(state.grid, technique, enemy, target, ctx.data));
+    }
+    risk += best;
+  }
+  return risk;
+}
+
 /** 1 − (damage the enemies could expect to deal on the destination next turn, as a share of hp). */
 // Risk depends only on the destination: memoized per decision (keyed by the original state).
 const safetyCache = new WeakMap<object, Map<string, number>>();
@@ -81,7 +102,7 @@ const safetyCache = new WeakMap<object, Map<string, number>>();
 export const safety: Consideration = {
   id: 'safety',
   evaluate(view) {
-    const { actor, state, ctx } = view;
+    const { actor, ctx } = view;
     const key = `${actor.position.x},${actor.position.y}`;
     let cache = safetyCache.get(ctx.state);
     if (!cache) {
@@ -90,24 +111,30 @@ export const safety: Consideration = {
     }
     const cached = cache.get(key);
     if (cached !== undefined) return cached;
-    let risk = 0;
-    for (const enemy of state.combatants) {
-      if (!active(enemy) || !isHostile(actor, enemy)) continue;
-      let best = 0;
-      for (const id of enemy.techniqueIds) {
-        const technique = ctx.data.techniques[id];
-        if (!technique?.effects.some((e) => e.kind === 'damage')) continue;
-        if (effectiveCost(technique, enemy, ctx.data) > enemy.energy) continue;
-        const reach = movementPoints(enemy, ctx.data) + technique.range.max;
-        if (manhattan(enemy.position, actor.position) > reach) continue;
-        const chance = hitChance(state.grid, technique, enemy, actor, ctx.data) / 100;
-        best = Math.max(best, chance * damageAmount(state.grid, technique, enemy, actor, ctx.data));
-      }
-      risk += best;
-    }
-    const value = clamp01(1 - risk / actor.hp);
+    const value = clamp01(1 - incomingDamage(view, actor) / actor.hp);
     cache.set(key, value);
     return value;
+  },
+};
+
+/**
+ * Damage-reducing status (`shielded`, water.shield) on a non-hostile victim that is not shielded
+ * yet: magnitude × rounds × share of its hp the enemies could deal next turn.
+ */
+export const protection: Consideration = {
+  id: 'protection',
+  evaluate(view) {
+    if (view.plan.act?.kind !== 'technique') return 0;
+    let best = 0;
+    for (const effect of view.plan.act.technique.effects) {
+      if (effect.kind !== 'status' || effect.statusId !== SHIELDED) continue;
+      for (const victim of view.victims) {
+        if (isHostile(view.actor, victim) || victim.status.some((s) => s.id === SHIELDED)) continue;
+        const share = incomingDamage(view, victim) / victim.hp;
+        best = Math.max(best, effect.magnitude * effect.rounds * share);
+      }
+    }
+    return clamp01(best);
   },
 };
 
@@ -158,7 +185,14 @@ export const avoidFire: Consideration = {
 
 /** Every consideration known by the AI, by id. Profiles in rules.json pick and weight them. */
 export const CONSIDERATIONS: Readonly<Record<string, Consideration>> = Object.fromEntries(
-  [expectedDamage, killChance, safety, closeness, heightAdvantage, flankAttack, avoidFire].map(
-    (c) => [c.id, c],
-  ),
+  [
+    expectedDamage,
+    killChance,
+    safety,
+    protection,
+    closeness,
+    heightAdvantage,
+    flankAttack,
+    avoidFire,
+  ].map((c) => [c.id, c]),
 );
