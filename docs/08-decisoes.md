@@ -103,6 +103,6 @@
 - **Decisão:** na fatia 1, o `monster.clawbeast` usa o placeholder temporário. A ART-01 fecha com humanoide, animações e natureza KayKit (CC0). Kenney Nature Kit fica descartado; texturas de terreno seguem adiadas (ADR-011).
 - **Consequências:** a fatia 1 não depende de modelo de criatura; a escolha do quadrúpede volta junto com a ART-04 (produção) ou quando surgir um pack com licença comprovada no download.
 
-## ADR-021 — Sala de batalha: sessão separada do transporte e reconexão no single-player (SRV-02)
+## ADR-023 — Sala de batalha: sessão separada do transporte e reconexão no single-player (SRV-02)
 - **Decisão:** a lógica de estado da sala fica em `BattleSession` (estado + ações registradas + `replay`), sem dependência do Colyseus; a `BattleRoom` cuida de transporte, timers e IA. O `snapshot` omite `seed` e `rngState` (o cliente poderia prever rolagens). A seed vem de `crypto.randomInt` no servidor. Na fatia 1 há um único jogador, então a queda dele cai na regra "todos os jogadores caem" de `docs/02` §10: a batalha pausa (timers e IA param) por `disconnect.allDisconnectedPauseSeconds` e, sem retorno, a sala encerra como `abandoned` (telemetria). A regra de "3 rodadas" fica para o multiplayer, quando houver outro jogador ativo. O cliente é `@colyseus/sdk` (sucessor do `colyseus.js` na 0.18).
 - **Consequências:** replay por seed + ações em log; testes da sala sem banco (autenticação injetável).
