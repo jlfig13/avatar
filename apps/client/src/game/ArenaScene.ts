@@ -3,6 +3,7 @@ import { gameData } from '@elemental/game-data';
 import * as Phaser from 'phaser';
 import { CombatantSprites } from '../characters/CombatantSprites.ts';
 import { RENDER } from '../config/render.ts';
+import { intentForClick } from '../net/logic.ts';
 import { type ClientStore, watch } from '../store/store.ts';
 import { arenaShapes, type CellShape, maxHeightOf } from './arenaGeometry.ts';
 import { CameraController } from './cameraController.ts';
@@ -63,6 +64,23 @@ export class ArenaScene extends Phaser.Scene {
       this.store.getState().setHoverCell(cell);
     });
     this.input.on(Phaser.Input.Events.GAME_OUT, () => this.store.getState().setHoverCell(null));
+    // CLI-06 — left click: move to a reachable cell or use the selected technique on a valid target.
+    this.input.on(Phaser.Input.Events.POINTER_UP, (p: Phaser.Input.Pointer) => {
+      if (p.button !== 0) return;
+      const { battle, actorId, selectedTechniqueId, sendIntent } = this.store.getState();
+      const cell = screenToCell(
+        { sx: p.worldX, sy: p.worldY },
+        this.grid,
+        heightAt,
+        maxHeight,
+        RENDER,
+      );
+      if (!battle || !cell || !sendIntent) return;
+      const intent = intentForClick(battle, actorId, selectedTechniqueId, cell, gameData);
+      if (!intent) return;
+      sendIntent(intent);
+      if (intent.kind === 'technique') this.store.getState().selectTechnique(null);
+    });
     const redraw = () => {
       const { battle, actorId, selectedTechniqueId, hoverCell } = this.store.getState();
       sprites.sync(battle);

@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@colyseus/sdk": "0.18.9",
     "@elemental/combat-core": "workspace:*",
     "@elemental/game-data": "workspace:*",
     "phaser": "4.2.1",

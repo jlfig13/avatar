@@ -9,5 +9,7 @@ export default defineConfig({
   resolve: { conditions },
   ssr: { resolve: { conditions: ['@elemental/source'] } },
   server: { port: 5173 },
+  // VITE_* variables come from the repository root .env (see .env.example).
+  envDir: '../../',
   test: { environment: 'node' },
 });

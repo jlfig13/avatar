@@ -325,13 +325,13 @@
   - [x] Passar o mouse numa célula-alvo mostra as células afetadas pela técnica.
   - [x] Células sem linha de visão aparecem diferenciadas.
 
-### [ ] CLI-06 — Conexão com a sala e envio de intenções
+### [x] CLI-06 — Conexão com a sala e envio de intenções
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CLI-01, SRV-02, SRV-04
 - **Descrição:** tela simples de convite (primeiro acesso) que chama `/auth/redeem` e guarda o token no `localStorage`; tela de escolha de preset (água/fogo); conexão à `BattleRoom`; envio de intenções com `clientSeq`; tratamento de `rejected`, lacuna de `seq` e reconexão.
 - **Critérios de aceite:**
-  - [ ] Clique em célula alcançável envia `move` e recebe eventos.
-  - [ ] Mensagem `rejected` mostra o motivo traduzido.
-  - [ ] Recarregar a página durante a batalha reconecta e recebe `snapshot`.
+  - [x] Clique em célula alcançável envia `move` e recebe eventos.
+  - [x] Mensagem `rejected` mostra o motivo traduzido.
+  - [x] Recarregar a página durante a batalha reconecta e recebe `snapshot`.
 
 ### [x] CLI-05 — Personagem e monstro com animações
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Misto · **Depende de:** CLI-03, ART-01
