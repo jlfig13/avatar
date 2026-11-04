@@ -34,7 +34,7 @@
 
 ## Riscos registrados
 
-- **Escopo × tempo:** 214 h só na fatia 1 a menos de 10 h/semana. Cortes possíveis se a estimativa estourar: IA por regras antes da utilidade; adiar Playwright e deploy para a fatia 2.
+- **Escopo × tempo:** 210 h só na fatia 1 a menos de 10 h/semana. Cortes possíveis se a estimativa estourar: IA por regras antes da utilidade; adiar Playwright e deploy para a fatia 2.
 - **Batalhas longas:** turnos de 60 s podem estourar a meta de 3–6 min.
 - **Perda de XP + PvP de terceiro lado:** pode gerar frustração; revisar no multiplayer.
 

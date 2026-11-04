@@ -2,7 +2,7 @@
 
 > **Meta da fatia:** uma batalha tática completa, jogável no navegador, executada no servidor (sala Colyseus), com 1 personagem (preset de água ou de fogo) contra 1–2 monstros controlados por IA de utilidade, numa arena de teste 10 × 10 com altura, água, vegetação e obstáculos.
 >
-> **Total:** 47 issues · 214 h estimadas · ~35 semanas a 8 h/semana com 30% de margem.
+> **Total:** 47 issues · 210 h estimadas · ~34 semanas a 8 h/semana com 30% de margem.
 >
 > **Como usar:** execute com `/proxima-issue`. Marque `[x]` no título ao concluir. Siga as ondas: uma onda só começa quando as dependências das suas issues estão prontas (issues da mesma onda podem ser feitas em qualquer ordem que respeite dependências).
 >
