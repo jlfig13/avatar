@@ -1,0 +1,27 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #14121c;
+  color: #f1ede3;
+  font-family: system-ui, sans-serif;
+}
+
+/* Phaser owns the canvas; pixels stay crisp at any size. */
+#game,
+#game canvas {
+  position: absolute;
+  inset: 0;
+  image-rendering: pixelated;
+}
+
+/* React overlay: transparent to the mouse except on its own widgets. */
+#ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+#ui .widget {
+  pointer-events: auto;
+}

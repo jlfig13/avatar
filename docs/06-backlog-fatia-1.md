@@ -290,12 +290,12 @@
 
 ## Onda 4 — Cliente
 
-### [ ] CLI-01 — App Vite com canvas Phaser, overlay React e Zustand
+### [x] CLI-01 — App Vite com canvas Phaser, overlay React e Zustand
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** INF-01
 - **Descrição:** estrutura de `docs/04`, seção 8. `main.tsx` monta o jogo Phaser 4 em tela cheia (`pixelArt: true`) e o overlay React por cima. Store Zustand inicial. Carregamento de `i18n/pt-BR.json` com função `t(key)`.
 - **Critérios de aceite:**
-  - [ ] Botão React altera algo na cena via store (ex.: cor de um losango).
-  - [ ] Redimensionar a janela ajusta o canvas sem distorção nem borrão (pixels nítidos).
+  - [x] Botão React altera algo na cena via store (ex.: cor de um losango).
+  - [x] Redimensionar a janela ajusta o canvas sem distorção nem borrão (pixels nítidos).
 
 ### [ ] CLI-02 — Projeção isométrica e câmera
 - **Epic:** client · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** CLI-01
