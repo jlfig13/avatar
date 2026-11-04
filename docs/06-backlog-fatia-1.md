@@ -273,12 +273,12 @@
   - [x] Turno do monstro acontece sem input do cliente.
   - [x] Atraso configurável por variável (0 nos testes).
 
-### [ ] SRV-06 — Telemetria de batalha
+### [x] SRV-06 — Telemetria de batalha
 - **Epic:** server · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** SRV-02, SRV-05
 - **Descrição:** gravar `battle_started` e `battle_ended` em `telemetry_events` com os campos de `docs/04`, seção 6. Falha de gravação não derruba a batalha.
 - **Critérios de aceite:**
-  - [ ] Cada batalha gera 2 linhas.
-  - [ ] Consulta SQL de exemplo em `docs/` ou `apps/server/README.md` para duração média e taxa de vitória.
+  - [x] Cada batalha gera 2 linhas.
+  - [x] Consulta SQL de exemplo em `docs/` ou `apps/server/README.md` para duração média e taxa de vitória.
 
 ### [ ] SRV-07 — Testes de integração da sala
 - **Epic:** server · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** SRV-02, SRV-03

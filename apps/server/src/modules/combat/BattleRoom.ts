@@ -1,4 +1,4 @@
-import { randomInt } from 'node:crypto';
+import { randomInt, randomUUID } from 'node:crypto';
 import { type AuthContext, type Client, type Delayed, Room } from '@colyseus/core';
 import {
   type Action,
@@ -22,6 +22,8 @@ import { BattleSession, createSetup, PLAYER_ID } from './session.ts';
 
 export interface BattleSummary {
   readonly roomId: string;
+  /** uuid identifying this battle in telemetry */
+  readonly sessionId: string;
   readonly accountId: string | null;
   readonly seed: number;
   readonly result: 'victory' | 'defeat' | 'fled' | 'abandoned';
@@ -43,6 +45,7 @@ export interface BattleRoomDeps {
   readonly reconnectSeconds?: number;
   seed?(): number;
   onBattleStarted?(info: {
+    sessionId: string;
     roomId: string;
     accountId: string | null;
     seed: number;
@@ -80,6 +83,7 @@ export class BattleRoom extends Room {
   override maxClients = 1;
   session!: BattleSession;
   private accountId: string | null = null;
+  private readonly sessionId = randomUUID();
   private presetId = '';
   private enemies = 1;
   private startedAt = Date.now();
@@ -127,6 +131,7 @@ export class BattleRoom extends Room {
     this.accountId = auth?.accountId ?? null;
     this.startedAt = Date.now();
     this.deps.onBattleStarted?.({
+      sessionId: this.sessionId,
       roomId: this.roomId,
       accountId: this.accountId,
       seed: this.session.setup.seed,
@@ -299,6 +304,7 @@ export class BattleRoom extends Room {
     this.clearTurnTimer();
     const summary: BattleSummary = {
       roomId: this.roomId,
+      sessionId: this.sessionId,
       accountId: this.accountId,
       seed: this.session.setup.seed,
       result,

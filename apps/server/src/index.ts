@@ -8,6 +8,7 @@ import { createRateLimiter } from './modules/account/rateLimit.ts';
 import { requireAccount } from './modules/account/roomAuth.ts';
 import { createRedeemEndpoint } from './modules/account/routes.ts';
 import { createBattleRoom } from './modules/combat/BattleRoom.ts';
+import { battleTelemetryHooks, createTelemetry } from './modules/telemetry/telemetry.ts';
 
 // Bootstrap. Rooms and routes are registered per module (combat, account, telemetry).
 async function main() {
@@ -37,6 +38,7 @@ async function main() {
           logger,
           aiActionDelayMs: config.AI_ACTION_DELAY_MS,
           authenticate: (token) => requireAccount(database.db, token),
+          ...battleTelemetryHooks(createTelemetry(database.db, logger)),
         }),
       ),
     },
