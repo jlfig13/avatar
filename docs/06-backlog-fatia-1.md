@@ -172,12 +172,12 @@
   - [x] `water.whip` em alvo sobre `shallow_water` causa 20% a mais.
   - [x] `water.glide` não consome o movimento do turno.
 
-### [ ] CORE-10 — Energia: máximo, regeneração e custo efetivo
+### [x] CORE-10 — Energia: máximo, regeneração e custo efetivo
 - **Epic:** core · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** CORE-09
 - **Descrição:** fórmulas de `docs/02`, seção 6.7, lidas de `rules.json`.
 - **Critérios de aceite:**
-  - [ ] Regeneração no início do turno bate com a fórmula e não passa do máximo.
-  - [ ] Técnica sem energia suficiente retorna `not_enough_energy`.
+  - [x] Regeneração no início do turno bate com a fórmula e não passa do máximo.
+  - [x] Técnica sem energia suficiente retorna `not_enough_energy`.
 
 ### [ ] CORE-11 — Terreno elemental temporário
 - **Epic:** core · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CORE-03, CORE-09

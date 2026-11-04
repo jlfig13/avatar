@@ -1,15 +1,25 @@
 import type { GameData } from '@elemental/shared';
 import type { BattleEventBody } from '../events.ts';
 import { requireCombatant, updateCombatant } from '../state.ts';
-import type { BattleState } from '../types.ts';
+import type { BattleState, Combatant } from '../types.ts';
 
 const DEFENDING = 'defending';
 
-/** docs/02 §11 step 3 — start-of-turn effects. Energy regen arrives with CORE-10, fire with CORE-11. */
+/** docs/02 §6.7 — regen = regenBase + floor(spirit / divisor) + floor(focus / divisor). */
+export function energyRegenOf(c: Combatant, data: GameData): number {
+  const { energy } = data.rules;
+  return (
+    energy.regenBase +
+    Math.floor(c.attributes.spirit / energy.regenSpiritDivisor) +
+    Math.floor(c.attributes.focus / energy.regenFocusDivisor)
+  );
+}
+
+/** docs/02 §11 step 3 — start-of-turn effects (fire damage arrives with CORE-11). */
 export function startTurn(
   state: BattleState,
   actorId: string,
-  _data: GameData,
+  data: GameData,
 ): { state: BattleState; events: BattleEventBody[] } {
   const events: BattleEventBody[] = [];
   let next = state;
@@ -20,6 +30,9 @@ export function startTurn(
     }));
     events.push({ type: 'statusExpired', targetId: actorId, statusId: DEFENDING });
   }
-  events.unshift({ type: 'turnStarted', combatantId: actorId, energyRegen: 0 });
+  const actor = requireCombatant(next, actorId);
+  const energy = Math.min(actor.maxEnergy, actor.energy + energyRegenOf(actor, data));
+  next = updateCombatant(next, actorId, (c) => ({ ...c, energy }));
+  events.unshift({ type: 'turnStarted', combatantId: actorId, energyRegen: energy - actor.energy });
   return { state: next, events };
 }
