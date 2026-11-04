@@ -44,7 +44,7 @@ describe('anonymous accounts (SRV-04)', () => {
       endpoints: {
         redeem: createRedeemEndpoint({
           db,
-          limiter: createRateLimiter({ max: 7, windowMs: 60_000 }),
+          limiter: createRateLimiter({ max: 9, windowMs: 60_000 }),
           logger,
         }),
       },
@@ -106,6 +106,20 @@ describe('anonymous accounts (SRV-04)', () => {
     expect(output).toContain('account created');
     for (const { hash } of tokens) expect(output).not.toContain(hash);
     expect(output).not.toMatch(/"token":"[A-Za-z0-9_-]{20,}"/);
+  });
+
+  it('keys the limit by the real socket address (a client-sent header is ignored)', async () => {
+    await redeem('NOPE');
+    const lines = logs.filter((l) => l.includes('invite rejected'));
+    const last = JSON.parse(lines.at(-1) ?? '{}') as { ip?: string };
+    expect(last.ip).toMatch(/127\.0\.0\.1|::1|::ffff:127\.0\.0\.1/);
+    const spoofed = await fetch(`http://${base}/auth/redeem`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-elemental-client-ip': '6.6.6.6' },
+      body: JSON.stringify({ inviteCode: 'NOPE' }),
+    });
+    expect([403, 429]).toContain(spoofed.status);
+    expect(logs.join('')).not.toContain('6.6.6.6');
   });
 
   it('limits attempts per IP (429)', async () => {

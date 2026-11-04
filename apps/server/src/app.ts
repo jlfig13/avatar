@@ -26,6 +26,22 @@ export interface App {
   close(): Promise<void>;
 }
 
+/** Records the socket address for rate limiting, overwriting anything the client sent. */
+function tagClientIp(http: HttpServer) {
+  http.prependListener('request', (req) => {
+    const ip = req.socket.remoteAddress ?? 'unknown';
+    req.headers[CLIENT_IP_HEADER] = ip;
+    // The router builds its Request from rawHeaders: drop any client-sent copy and add ours.
+    const raw: string[] = [];
+    for (let i = 0; i < req.rawHeaders.length; i += 2) {
+      const name = req.rawHeaders[i] ?? '';
+      if (name.toLowerCase() !== CLIENT_IP_HEADER) raw.push(name, req.rawHeaders[i + 1] ?? '');
+    }
+    raw.push(CLIENT_IP_HEADER, ip);
+    req.rawHeaders.splice(0, req.rawHeaders.length, ...raw);
+  });
+}
+
 /** Modular monolith (docs/04 §1.5): one Colyseus process; modules contribute rooms and routes. */
 export function createApp(options: AppOptions): App {
   const { config, logger } = options;
@@ -38,10 +54,6 @@ export function createApp(options: AppOptions): App {
     Vary: 'Origin',
   });
   const http = createServer();
-  // Record the socket address for rate limiting, overwriting anything the client sent.
-  http.prependListener('request', (req) => {
-    req.headers[CLIENT_IP_HEADER] = req.socket.remoteAddress ?? 'unknown';
-  });
   const server = defineServer({
     greet: false,
     gracefullyShutdown: false,
@@ -53,6 +65,8 @@ export function createApp(options: AppOptions): App {
     http,
     async listen(port = config.PORT) {
       await server.listen(port);
+      // Must run after listen(): Colyseus re-wraps the request listeners while binding its routes.
+      tagClientIp(http);
       const actual = (http.address() as AddressInfo).port;
       logger.info({ port: actual }, 'server listening');
       return actual;
