@@ -1,0 +1,182 @@
+{
+  "type": "tileset",
+  "version": "1.10",
+  "tiledversion": "1.11.0",
+  "name": "arena_placeholder",
+  "tilewidth": 64,
+  "tileheight": 32,
+  "tilecount": 11,
+  "columns": 11,
+  "margin": 0,
+  "spacing": 0,
+  "image": "arena_placeholder.png",
+  "imagewidth": 704,
+  "imageheight": 32,
+  "tiles": [
+    {
+      "id": 0,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "terrain"
+        },
+        {
+          "name": "terrain",
+          "type": "string",
+          "value": "ground"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "terrain"
+        },
+        {
+          "name": "terrain",
+          "type": "string",
+          "value": "rock"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "terrain"
+        },
+        {
+          "name": "terrain",
+          "type": "string",
+          "value": "shallow_water"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "terrain"
+        },
+        {
+          "name": "terrain",
+          "type": "string",
+          "value": "vegetation"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "height"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "height"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "height"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "height"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "blocked"
+        },
+        {
+          "name": "blocked",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "spawns"
+        },
+        {
+          "name": "spawn",
+          "type": "string",
+          "value": "players"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "properties": [
+        {
+          "name": "layer",
+          "type": "string",
+          "value": "spawns"
+        },
+        {
+          "name": "spawn",
+          "type": "string",
+          "value": "enemies"
+        }
+      ]
+    }
+  ]
+}
