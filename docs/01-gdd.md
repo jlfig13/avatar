@@ -108,6 +108,8 @@ O mundo segue funcionando enquanto jogadores estão em batalhas instanciadas.
 
 Exploração em tempo real alterna com batalha tática por turnos. A arena é um **recorte do mapa** onde o encontro aconteceu, com uma **grade lógica** sobreposta ao terreno. Regras completas em `docs/02-regras-combate.md`.
 
+**Combate sem armas (ADR-024):** o personagem do jogador luta com movimentos corporais e domínio elemental. Armas convencionais (espadas, arcos, lanças, escudos) não fazem parte do seu sistema de combate. O equipamento continua existindo (slots de `docs/03`, sem slot de arma).
+
 ## 6. Multiplayer, economia e interface
 
 - **Multiplayer (pós-protótipo):** grupos, guildas, chat, comércio, eventos, chefes de mundo, arenas PvP. Batalhas em instâncias separadas. PvP balanceado à parte.

@@ -415,15 +415,21 @@
 
 ## Fora da fatia 1 (não conta nas 47 issues)
 
-### [ ] ART-04 — Personagem de referência em pixel art
+### [ ] ART-04 — Personagem de referência em pixel art (fase de validação)
 - **Epic:** art · **Estimativa:** a definir · **Executor:** Humano (com apoio do Claude Code) · **Depende de:** —
-- **Descrição:** criar no Aseprite o personagem que define o padrão artístico (ADR-022): 64 × 96 px, 8 direções, idle e caminhada, cabelo e roupas detalhados, paleta inspirada em Breath of Fire IV (sem copiar sprites de outros jogos). O Claude Code escreve o guia de exportação (PNG + JSON de atlas, nomes de animação e direção) e o carregamento no cliente; o humano desenha.
+- **Descrição:** criar no Aseprite o personagem de referência (ADR-022, ADR-024) para validar os parâmetros provisórios e medir o custo real de produção. É a primeira fase da visão do sistema de avatar (`docs/10-visao-avatar.md`); o sistema modular completo fica para issues posteriores à fatia 1 (`docs/09`). O personagem combate sem armas (`docs/01` §5). O Claude Code escreve o guia de exportação, o manifesto com schema Zod e o carregamento no cliente; o humano desenha.
 - **Critérios de aceite:**
-  - [ ] Personagem com idle e caminhada nas 8 direções exportado e animando na arena.
-  - [ ] Guia em `assets-src/README.md` (ou documento próprio) com tamanho, paleta, nomes e exportação.
-  - [ ] Paleta-base registrada para os demais personagens, NPCs e criaturas.
-  - [ ] Pequena área jogável funcional usando os parâmetros provisórios: tile 64 × 32 e degrau de 16 px avaliados, sprite 64 × 96 nas 4 direções do combate e nas 8 da exploração.
-  - [ ] Espelhamento das direções opostas testado, com o resultado (onde funciona e onde não funciona) registrado.
-  - [ ] Captura de tela ou GIF da área jogável mostrando os parâmetros aplicados, salvo em `docs/evidence/art-04/` (Git LFS) e referenciado em `docs/08`.
-  - [ ] Conclusão registrada em `docs/08`: parâmetros confirmados ou ajustados, e estimativa de esforço por personagem, animação e mapa.
-- **Nota:** pode começar a qualquer momento; não bloqueia a fatia 1.
+  - [ ] Protagonista humano com identidade visual própria, sem personagens ou elementos identificáveis de outras franquias (`docs/10` §2).
+  - [ ] Exploração: `idle` e `walk` nas 8 direções.
+  - [ ] Combate: `combatReady`, `cast`, `hit` e `defeat` nas 4 direções lógicas (`N/E/S/W`), projetadas nas diagonais da tela.
+  - [ ] Canvas 64 × 96, tile 64 × 32, degrau de 16 px e âncora no centro dos pés usados, ou ajuste registrado com justificativa.
+  - [ ] Espelhamento testado por direção e animação, com o registro de onde funciona e onde exige desenho próprio.
+  - [ ] Pelo menos um teste de troca de paleta (pré-processada) sem alterar pele, contorno e sombra.
+  - [ ] Pelo menos um efeito elemental separado do sprite do corpo, sincronizado com a animação `cast`.
+  - [ ] Personagem funcionando numa pequena área isométrica no cliente Phaser 4.
+  - [ ] Captura de tela ou GIF em `docs/evidence/art-04/` (Git LFS), referenciado em `docs/08`.
+  - [ ] Fontes `.aseprite`, spritesheets PNG, JSON de atlas do Aseprite e manifesto `camelCase` validado por Zod em `pnpm validate:data`.
+  - [ ] Guia técnico com dimensões, paleta-base, direções, animações, âncoras e exportação.
+  - [ ] Estimativa de produção nas 5 categorias de `docs/10` §15 (personagem novo; animação adicional; criaturas, com humanoide e não humanoide estimados separadamente; tilemap novo; variação de ambiente), com horas de desenho, animação, integração e revisão.
+  - [ ] Conclusão registrada em `docs/08`: parâmetros confirmados ou ajustados.
+- **Nota:** pode começar a qualquer momento; não bloqueia a fatia 1. Componentes modulares, expressões, demais animações e customização não fazem parte desta issue (`docs/10` §18).
