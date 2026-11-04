@@ -50,7 +50,7 @@
 - **Descrição:** `.github/workflows/ci.yml` conforme `docs/04`, seção 10, com cache do pnpm.
 - **Critérios de aceite:**
   - [x] Roda em PR e push na `main`: install (frozen lockfile) → lint → typecheck → validate:data → test → build.
-  - [ ] Um erro de tipo proposital faz o job falhar (verificar e reverter). — *verificado localmente (`pnpm typecheck` sai com código 1); falta confirmar no GitHub Actions no primeiro PR para a `main`.*
+  - [ ] Um erro de tipo proposital faz o job falhar (verificar e reverter). — *verificado localmente (`pnpm typecheck` sai com código 1). Sequência completa do CI e testes do servidor contra PostgreSQL real passam localmente (2026-11-04). Falta confirmar num run real do GitHub Actions: o repositório ainda não tem branch `main` nem nenhum run de workflow.*
 
 ### [x] INF-03 — Git LFS para assets binários
 - **Epic:** infra · **Estimativa:** 1 h · **Executor:** Claude · **Depende de:** INF-01
