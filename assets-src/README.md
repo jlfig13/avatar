@@ -7,7 +7,7 @@ Fontes de arte: arquivos `.aseprite`, projetos e tilesets do Tiled e qualquer ar
 
 ## Git LFS
 
-Binários (`*.aseprite *.ase *.blend *.glb *.gltf *.ktx2 *.png *.jpg *.wav *.ogg *.mp3 *.fbx`) são versionados com Git LFS, conforme `.gitattributes` na raiz.
+Binários (`*.aseprite *.ase *.blend *.glb *.gltf *.ktx2 *.png *.jpg *.gif *.wav *.ogg *.mp3 *.fbx`) são versionados com Git LFS, conforme `.gitattributes` na raiz.
 
 1. Instale o Git LFS: <https://git-lfs.com> (macOS: `brew install git-lfs`; Debian/Ubuntu: `sudo apt install git-lfs`; Windows: já vem no Git for Windows).
 2. Uma vez por máquina: `git lfs install`.

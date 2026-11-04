@@ -422,5 +422,8 @@
   - [ ] Personagem com idle e caminhada nas 8 direções exportado e animando na arena.
   - [ ] Guia em `assets-src/README.md` (ou documento próprio) com tamanho, paleta, nomes e exportação.
   - [ ] Paleta-base registrada para os demais personagens, NPCs e criaturas.
-  - [ ] Parâmetros provisórios (tile 64 × 32, degrau 16 px, sprite 64 × 96, 4/8 direções) validados numa pequena área jogável, com o espelhamento das direções opostas avaliado; resultado registrado em `docs/08`.
+  - [ ] Pequena área jogável funcional usando os parâmetros provisórios: tile 64 × 32 e degrau de 16 px avaliados, sprite 64 × 96 nas 4 direções do combate e nas 8 da exploração.
+  - [ ] Espelhamento das direções opostas testado, com o resultado (onde funciona e onde não funciona) registrado.
+  - [ ] Captura de tela ou GIF da área jogável mostrando os parâmetros aplicados, salvo em `docs/evidence/art-04/` (Git LFS) e referenciado em `docs/08`.
+  - [ ] Conclusão registrada em `docs/08`: parâmetros confirmados ou ajustados, e estimativa de esforço por personagem, animação e mapa.
 - **Nota:** pode começar a qualquer momento; não bloqueia a fatia 1.
