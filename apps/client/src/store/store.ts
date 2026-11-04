@@ -3,8 +3,6 @@ import { createStore } from 'zustand/vanilla';
 // Zustand is the bridge (docs/04 §8): network writes state, React reads it for the HUD,
 // Phaser scenes subscribe to changes.
 
-export const DEBUG_COLORS = [0x6fa8dc, 0xe06666, 0x93c47d, 0xf6b26b] as const;
-
 export interface DebugStats {
   /** increasing sample number (shows the panel is live) */
   readonly sample: number;
@@ -17,9 +15,6 @@ export interface DebugStats {
 }
 
 export interface ClientState {
-  /** CLI-01 smoke test: color of the test diamond drawn by the scene. */
-  readonly diamondColor: number;
-  cycleDiamondColor(): void;
   /** CLI-11 — debug panel (F3). */
   readonly debug: {
     readonly visible: boolean;
@@ -32,12 +27,7 @@ export interface ClientState {
 }
 
 export function createClientStore() {
-  return createStore<ClientState>()((set, get) => ({
-    diamondColor: DEBUG_COLORS[0],
-    cycleDiamondColor() {
-      const index = DEBUG_COLORS.indexOf(get().diamondColor as (typeof DEBUG_COLORS)[number]);
-      set({ diamondColor: DEBUG_COLORS[(index + 1) % DEBUG_COLORS.length] ?? DEBUG_COLORS[0] });
-    },
+  return createStore<ClientState>()((set) => ({
     debug: { visible: false, stats: null, lastAiDecision: null },
     toggleDebug() {
       set((s) => ({ debug: { ...s.debug, visible: !s.debug.visible } }));

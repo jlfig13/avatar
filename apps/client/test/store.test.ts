@@ -1,21 +1,24 @@
 import { describe, expect, it } from 'vitest';
 import { t } from '../src/i18n/i18n.ts';
-import { createClientStore, DEBUG_COLORS, watch } from '../src/store/store.ts';
+import { createClientStore, watch } from '../src/store/store.ts';
 
 describe('client store', () => {
-  it('cycles the diamond color and notifies watchers (React → store → scene)', () => {
+  it('notifies watchers only when the selected slice changes (store → scene bridge)', () => {
     const store = createClientStore();
-    const seen: number[] = [];
+    const seen: boolean[] = [];
     const unwatch = watch(
       store,
-      (s) => s.diamondColor,
-      (c) => seen.push(c),
+      (s) => s.debug.visible,
+      (v) => seen.push(v),
     );
-    store.getState().cycleDiamondColor();
-    store.getState().cycleDiamondColor();
-    expect(seen).toEqual([DEBUG_COLORS[0], DEBUG_COLORS[1], DEBUG_COLORS[2]]);
+    store.getState().toggleDebug();
+    store
+      .getState()
+      .setDebugStats({ sample: 1, fps: 60, gameObjects: 1, drawCalls: 1, memoryMb: null });
+    store.getState().toggleDebug();
+    expect(seen).toEqual([false, true, false]);
     unwatch();
-    store.getState().cycleDiamondColor();
+    store.getState().toggleDebug();
     expect(seen).toHaveLength(3);
   });
 });
@@ -41,7 +44,7 @@ describe('debug state', () => {
 
 describe('i18n', () => {
   it('translates known keys and falls back to the key', () => {
-    expect(t('debug.cycleColor')).toBe('Trocar cor do losango');
+    expect(t('debug.fps')).toBe('FPS');
     expect(t('missing.key')).toBe('missing.key');
   });
 });

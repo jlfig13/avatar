@@ -311,12 +311,12 @@
 - **Critérios de aceite:**
   - [x] F3 alterna o painel; valores atualizam a cada 500 ms.
 
-### [ ] CLI-03 — Arena a partir da grade (procedural, com mapa Tiled opcional)
+### [x] CLI-03 — Arena a partir da grade (procedural, com mapa Tiled opcional)
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CLI-02, CORE-03
 - **Descrição:** carregar `test-arena.grid.json` e desenhar a arena em 2D isométrico: blocos empilhados por nível de altura, cor por terreno, água semitransparente, rochas como blocos, ordenação por profundidade conforme `docs/04`, seção 8. Se existir `assets/maps/test-arena.tmj`, usar o mapa do Tiled e manter a grade só como camada lógica.
 - **Critérios de aceite:**
-  - [ ] Células do arquivo alinham com o desenho (marcador de debug em `(0,0)` e `(9,9)`).
-  - [ ] Funciona sem nenhum mapa do Tiled nem imagem no repositório.
+  - [x] Células do arquivo alinham com o desenho (marcador de debug em `(0,0)` e `(9,9)`).
+  - [x] Funciona sem nenhum mapa do Tiled nem imagem no repositório.
 
 ### [ ] CLI-04 — Overlay da grade: movimento, alcance e área
 - **Epic:** client · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CLI-03, CORE-07

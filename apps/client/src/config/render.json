@@ -2,5 +2,32 @@
   "tileWidth": 64,
   "tileHeight": 32,
   "heightStep": 16,
-  "zoom": { "min": 1, "max": 4 }
+  "zoom": {
+    "min": 1,
+    "max": 4
+  },
+  "terrain": {
+    "ground": {
+      "top": "#7a9a4e",
+      "left": "#5a7339",
+      "right": "#4b602f"
+    },
+    "rock": {
+      "top": "#8c8a86",
+      "left": "#6b6965",
+      "right": "#595754"
+    },
+    "shallow_water": {
+      "top": "#3f7fbf",
+      "left": "#3a5f7d",
+      "right": "#30506a",
+      "alpha": 0.7
+    },
+    "vegetation": {
+      "top": "#3f7a3a",
+      "left": "#2f5c2b",
+      "right": "#284e25"
+    }
+  },
+  "markerColor": "#ffd966"
 }
