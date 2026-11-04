@@ -1,6 +1,6 @@
-# 10 — Visão do sistema de avatar (personagem humano modular)
+# 10 — Visão do sistema de personagem do jogador (personagem humano modular)
 
-> **Documento de visão de longo prazo.** Descreve o sistema completo de avatar do personagem do jogador. **Não é escopo da fatia 1.**
+> **Documento de visão de longo prazo.** Descreve o sistema completo de aparência do personagem do jogador. **Não é escopo da fatia 1.**
 > A execução está dividida em duas fases (ADR-024):
 > - **Fase de validação: ART-04** (`docs/06`). Personagem de referência, medição de parâmetros e de custo de produção. Os critérios de aceite estão na issue, não aqui.
 > - **Fase posterior:** o sistema modular completo (§18), em issues próprias depois da fatia 1 (`docs/09`).
@@ -130,7 +130,7 @@ Exemplos visuais (não definem regra de jogo): fogo (concentração, chamas proj
 
 ## 9. Arquivos-fonte (Aseprite)
 
-Um arquivo editável por componente, por exemplo `avatar_head_base.aseprite`, `avatar_hair_short.aseprite`, `avatar_face_expressions.aseprite`, `avatar_torso_base.aseprite`, `avatar_arms_base.aseprite`, `avatar_legs_base.aseprite`, `avatar_back_accessories.aseprite`. Ficam em `assets-src/` (Git LFS).
+Um arquivo editável por componente, por exemplo `character_head_base.aseprite`, `character_hair_short.aseprite`, `character_face_expressions.aseprite`, `character_torso_base.aseprite`, `character_arms_base.aseprite`, `character_legs_base.aseprite`, `character_back_accessories.aseprite`. Ficam em `assets-src/` (Git LFS).
 
 Prefixos de camada: `[B]` corpo-base, `[M]` componente modular, `[A]` acessório, `[S]` sombra, `[FX]` efeito.
 
@@ -186,10 +186,10 @@ Exemplo ilustrativo (o schema definitivo nasce na ART-04):
 
 | Módulo do cliente | Responsabilidade |
 | --- | --- |
-| Avatar Renderer | Carregar o corpo, compor componentes, aplicar paletas, posicionar e ordenar camadas |
+| Character Renderer | Carregar o corpo, compor componentes, aplicar paletas, posicionar e ordenar camadas |
 | Animation Controller | Escolher animação e direção, controlar quadros, transições e marcadores |
 | Elemental Effects | Carregar efeitos, sincronizar com animações, posicionar e controlar duração |
-| Avatar Configuration | Cabelo, roupas, acessórios, cores e aparência |
+| Character Configuration | Cabelo, roupas, acessórios, cores e aparência |
 
 A lógica de jogo não depende de classes do Phaser, e o `combat-core` continua independente da engine (`CLAUDE.md`, regra 4).
 
@@ -220,7 +220,7 @@ Para cada categoria: horas de desenho, animação, integração e revisão; depe
 
 ## 16. Entregáveis da visão completa
 
-Personagem original; corpo-base em 8 direções; 4 direções de combate; animações de exploração e de combate; sistema modular; 2–3 combinações de avatar; expressões; paletas de recoloração com demonstração no cliente; ao menos um efeito independente; manifesto e atlas; fontes Aseprite; spritesheets PNG; área jogável; evidências; guia de exportação; parâmetros confirmados; estimativa nas cinco categorias. **Na ART-04 vale apenas o subconjunto dos critérios de aceite da issue.**
+Personagem original; corpo-base em 8 direções; 4 direções de combate; animações de exploração e de combate; sistema modular; 2–3 combinações de personagem; expressões; paletas de recoloração com demonstração no cliente; ao menos um efeito independente; manifesto e atlas; fontes Aseprite; spritesheets PNG; área jogável; evidências; guia de exportação; parâmetros confirmados; estimativa nas cinco categorias. **Na ART-04 vale apenas o subconjunto dos critérios de aceite da issue.**
 
 ## 17. Critérios de aceite da fase de validação
 
@@ -238,7 +238,7 @@ Não é condição para concluir a ART-04. Cada item vira issue própria, com es
 | Customização | Combinações de roupas, cabelos e acessórios |
 | Recoloração | Múltiplos canais e paletas personalizáveis |
 | Efeitos | Biblioteca de técnicas e efeitos elementais |
-| Configuração | Manifesto completo de aparência e composição do avatar |
+| Configuração | Manifesto completo de aparência e composição do personagem |
 | Escalabilidade | Reuso do sistema para NPCs e personagens humanoides |
 
 ## 19. Compatibilidade técnica

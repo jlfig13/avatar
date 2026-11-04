@@ -117,7 +117,7 @@
 
 ## ADR-024 — ART-04 em duas fases e combate sem armas
 - **Contexto:** a especificação do protagonista modular cobria o sistema de avatar inteiro (componentes, expressões, 12 animações, recoloração, efeitos, configuração). Executada de uma vez, levaria meses com menos de 10 h/semana e atrasaria a medição de custo que a ART-04 deve entregar. O `docs/03` já deixa "personagem modular" fora do protótipo. O dono também definiu que o personagem não usa armas convencionais.
-- **Decisão:** (1) a especificação completa vira o documento de visão `docs/10-visao-avatar.md`; a ART-04 executa só a fase de validação (personagem de referência, parâmetros, espelhamento, uma recoloração, um efeito, área jogável, evidências e estimativa em 5 categorias); o resto vira issues depois da fatia 1. (2) O personagem do jogador combate com movimentos corporais e domínio elemental, sem armas convencionais (`docs/01` §5).
+- **Decisão:** (1) a especificação completa vira o documento de visão `docs/10-visao-personagem.md`; a ART-04 executa só a fase de validação (personagem de referência, parâmetros, espelhamento, uma recoloração, um efeito, área jogável, evidências e estimativa em 5 categorias); o resto vira issues depois da fatia 1. (2) O personagem do jogador combate com movimentos corporais e domínio elemental, sem armas convencionais (`docs/01` §5).
 - **Consequências:** a ART-04 continua sem bloquear a fatia 1. Nomes de animação seguem os contratos (`hit`, `defeat`); o manifesto usa `camelCase` e Zod; recoloração inicial por troca de paleta pré-processada. Paletas elementais finais saem da ART-04, sem repetir associações de cor de outras franquias. Nada muda em `combat-core`, regras de `docs/02` ou contratos de `docs/05`.
 
 ## ADR-025 — Âncora do sprite em (32, 90)

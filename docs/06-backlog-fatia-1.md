@@ -417,7 +417,7 @@
 
 ### [ ] ART-04 — Personagem de referência em pixel art (fase de validação)
 - **Epic:** art · **Estimativa:** a definir · **Executor:** Humano (com apoio do Claude Code) · **Depende de:** —
-- **Descrição:** criar no Aseprite o personagem de referência (ADR-022, ADR-024) para validar os parâmetros provisórios e medir o custo real de produção. É a primeira fase da visão do sistema de avatar (`docs/10-visao-avatar.md`); o sistema modular completo fica para issues posteriores à fatia 1 (`docs/09`). O personagem combate sem armas (`docs/01` §5). O Claude Code escreve o guia de exportação, o manifesto com schema Zod e o carregamento no cliente; o humano desenha.
+- **Descrição:** criar no Aseprite o personagem de referência (ADR-022, ADR-024) para validar os parâmetros provisórios e medir o custo real de produção. É a primeira fase da visão do sistema de personagem do jogador (`docs/10-visao-personagem.md`); o sistema modular completo fica para issues posteriores à fatia 1 (`docs/09`). O personagem combate sem armas (`docs/01` §5). O Claude Code escreve o guia de exportação, o manifesto com schema Zod e o carregamento no cliente; o humano desenha.
 - **Critérios de aceite:**
   - [ ] Protagonista humano com identidade visual própria, sem personagens ou elementos identificáveis de outras franquias (`docs/10` §2).
   - [ ] Exploração: `idle` e `walk` nas 8 direções.

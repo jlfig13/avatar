@@ -25,7 +25,7 @@ MMORPG 2D isométrico em pixel art para navegador, em **universo próprio** (nã
 | `docs/07-convencoes.md` | Padrões de código, testes, commits, branches e PRs | Sempre |
 | `docs/08-decisoes.md` | Registro de decisões (ADRs) e o porquê de cada uma | Antes de propor mudar algo estrutural |
 | `docs/09-pendencias.md` | Perguntas em aberto e valores a calibrar | Quando esbarrar em algo indefinido |
-| `docs/10-visao-avatar.md` | Visão de longo prazo do sistema de avatar (não é escopo da fatia 1) | ART-04 e issues futuras de personagem |
+| `docs/10-visao-personagem.md` | Visão de longo prazo do sistema de personagem do jogador (não é escopo da fatia 1) | ART-04 e issues futuras de personagem |
 
 ## 3. Regras de trabalho (obrigatórias)
 
