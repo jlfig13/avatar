@@ -242,7 +242,12 @@ export class BattleRoom extends Room {
 
   /** SRV-03 — AI turns run on the server, with a configurable delay between actions. */
   private async runAiTurn(actorId: string) {
-    const monsterProfile = this.deps.data.monsters['monster.clawbeast']?.ai.profile ?? 'balanced';
+    // Monsters use the ai.profile of their data file; anything else plays 'balanced'.
+    const template = this.session.setup.combatants.find((c) => c.id === actorId)?.template;
+    const monsterProfile =
+      (template?.kind === 'monster'
+        ? this.deps.data.monsters[template.id]?.ai.profile
+        : undefined) ?? 'balanced';
     const actions = chooseActions({
       state: this.session.state,
       actorId,

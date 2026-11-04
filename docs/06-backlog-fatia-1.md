@@ -266,12 +266,12 @@
   - [x] Reconectar recebe `snapshot` com `lastEventSeq` correto.
   - [x] Replay: seed + lista de ações registradas reproduz o mesmo estado final (teste).
 
-### [ ] SRV-03 — Turnos da IA no servidor
+### [x] SRV-03 — Turnos da IA no servidor
 - **Epic:** server · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** SRV-02, IA-01
 - **Descrição:** quando o turno é de um combatente `ai`, a sala chama `chooseActions` e aplica a sequência, com pequeno atraso configurável entre ações (padrão 400 ms) para o cliente acompanhar.
 - **Critérios de aceite:**
-  - [ ] Turno do monstro acontece sem input do cliente.
-  - [ ] Atraso configurável por variável (0 nos testes).
+  - [x] Turno do monstro acontece sem input do cliente.
+  - [x] Atraso configurável por variável (0 nos testes).
 
 ### [ ] SRV-06 — Telemetria de batalha
 - **Epic:** server · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** SRV-02, SRV-05
