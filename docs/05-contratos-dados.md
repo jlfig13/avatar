@@ -330,6 +330,7 @@ export function chooseActions(ctx: AiContext): Action[];   // sequência do turn
 - `rng` (opcional) só desempata; padrão = `state.rngState`, sem consumir o RNG da batalha.
 - Garantia de validade: a sequência escolhida é simulada com `applyAction` antes de ser devolvida; se falhar, o próximo candidato é tentado. Se a batalha terminar no meio da sequência, devolve-se só o prefixo válido.
 - `chooseActionsWithDebug(ctx)` devolve também os candidatos com `score` e `debug` (valor de cada consideração).
+- Considerações implementadas (ids usados nos perfis): `expectedDamage` (chance × dano / vida restante, fogo amigo subtrai), `killChance`, `safety` (1 − dano esperado dos inimigos na célula de destino / vida), `closeness` (ao inimigo mais próximo), `heightAdvantage`, `flankAttack` (costas 1, lado 0,5), `avoidFire`. Perfis iniciais: `aggressive_melee` e `balanced` (PROVISÓRIO).
 
 ## 9. API pública do `combat-core`
 

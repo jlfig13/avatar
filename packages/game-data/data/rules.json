@@ -93,10 +93,22 @@
   "ai": {
     "profiles": {
       "aggressive_melee": {
-        "expectedDamage": 1.0
+        "expectedDamage": 1.0,
+        "killChance": 0.6,
+        "safety": 0.2,
+        "closeness": 0.3,
+        "heightAdvantage": 0.1,
+        "flankAttack": 0.2,
+        "avoidFire": 0.5
       },
       "balanced": {
-        "expectedDamage": 1.0
+        "expectedDamage": 1.0,
+        "killChance": 0.5,
+        "safety": 0.5,
+        "closeness": 0.2,
+        "heightAdvantage": 0.15,
+        "flankAttack": 0.15,
+        "avoidFire": 0.5
       }
     }
   }

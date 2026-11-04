@@ -216,14 +216,14 @@
   - [x] Nunca devolve ação inválida (teste com 500 estados aleatórios válidos).
   - [x] Decisão < 50 ms numa arena 10 × 10 com 4 combatentes.
 
-### [ ] IA-02 — Considerações iniciais da IA
+### [x] IA-02 — Considerações iniciais da IA
 - **Epic:** ai · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** IA-01, CORE-08, CORE-11
 - **Descrição:** considerações de dano esperado, chance de abate, risco na célula de destino, distância, altura, flanco e evitar fogo. Pesos do perfil `aggressive_melee` em dados.
 - **Critérios de aceite:**
-  - [ ] Com dano esperado igual, prefere célula mais alta.
-  - [ ] Prefere atacar pelas costas quando possível.
-  - [ ] Não termina o movimento em célula com fogo se houver alternativa equivalente.
-  - [ ] Usa `monster.pounce` quando o alvo está a 2–3 células e não alcançável a pé.
+  - [x] Com dano esperado igual, prefere célula mais alta.
+  - [x] Prefere atacar pelas costas quando possível.
+  - [x] Não termina o movimento em célula com fogo se houver alternativa equivalente.
+  - [x] Usa `monster.pounce` quando o alvo está a 2–3 células e não alcançável a pé.
 
 ### [ ] QA-01 — Simulador de balanceamento IA × IA
 - **Epic:** qa · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** IA-02, CORE-13
