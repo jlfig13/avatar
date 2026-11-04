@@ -48,6 +48,23 @@ Protagonista humano jovem e aventureiro, com proporções estilizadas de JRPG, s
 
 **Combate (4):** `N/E/S/W` são eixos do mundo, projetados nas **diagonais** da tela. Não confundir com as vistas frontal, lateral e traseira de uma câmera convencional. Deve ficar demonstrada a correspondência entre direção lógica, coordenada do mundo, orientação na tela e sprite usado.
 
+**Direção lógica → tela.** Consequência direta da projeção da ADR-022 (`sx = (x − y) · 32`, `sy = (x + y) · 16`) e do `facingOf` do `combat-core` (`N` diminui y, `E` aumenta x, `S` aumenta y, `W` diminui x). Não é regra nova.
+
+| Lógica | Vetor na grade | Na tela | Vista desenhada | Uso | Par de espelho |
+| --- | --- | --- | --- | --- | --- |
+| `SE` | (+1, +1) | ↓ baixo | **Frente pura** (ombros retos) | Exploração | — (eixo de simetria) |
+| `NW` | (−1, −1) | ↑ cima | **Costas pura** (ombros retos) | Exploração | — (eixo de simetria) |
+| `E` | (+1, 0) | ↘ baixo-direita | Frente 3/4 | Exploração e combate | `S` |
+| `S` | (0, +1) | ↙ baixo-esquerda | Frente 3/4 | Exploração e combate | `E` |
+| `N` | (0, −1) | ↗ cima-direita | Costas 3/4 | Exploração e combate | `W` |
+| `W` | (−1, 0) | ↖ cima-esquerda | Costas 3/4 | Exploração e combate | `N` |
+| `NE` | (+1, −1) | → direita | Perfil | Exploração | `SW` |
+| `SW` | (−1, +1) | ← esquerda | Perfil | Exploração | `NE` |
+
+- O eixo vertical da tela (`SE`–`NW`) é o eixo de simetria: espelhar na horizontal troca `E`↔`S`, `N`↔`W` e `NE`↔`SW`; `SE` e `NW` espelham em si mesmas.
+- Desenhos mínimos se o espelhamento passar no teste: **5** nas 8 direções (`SE`, `NW`, `E`, `N`, `NE`) e **2** nas 4 de combate (`E`, `N`). Se falhar numa direção, ela ganha desenho próprio.
+- A volumetria vem das vistas 3/4 e de perfil. `SE` e `NW` ficam com ombros retos; a câmera de cima aparece só num leve encurtamento (topo da cabeça e dos ombros visível).
+
 **Espelhamento horizontal:** pode reduzir trabalho, mas **não é presumido**. Testar por direção e por animação. Não pode inverter elementos assimétricos importantes (acessórios, símbolos, detalhes de roupa) nem gerar gestos incoerentes. Registrar onde funciona e onde exige desenho próprio.
 
 ## 5. Componentes modulares (fase posterior)
@@ -115,7 +132,21 @@ Exemplos visuais (não definem regra de jogo): fogo (concentração, chamas proj
 
 Um arquivo editável por componente, por exemplo `avatar_head_base.aseprite`, `avatar_hair_short.aseprite`, `avatar_face_expressions.aseprite`, `avatar_torso_base.aseprite`, `avatar_arms_base.aseprite`, `avatar_legs_base.aseprite`, `avatar_back_accessories.aseprite`. Ficam em `assets-src/` (Git LFS).
 
-Prefixos de camada: `[B]` corpo-base, `[M]` componente modular, `[A]` acessório, `[S]` sombra, `[FX]` efeito. Ordem de exemplo, de baixo para cima: `[S] Shadow`, `[B] Legs`, `[B] Feet`, `[M] Torso`, `[M] Arms`, `[M] Hands`, `[M] Head`, `[M] Hair`, `[A] Back`, `[A] Accessories`. Uma capa pode exigir partes atrás e à frente do corpo.
+Prefixos de camada: `[B]` corpo-base, `[M]` componente modular, `[A]` acessório, `[S]` sombra, `[FX]` efeito.
+
+**Sobreposição dinâmica por direção.** No Aseprite a ordem das camadas é a mesma em todos os quadros. Por isso, peças que trocam de plano conforme a direção (capa, mochila, cabelo longo, braço distante) têm **duas camadas**, uma atrás e outra na frente do corpo, e em cada direção o artista desenha na que se aplica. O cliente compõe sempre na mesma ordem; a alternância vem de qual camada tem pixels naquela direção.
+
+Ordem das camadas, de baixo para cima:
+
+`[S] Shadow` · `[A] Back (behind)` · `[M] Hair (back)` · `[M] Arm (far)` · `[B] Legs` · `[B] Feet` · `[M] Torso` · `[M] Arms` · `[M] Hands` · `[M] Head` · `[M] Hair` · `[A] Back (front)` · `[A] Accessories`
+
+| Grupo de direções | Atrás do corpo | Na frente do corpo |
+| --- | --- | --- |
+| Frente (`SE`, `E`, `S`) | Capa e mochila em `[A] Back (behind)`; parte de trás do cabelo longo em `[M] Hair (back)` | Franja e mechas laterais em `[M] Hair` |
+| Costas (`NW`, `N`, `W`) | — | Capa e mochila em `[A] Back (front)`; cabelo inteiro, cobrindo a nuca, em `[M] Hair` |
+| Perfil (`NE`, `SW`) | Lado de trás da capa em `[A] Back (behind)`; braço distante em `[M] Arm (far)` | Braço próximo em `[M] Arms`; mechas do lado visível em `[M] Hair` |
+
+Nas vistas 3/4, o braço do lado oposto à câmera também vai em `[M] Arm (far)` quando ficar parcialmente atrás do tronco. Camadas vazias numa direção não custam nada na exportação.
 
 ## 10. Spritesheets
 
