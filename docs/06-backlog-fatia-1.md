@@ -103,6 +103,7 @@
   - [ ] Cada asset usado tem linha no `LICENSES.csv`.
   - [ ] Nenhum asset com licença que proíba uso comercial.
 - **Parada do Claude Code:** depois de criar os modelos, avisar o humano e seguir para outras issues; não baixar assets por conta própria.
+- **Situação (2026-11-04):** humanoide (KayKit Adventurers), animações (KayKit Character Animations) e natureza (KayKit Forest) verificados e no `LICENSES.csv`, todos CC0. Falta a criatura quadrúpede (ver `docs/09-pendencias.md`); texturas de terreno adiadas pela ADR-011.
 
 ---
 
