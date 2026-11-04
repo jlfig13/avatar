@@ -17,7 +17,7 @@
     "energyCost": 8,
     "ctDelay": 0,
     "accuracy": 90,
-    "power": 10,
+    "power": 14,
     "powerScaling": 0.8,
     "effects": [
       {

@@ -105,6 +105,7 @@
         "expectedDamage": 1.0,
         "killChance": 0.5,
         "safety": 0.5,
+        "protection": 1.0,
         "closeness": 0.2,
         "heightAdvantage": 0.15,
         "flankAttack": 0.15,

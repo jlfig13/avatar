@@ -3,7 +3,7 @@
     "id": "preset.water",
     "nameKey": "preset.water.name",
     "element": "water",
-    "maxHp": 100,
+    "maxHp": 140,
     "attributes": {
       "power": 10,
       "control": 14,
@@ -19,7 +19,7 @@
     "id": "preset.fire",
     "nameKey": "preset.fire.name",
     "element": "fire",
-    "maxHp": 95,
+    "maxHp": 122,
     "attributes": {
       "power": 14,
       "control": 10,

@@ -232,7 +232,7 @@ export const TechniqueSchema = z.object({
 
 | id | Nome provisório | Papel | Alvo | Alcance | Área | Custo | Atraso CT | Precisão | Poder | Escala | Efeitos |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `water.whip` | Chicote d'água | ataque | inimigo | 1–3 | single | 8 | 0 | 90 | 10 | 0,8 | dano; +20% em água rasa |
+| `water.whip` | Chicote d'água | ataque | inimigo | 1–3 | single | 8 | 0 | 90 | 14 | 0,8 | dano; +20% em água rasa |
 | `water.shield` | Véu de água | defesa | aliado/si | 0–2 | single | 10 | 0 | 100 | 0 | 0 | status `shielded` 2 rodadas, −30% dano recebido |
 | `water.freeze` | Corrente gélida | controle | célula | 2–4 | cross r1 | 14 | 10 | 85 | 6 | 0,4 | dano + `cellEffect: ice` em toda a área |
 | `water.glide` | Deslize | mobilidade | célula | 1–4 | single | 6 | 0 | 100 | 0 | 0 | `dash` até 4 células, ignora custo de água/gelo; não gasta o movimento do turno |
@@ -280,7 +280,7 @@ Lembrete: máximo de 1 reação por combatente por rodada; reação não provoca
   "id": "monster.clawbeast",
   "nameKey": "monster.clawbeast.name",
   "role": "melee",
-  "maxHp": 90,
+  "maxHp": 160,
   "attributes": { "power": 12, "control": 10, "resistance": 8, "mobility": 12, "spirit": 5, "focus": 5 },
   "techniqueIds": ["monster.claw", "monster.pounce"],
   "passiveIds": ["monster.counter"],
@@ -290,7 +290,7 @@ Lembrete: máximo de 1 reação por combatente por rodada; reação não provoca
 
 | id | Alcance | Área | Custo | Atraso | Precisão | Poder | Escala | Efeito |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `monster.claw` | 1 | single | 0 | 0 | 90 | 10 | 0,8 | dano |
+| `monster.claw` | 1 | single | 0 | 0 | 90 | 8 | 0,8 | dano |
 | `monster.pounce` | 2–3 | single | 10 | 10 | 80 | 8 | 0,6 | `dash` até o alvo + dano |
 
 Monstros usam energia igual aos jogadores (`maxEnergy = 40 + spirit*2`).
@@ -301,8 +301,8 @@ Dados: `packages/game-data/data/monsters/clawbeast.json` e `packages/game-data/d
 
 | id | Elemento | maxHp | power | control | resistance | mobility | spirit | focus | Técnicas | Passiva |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `preset.water` | água | 100 | 10 | 14 | 10 | 12 | 12 | 12 | as 4 de água | `water.backflow` |
-| `preset.fire` | fogo | 95 | 14 | 10 | 9 | 13 | 10 | 10 | as 4 de fogo | `fire.ember` |
+| `preset.water` | água | 140 | 10 | 14 | 10 | 12 | 12 | 12 | as 4 de água | `water.backflow` |
+| `preset.fire` | fogo | 122 | 14 | 10 | 9 | 13 | 10 | 10 | as 4 de fogo | `fire.ember` |
 
 Schema (`PresetSchema` em `@elemental/shared`): `id`, `nameKey` (i18n, ex.: `preset.water.name`), `element`, `maxHp`, `attributes`, `techniqueIds`, `passiveIds`. Arquivo: `packages/game-data/data/combatants/player-presets.json` (lista).
 
@@ -330,7 +330,7 @@ export function chooseActions(ctx: AiContext): Action[];   // sequência do turn
 - `rng` (opcional) só desempata; padrão = `state.rngState`, sem consumir o RNG da batalha.
 - Garantia de validade: a sequência escolhida é simulada com `applyAction` antes de ser devolvida; se falhar, o próximo candidato é tentado. Se a batalha terminar no meio da sequência, devolve-se só o prefixo válido.
 - `chooseActionsWithDebug(ctx)` devolve também os candidatos com `score` e `debug` (valor de cada consideração).
-- Considerações implementadas (ids usados nos perfis): `expectedDamage` (chance × dano / vida restante, fogo amigo subtrai), `killChance`, `safety` (1 − dano esperado dos inimigos na célula de destino / vida), `closeness` (ao inimigo mais próximo), `heightAdvantage`, `flankAttack` (costas 1, lado 0,5), `avoidFire`. Perfis iniciais: `aggressive_melee` e `balanced` (PROVISÓRIO).
+- Considerações implementadas (ids usados nos perfis): `expectedDamage` (chance × dano / vida restante, fogo amigo subtrai), `killChance`, `safety` (1 − dano esperado dos inimigos na célula de destino / vida), `protection` (estado `shielded` num aliado ameaçado e ainda sem escudo: magnitude × rodadas × dano esperado dos inimigos / vida; ADR-026), `closeness` (ao inimigo mais próximo), `heightAdvantage`, `flankAttack` (costas 1, lado 0,5), `avoidFire`. Perfis iniciais: `aggressive_melee` e `balanced` (PROVISÓRIO). `dash` com dano até uma célula (`fire.surge`) é avaliado na célula de chegada, com dano nos inimigos adjacentes a ela (como na resolução); `dash` sem dano (`water.glide`) continua avaliado a partir do destino do movimento (ADR-026).
 
 ## 9. API pública do `combat-core`
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { chooseActions } from '../src/ai/chooseActions.ts';
+import { chooseActions, chooseActionsWithDebug } from '../src/ai/chooseActions.ts';
 import { getCombatant } from '../src/state.ts';
 import type { Action, BattleState, Combatant, Position } from '../src/types.ts';
 import {
@@ -116,5 +116,112 @@ describe('AI considerations (aggressive_melee)', () => {
     });
     const destination = moveOf(choose(state));
     expect(destination && destination.x + destination.y).toBe(4);
+  });
+});
+
+describe('AI considerations (dash to cell and protection)', () => {
+  const surge = makeTechnique({
+    id: 't.surge',
+    target: 'cell',
+    range: { min: 1, max: 3 },
+    effects: [
+      { kind: 'dash', maxCells: 3, ignoresTerrainCost: false, straightLine: true },
+      { kind: 'damage' },
+    ],
+  });
+  const shield = makeTechnique({
+    id: 't.shield',
+    role: 'defense',
+    target: 'ally',
+    range: { min: 0, max: 2 },
+    accuracy: 100,
+    power: 0,
+    powerScaling: 0,
+    effects: [{ kind: 'status', statusId: 'shielded', rounds: 2, magnitude: 0.3 }],
+  });
+  const profileData = (profile: Record<string, number>) =>
+    makeData({
+      techniques: { ...techniques, 't.surge': surge, 't.shield': shield },
+      rules: { ...testRules, ai: { profiles: { p: profile } } },
+    });
+  const acting = { combatantId: 'p1', hasMoved: true, hasActed: false, usedTechniqueId: null };
+  const enemy = (o: Partial<Combatant> = {}) =>
+    makeCombatant({
+      id: 'm1',
+      team: 'enemies',
+      controller: 'ai',
+      position: { x: 4, y: 5 },
+      techniqueIds: ['t.claw'],
+      ...o,
+    });
+
+  it('estimates the damage of a dash to a cell on the enemies adjacent to the landing cell', () => {
+    const data = profileData({ expectedDamage: 1 });
+    const state = makeBattle({
+      turn: acting,
+      combatants: [
+        makeCombatant({ id: 'p1', position: { x: 0, y: 5 }, techniqueIds: ['t.surge'] }),
+        enemy(),
+      ],
+    });
+    const { actions, candidates } = chooseActionsWithDebug({
+      state,
+      actorId: 'p1',
+      data,
+      profile: 'p',
+    });
+    const landing = (x: number) =>
+      candidates.find((c) =>
+        c.actions.some((a) => a.type === 'technique' && a.target.x === x && a.target.y === 5),
+      )?.debug.expectedDamage;
+    expect(landing(3)).toBeGreaterThan(0);
+    expect(landing(2)).toBe(0);
+    expect(actions.find((a) => a.type === 'technique')).toMatchObject({
+      techniqueId: 't.surge',
+      target: { x: 3, y: 5 },
+    });
+  });
+
+  it('values a shield on an ally under threat, but not on an already shielded one', () => {
+    const data = profileData({ protection: 1 });
+    const shieldDebug = (status: Combatant['status']) => {
+      const state = makeBattle({
+        turn: acting,
+        combatants: [
+          makeCombatant({ id: 'p1', position: { x: 3, y: 5 }, techniqueIds: ['t.shield'], status }),
+          enemy(),
+        ],
+      });
+      const { candidates, actions } = chooseActionsWithDebug({
+        state,
+        actorId: 'p1',
+        data,
+        profile: 'p',
+      });
+      const onSelf = candidates.find((c) =>
+        c.actions.some((a) => a.type === 'technique' && a.target.x === 3 && a.target.y === 5),
+      );
+      return { value: onSelf?.debug.protection ?? -1, actions };
+    };
+    const threatened = shieldDebug([]);
+    expect(threatened.value).toBeGreaterThan(0);
+    expect(threatened.actions.find((a) => a.type === 'technique')).toMatchObject({
+      techniqueId: 't.shield',
+      target: { x: 3, y: 5 },
+    });
+    expect(shieldDebug([{ id: 'shielded', roundsLeft: 1, magnitude: 0.3 }]).value).toBe(0);
+  });
+
+  it('does not value a shield when no enemy can reach the ally next turn', () => {
+    const data = profileData({ protection: 1 });
+    const state = makeBattle({
+      turn: acting,
+      combatants: [
+        makeCombatant({ id: 'p1', position: { x: 0, y: 0 }, techniqueIds: ['t.shield'] }),
+        enemy({ position: { x: 9, y: 9 } }),
+      ],
+    });
+    const { candidates } = chooseActionsWithDebug({ state, actorId: 'p1', data, profile: 'p' });
+    expect(candidates.every((c) => (c.debug.protection ?? 0) === 0)).toBe(true);
   });
 });

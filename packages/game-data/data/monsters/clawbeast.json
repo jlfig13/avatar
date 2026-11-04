@@ -2,7 +2,7 @@
   "id": "monster.clawbeast",
   "nameKey": "monster.clawbeast.name",
   "role": "melee",
-  "maxHp": 90,
+  "maxHp": 160,
   "attributes": {
     "power": 12,
     "control": 10,
