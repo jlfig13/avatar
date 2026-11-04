@@ -16,7 +16,7 @@
 | Runtime | Node.js LTS atual (≥ 22) | Fixar em `.nvmrc` e `engines` |
 | Linguagem | TypeScript, `strict` + `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` | `tsconfig.base.json` compartilhado |
 | Monorepo | pnpm workspaces | Sem Turborepo/Nx no início; scripts recursivos do pnpm bastam |
-| Cliente | Vite + Babylon.js + React + Zustand | Canvas Babylon e overlay React separados |
+| Cliente | Vite + Phaser 4 + React + Zustand | Canvas Phaser e overlay React separados (ADR-022) |
 | Servidor | Colyseus (salas) + HTTP do próprio Colyseus/Express para rotas REST simples | Combate executa numa sala Colyseus |
 | Banco | PostgreSQL + Drizzle ORM + drizzle-kit | Docker Compose local |
 | Validação | Zod | Dados de jogo e mensagens do cliente |
@@ -24,7 +24,7 @@
 | Qualidade | Biome (lint + format) | CI no GitHub Actions |
 | Erros | Sentry (cliente e servidor) | DSN por variável de ambiente; desligado se vazio |
 | Deploy | Cliente em CDN estática; servidor no Fly.io ou Render; Postgres gerenciado | WebSocket precisa estar habilitado |
-| Assets | Git LFS (`*.blend`, `*.glb`, `*.ktx2`, `*.png`, `*.wav`, `*.ogg`) | Atenção à cota do GitHub |
+| Assets | Git LFS (`*.aseprite`, `*.png`, `*.wav`, `*.ogg`); mapas `.tmj` e atlas `.json` em texto | Atenção à cota do GitHub |
 
 Versões: usar a **última versão estável** de cada dependência no momento da instalação e registrar em `package.json`. Não usar versões beta/RC.
 
@@ -102,10 +102,10 @@ elemental/
 │   │
 │   └── client/                  # @elemental/client
 │       ├── index.html
-│       ├── public/assets/       # GLB, texturas, áudio (LFS)
+│       ├── public/assets/       # spritesheets/atlas PNG+JSON, mapas .tmj, áudio (LFS)
 │       └── src/
 │           ├── main.tsx         # monta canvas + overlay React
-│           ├── engine/          # Babylon: cena, câmera, luzes, loaders
+│           ├── engine/          # Phaser: config, cenas, câmera, projeção iso, loaders
 │           ├── battle/          # renderização da arena, grade, unidades, efeitos, fila de eventos
 │           ├── net/             # cliente Colyseus, envio de intenções
 │           ├── store/           # Zustand
@@ -114,9 +114,9 @@ elemental/
 │           └── debug/
 │
 ├── tools/
-│   └── blender/export_grid.py   # exportador Blender → *.grid.json (ART-03)
+│   └── tiled/export-grid.ts     # exportador Tiled (.tmj) → *.grid.json (ART-03)
 │
-└── assets-src/                  # fontes de arte (.blend etc.), LFS
+└── assets-src/                  # fontes de arte (.aseprite, mapas Tiled etc.), LFS
     └── 09_LICENSES/             # licença e origem de cada asset de terceiros
 ```
 
@@ -212,17 +212,18 @@ telemetry_events: id (bigserial pk), accountId (uuid null), sessionId (uuid), ty
 
 ## 8. Cliente: organização interna
 
-- **Babylon** é dono do canvas e do loop de render. **React** só renderiza UI sobre o canvas (`position: absolute`, `pointer-events` controlado).
-- **Zustand** é a ponte: a camada de rede grava estado/eventos; React lê para a HUD; o código Babylon assina mudanças.
-- **Câmera:** `ArcRotateCamera` em modo ortográfico (`camera.mode = ORTHOGRAPHIC_CAMERA`), alpha = −π/4 (azimute 45°), beta tal que a elevação seja ≈ 35,26°, zoom por ajuste de `orthoTop/Bottom/Left/Right` com limites.
-- **Arena sem GLB:** se o GLB da arena não existir, o cliente gera a geometria a partir do `*.grid.json` (caixas por célula com altura e cor por terreno). Isso desbloqueia a fatia 1 antes da arte.
-- **Debug:** painel com FPS, draw calls, malhas ativas e memória, ligado com a tecla `F3`.
+- **Phaser 4** é dono do canvas e do loop de render (`pixelArt: true`, `roundPixels: true`). **React** só renderiza UI sobre o canvas (`position: absolute`, `pointer-events` controlado).
+- **Zustand** é a ponte: a camada de rede grava estado/eventos; React lê para a HUD; as cenas Phaser assinam mudanças.
+- **Projeção:** isométrica 2:1. Célula `(x, y)` com altura `h` vai para a tela em `sx = (x − y) · W/2`, `sy = (x + y) · H/2 − h · D`, com `W × H` = tamanho do tile e `D` = degrau de altura (valores PROVISÓRIOS em `docs/01`, §7). Profundidade de desenho por `(x + y)`, depois `h`, depois a camada (chão, objeto, personagem). O picking de célula usa a projeção inversa, testando da maior altura para a menor.
+- **Câmera:** câmera 2D do Phaser, sem rotação; pan e zoom em passos inteiros com limites.
+- **Arena sem mapa do Tiled:** se não houver `.tmj` da arena, o cliente desenha blocos isométricos a partir do `*.grid.json` (um bloco empilhado por nível de altura, cor por terreno). Isso desbloqueia a fatia 1 antes da arte (ADR-011).
+- **Debug:** painel com FPS, quantidade de objetos de jogo, chamadas de desenho (quando o renderer informar) e memória, ligado com a tecla `F3`.
 
 ## 9. Mapas e grade
 
-- A **grade lógica global** do mapa é a fonte da verdade para regras. A geometria 3D é só visual.
+- A **grade lógica global** do mapa é a fonte da verdade para regras. Tiles e sprites são só visual.
 - Formato `*.grid.json` em `docs/05`, seção 3.
-- Mapas são montados no Blender; cada célula é marcada por custom properties; `tools/blender/export_grid.py` gera o `*.grid.json`. Na fatia 1 a arena de teste é escrita à mão/gerada por script.
+- Mapas são montados no Tiled (mapa isométrico); cada célula leva propriedades (`height`, `terrain`, `blocked`) nos tiles ou numa camada de dados; `tools/tiled/export-grid.ts` gera o `*.grid.json`. Na fatia 1 a arena de teste é escrita à mão/gerada por script.
 - O recorte de arena (`sliceArena(grid, center, size)`) copia alturas, terrenos e bloqueios da região e marca as células de fuga na borda.
 
 ## 10. Qualidade e CI

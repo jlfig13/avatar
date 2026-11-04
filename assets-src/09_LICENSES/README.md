@@ -15,9 +15,9 @@ Registro de origem e licença de **todo** asset de terceiros usado no jogo (ART-
 
 | Classe | O que é | Exemplo |
 | --- | --- | --- |
-| Produção | Acabamento anime 3D aprovado (ART-04) | Personagem final com material toon |
-| Auxiliar | Asset CC0 usado para geometria, rig, animação ou teste de câmera | Humanoide e criatura CC0 da fatia 1 |
-| Temporário | Forma simples gerada no código | Cápsula do jogador, caixa do monstro |
+| Produção | Arte original em pixel art no padrão do personagem de referência (ART-04, ADR-022) | Personagem final desenhado no Aseprite |
+| Auxiliar | Asset CC0 usado para teste de projeção, animação ou câmera | Tiles isométricos CC0 de teste |
+| Temporário | Forma simples gerada no código | Losango do jogador, bloco do monstro |
 
 Na fatia 1 só existem assets **auxiliares** e **temporários**. Informe a classe na coluna `usage` (ex.: `auxiliary: rig test`).
 
@@ -25,7 +25,7 @@ Na fatia 1 só existem assets **auxiliares** e **temporários**. Informe a class
 
 | Coluna | Conteúdo | Exemplo |
 | --- | --- | --- |
-| `asset` | Pacote e, se útil, arquivo usado | `Nature Kit / rock_largeA.glb` |
+| `asset` | Pacote e, se útil, arquivo usado | `Isometric Tiles / grass_01.png` |
 | `author` | Autor ou estúdio | `Kenney` |
 | `source_url` | Página oficial do download (sem parâmetros de rastreio) | `https://kenney.nl/assets/nature-kit` |
 | `license` | Identificador da licença | `CC0-1.0` |
@@ -36,19 +36,21 @@ Na fatia 1 só existem assets **auxiliares** e **temporários**. Informe a class
 
 - [ ] Licença lida no arquivo do download, cópia salva nesta pasta.
 - [ ] Uso comercial permitido; exigência de atribuição anotada.
-- [ ] Formato utilizável (GLB/GLTF preferido; FBX aceitável).
-- [ ] Para personagens: rig e animações necessárias presentes (idle, walk, run, cast, hit, defeat ou próximas).
+- [ ] Formato utilizável (PNG; spritesheet com JSON de atlas ou grade regular; `.aseprite` é um bônus).
+- [ ] Para personagens: animações necessárias (idle, walk, run, cast, hit, defeat ou próximas) em pelo menos 4 direções.
 - [ ] Estilo visual compatível com o conjunto principal.
 
 ## Candidatos avaliados (verificação de 2026-11-04)
+
+> **ADR-022 (2026-11-04):** a direção passou a ser 2D em pixel art. Os packs KayKit 3D abaixo tinham licença válida, mas **deixaram de ser usados** e saíram do `LICENSES.csv`; as cópias de licença ficam arquivadas nesta pasta. Os candidatos 2D (Newc42, LPC, PtDesigns, 0x72) seguem sem aprovação: ver `docs/09-pendencias.md`.
 
 Downloads feitos pela página oficial (tier gratuito, "pague quanto quiser" com US$ 0) e inspecionados fora do repositório. Nenhum binário foi versionado. Só os aprovados estão no `LICENSES.csv`.
 
 | Necessidade | Candidato | Fonte | Licença (no download) | Formatos | Situação |
 | --- | --- | --- | --- | --- | --- |
-| Humanoide | KayKit Adventurers 2.0 (Free) | <https://kaylousberg.itch.io/kaykit-adventurers> | CC0 1.0; comercial ok; crédito opcional ("Kay Lousberg, www.kaylousberg.com") | GLB, glTF, FBX, OBJ | **Aprovado.** 6 personagens (Barbarian, Knight, Mage, Ranger, Rogue, Rogue_Hooded), rig `Rig_Medium` de 23 ossos |
-| Animações do humanoide | KayKit Character Animations 1.1 (Free) | <https://kaylousberg.itch.io/kaykit-character-animations> | CC0 1.0; comercial ok; crédito opcional | GLB (8 Rig_Medium + 6 Rig_Large + 2 manequins), FBX | **Aprovado.** Rig idêntico ao Adventurers (ver teste abaixo) |
-| Natureza | KayKit Forest Nature Pack 1.0 (Free) | <https://kaylousberg.itch.io/kaykit-forest> | CC0 1.0; comercial ok; crédito opcional | glTF + .bin (105), FBX, OBJ; 1 atlas `forest_texture.png` 1024² | **Aprovado e recomendado.** 14 árvores, 6 árvores secas, 22 arbustos, 43 pedras, 20 gramas |
+| Humanoide | KayKit Adventurers 2.0 (Free) | <https://kaylousberg.itch.io/kaykit-adventurers> | CC0 1.0; comercial ok; crédito opcional ("Kay Lousberg, www.kaylousberg.com") | GLB, glTF, FBX, OBJ | **Licença ok; não usado (ADR-022).** 6 personagens (Barbarian, Knight, Mage, Ranger, Rogue, Rogue_Hooded), rig `Rig_Medium` de 23 ossos |
+| Animações do humanoide | KayKit Character Animations 1.1 (Free) | <https://kaylousberg.itch.io/kaykit-character-animations> | CC0 1.0; comercial ok; crédito opcional | GLB (8 Rig_Medium + 6 Rig_Large + 2 manequins), FBX | **Licença ok; não usado (ADR-022).** Rig idêntico ao Adventurers (ver teste abaixo) |
+| Natureza | KayKit Forest Nature Pack 1.0 (Free) | <https://kaylousberg.itch.io/kaykit-forest> | CC0 1.0; comercial ok; crédito opcional | glTF + .bin (105), FBX, OBJ; 1 atlas `forest_texture.png` 1024² | **Licença ok; não usado (ADR-022).** 14 árvores, 6 árvores secas, 22 arbustos, 43 pedras, 20 gramas |
 | Natureza (alternativa) | Kenney Nature Kit | <https://kenney.nl/assets/nature-kit> | — | — | **Descartado (ADR-021):** o site `kenney.nl` recusa acesso automatizado (403 do próprio servidor) e o KayKit Forest já cobre a necessidade |
 | Animações (alternativa) | Quaternius Universal Animation Library (Standard) | <https://quaternius.itch.io/universal-animation-library> | CC0 1.0 (licença verificada) | GLB, FBX; rig próprio de 65 ossos, 43 animações | **Não necessário:** o KayKit cobre todas as animações; usar exigiria retarget. Fora do CSV |
 | Quadrúpede | Quaternius Farm Animals Animated (`lowpoly-animated-animals`) | <https://quaternius.itch.io/lowpoly-animated-animals> | **Sem arquivo de licença no download** (só a página diz CC0) | FBX, OBJ, .blend (sem GLB) | **Reprovado:** licença não comprovada no download; animações só idle/walk/run/jump/death, sem attack nem hit |
@@ -60,7 +62,7 @@ Downloads feitos pela página oficial (tier gratuito, "pague quanto quiser" com 
 | Referência de estilo 2D | 0x72 DungeonTileset II | <https://0x72.itch.io/dungeontileset-ii> | CC0 declarado na página; não verificado no download | PNG | **Só referência, não aprovado:** mesmo motivo do PtDesigns |
 | Texturas de terreno | — | — | — | — | **Adiado:** a arena da fatia 1 usa cor por terreno (ADR-011, ADR-021) |
 
-### Teste de rig (Adventurers × Character Animations)
+### Teste de rig (Adventurers × Character Animations) — histórico, antes da ADR-022
 
 Leitura do JSON dos GLB (skins, nós e canais de animação):
 

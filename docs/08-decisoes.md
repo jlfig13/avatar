@@ -8,6 +8,7 @@
 - **Consequências:** lore e nomes finais ficam para documento à parte; o sistema de jogo não depende do IP.
 
 ## ADR-002 — 3D isométrico com Babylon.js
+> **Substituída pela ADR-022 (2026-11-04).**
 - **Contexto:** GDD v1.0 previa 2D/Phaser; o manual de arte, 3D.
 - **Decisão:** 3D estilizado, câmera ortográfica isométrica, Babylon.js + TypeScript.
 - **Consequências:** personagens modulares em 3D; sprites pré-renderizados só no pós-protótipo.
@@ -45,6 +46,7 @@
 - **Consequências:** menos operação para equipe solo; extração futura possível pelas fronteiras dos módulos.
 
 ## ADR-011 — Arena da fatia 1 procedural a partir da grade
+> **Ajustada pela ADR-022:** em 2D, o cliente desenha blocos isométricos empilhados a partir do `*.grid.json`; o mapa `.tmj` do Tiled ocupa o lugar do GLB.
 - **Contexto:** a arte (ART-02) depende do humano e não deve bloquear o desenvolvimento.
 - **Decisão:** o cliente gera a geometria da arena a partir do `*.grid.json` quando não há GLB.
 - **Consequências:** fatia 1 jogável sem arte; o GLB substitui o visual quando existir.
@@ -87,6 +89,7 @@
 - **Consequências:** regras determinísticas para IA e cliente; pendentes de confirmação em `docs/09`.
 
 ## ADR-018 — Direção de arte anime 3D como alvo de produção, fora da fatia 1
+> **Substituída pela ADR-022 (2026-11-04).**
 - **Contexto:** o GDD previa "3D estilizado" low-mid poly. O dono definiu como identidade visual um JRPG com acabamento anime 3D (personagens com proporções de anime, materiais toon, texturas pintadas). Não há pacote CC0 que entregue isso pronto, e o pipeline (rosto, cabelo, roupas, materiais, animações) é trabalho grande para uma pessoa com menos de 10 h/semana. A fatia 1 valida o combate, não a arte.
 - **Decisão:** anime 3D com câmera isométrica ortográfica é o alvo de produção (`docs/01`, §7). A fatia 1 mantém a ART-01 com escopo e critérios originais, usando assets CC0 como **auxiliares** e placeholders como **temporários**. O pipeline anime fica na nova issue ART-04, fora da fatia 1, iniciada só depois da validação do combate. O sombreado toon e o contorno são implementados no Babylon (o GLB não carrega o Toon BSDF do Blender).
 - **Consequências:** a fatia 1 não atrasa por arte; assets são classificados em produção, auxiliares e temporários (`assets-src/09_LICENSES/README.md`); referências visuais de jogos de terceiros servem só como inspiração e nenhum modelo extraído ou fan-made entra no projeto.
@@ -103,11 +106,26 @@
 - **Decisão:** na fatia 1, o `monster.clawbeast` usa o placeholder temporário. A ART-01 fecha com humanoide, animações e natureza KayKit (CC0). Kenney Nature Kit fica descartado; texturas de terreno seguem adiadas (ADR-011).
 - **Consequências:** a fatia 1 não depende de modelo de criatura; a escolha do quadrúpede volta junto com a ART-04 (produção) ou quando surgir um pack com licença comprovada no download.
 
-## ADR-021 — Sala de batalha: sessão separada do transporte e reconexão no single-player (SRV-02)
+## ADR-023 — Sala de batalha: sessão separada do transporte e reconexão no single-player (SRV-02)
 - **Decisão:** a lógica de estado da sala fica em `BattleSession` (estado + ações registradas + `replay`), sem dependência do Colyseus; a `BattleRoom` cuida de transporte, timers e IA. O `snapshot` omite `seed` e `rngState` (o cliente poderia prever rolagens). A seed vem de `crypto.randomInt` no servidor. Na fatia 1 há um único jogador, então a queda dele cai na regra "todos os jogadores caem" de `docs/02` §10: a batalha pausa (timers e IA param) por `disconnect.allDisconnectedPauseSeconds` e, sem retorno, a sala encerra como `abandoned` (telemetria). A regra de "3 rodadas" fica para o multiplayer, quando houver outro jogador ativo. O cliente é `@colyseus/sdk` (sucessor do `colyseus.js` na 0.18).
 - **Consequências:** replay por seed + ações em log; testes da sala sem banco (autenticação injetável).
 
-## ADR-022 — IA: dano do `fire.surge` na estimativa e consideração `protection` (QA-01)
+## ADR-022 — 2D isométrico em pixel art com Phaser 4 (substitui ADR-002 e ADR-018)
+- **Contexto:** o dono definiu como identidade visual definitiva um JRPG em pixel art (inspiração de paleta e leitura: Breath of Fire IV), em mundo 2D isométrico. A decisão foi tomada antes da CLI-01, quando o cliente ainda não tinha código de engine; o `combat-core` não depende de engine. Custos conhecidos e aceitos: cada direção e cada animação de personagem é desenhada à mão, e a altura do tático exige empilhar tiles e ordenar profundidade.
+- **Decisão:** cliente em **Phaser 4** (canvas/WebGL, `pixelArt: true`, zoom inteiro) com overlay React + Zustand; mapas no **Tiled**; sprites e tiles no **Aseprite**. Projeção isométrica 2:1. Personagens, NPCs e criaturas finais são **arte original**; packs de terceiros entram só como auxiliares/temporários, depois da verificação de licença (`assets-src/09_LICENSES`). O personagem de referência (ART-04) define o padrão de todos os demais. Valores de tamanho e direções são PROVISÓRIOS (ver `docs/09`).
+- **Consequências:** `docs/01`, `docs/03`, `docs/04`, o backlog do cliente (CLI-*) e de arte (ART-01–04) foram revisados; o pipeline Blender/GLB sai do projeto e a ART-02/ART-03 passam a usar Tiled. Os packs KayKit 3D aprovados na ART-01 deixam de ser usados (saem do `LICENSES.csv`; as licenças ficam arquivadas). Nada muda no `combat-core`, no servidor nem nos contratos de dados: `Facing` continua `N/E/S/W` e mapeia para as 4 diagonais da tela. A ADR-011 (arena gerada a partir da grade) e a ADR-021 (monstro como placeholder) continuam valendo, agora em 2D: a arena vira blocos isométricos empilhados (altura 0–8 desenhada como `h` degraus de `D` px) e o placeholder do monstro vira um bloco 2D. O cliente continua usando o `combat-core` só para previews. A estimativa da ART-03 caiu de 8 h para 4 h (exportador em Node, sem Blender); total da fatia 1: 210 h.
+
+## ADR-024 — ART-04 em duas fases e combate sem armas
+- **Contexto:** a especificação do protagonista modular cobria o sistema de avatar inteiro (componentes, expressões, 12 animações, recoloração, efeitos, configuração). Executada de uma vez, levaria meses com menos de 10 h/semana e atrasaria a medição de custo que a ART-04 deve entregar. O `docs/03` já deixa "personagem modular" fora do protótipo. O dono também definiu que o personagem não usa armas convencionais.
+- **Decisão:** (1) a especificação completa vira o documento de visão `docs/10-visao-avatar.md`; a ART-04 executa só a fase de validação (personagem de referência, parâmetros, espelhamento, uma recoloração, um efeito, área jogável, evidências e estimativa em 5 categorias); o resto vira issues depois da fatia 1. (2) O personagem do jogador combate com movimentos corporais e domínio elemental, sem armas convencionais (`docs/01` §5).
+- **Consequências:** a ART-04 continua sem bloquear a fatia 1. Nomes de animação seguem os contratos (`hit`, `defeat`); o manifesto usa `camelCase` e Zod; recoloração inicial por troca de paleta pré-processada. Paletas elementais finais saem da ART-04, sem repetir associações de cor de outras franquias. Nada muda em `combat-core`, regras de `docs/02` ou contratos de `docs/05`.
+
+## ADR-025 — Âncora do sprite em (32, 90)
+- **Contexto:** com a âncora em (32, 96), na borda de baixo do canvas, o pé mais próximo da câmera era cortado. Na projeção 2:1, um ponto à frente do ponto de apoio aparece abaixo dele na tela, e na caminhada o pé da frente desce até uns 5 px. Isso apareceu nos sprites isométricos gerados para teste e na demo no Phaser 4.
+- **Decisão:** a âncora (centro dos pés) fica no pixel (32, 90) do canvas de 64 × 96, com 6 px livres embaixo. No Phaser, `setOrigin(0.5, 90 / 96)`. O valor continua PROVISÓRIO até a ART-04.
+- **Consequências:** o personagem não perde altura, porque a escala do desenho é a mesma. Atualizados `docs/10` (§3 e §11), o critério da ART-04 e o gerador de template `.aseprite`. A grade, o `combat-core` e os contratos de `docs/05` não mudam.
+
+## ADR-026 — IA: dano do `fire.surge` na estimativa e consideração `protection` (QA-01)
 - **Contexto:** o simulador (QA-01) mostrou que a IA nunca usava o `water.shield` (nenhuma consideração valorizava defesa) e que o dano do `fire.surge` não entrava na estimativa, porque os alvos eram procurados na célula de destino do `dash` (sempre vazia), e não nos inimigos adjacentes à chegada.
 - **Decisão:** (1) na avaliação de um plano, uma técnica de alvo `cell` com `dash` **e** `damage` coloca o usuário na célula de chegada e considera como vítimas os inimigos adjacentes a ela, como `victimsOf` na resolução. `dash` sem dano (`water.glide`) continua avaliado a partir do destino do movimento: avaliá-lo pela chegada fez a IA `balanced` gastar a ação aproximando-se e ceder o primeiro golpe (vitória da água caiu de ~36% para ~5% no simulador). (2) Nova consideração `protection`: para técnica com estado `shielded`, vale `magnitude × rodadas × dano esperado dos inimigos no alvo / vida do alvo` (mesmo cálculo de risco do `safety`), zero se o alvo já está com escudo ou é hostil. Peso só no perfil `balanced` (`rules.json`, PROVISÓRIO 1,0); pesos acima de ~1,5 fazem a IA trocar ataque por escudo cedo demais e reduzem a vitória.
 - **Consequências:** nenhuma regra de jogo muda; só a escolha da IA. A IA ainda não planeja vários turnos (ex.: usar `water.glide` para manter distância), o que fica como limitação conhecida.

@@ -24,6 +24,7 @@
               "options": {
                 "paths": {
                   "babylonjs": "combat-core must stay pure TypeScript (CLAUDE.md rule 4).",
+                  "phaser": "combat-core must stay pure TypeScript (CLAUDE.md rule 4).",
                   "react": "combat-core must stay pure TypeScript (CLAUDE.md rule 4).",
                   "react-dom": "combat-core must stay pure TypeScript (CLAUDE.md rule 4).",
                   "colyseus": "combat-core must stay pure TypeScript (CLAUDE.md rule 4).",
@@ -31,7 +32,14 @@
                 },
                 "patterns": [
                   {
-                    "group": ["@babylonjs/*", "@colyseus/*", "react/*", "react-dom/*", "node:*"],
+                    "group": [
+                      "@babylonjs/*",
+                      "phaser/*",
+                      "@colyseus/*",
+                      "react/*",
+                      "react-dom/*",
+                      "node:*"
+                    ],
                     "message": "combat-core must stay pure TypeScript (CLAUDE.md rule 4)."
                   }
                 ]

@@ -69,7 +69,7 @@ const active = (c: BattleState['combatants'][number]) => c.alive && !c.fled;
 /**
  * A damaging dash to a cell (fire.surge) moves the user there and hits the enemies adjacent to the
  * landing cell. Pure-mobility dashes (water.glide) keep being evaluated from the destination
- * (ADR-022: evaluating them from the landing made the balanced AI throw away its tempo).
+ * (ADR-026: evaluating them from the landing made the balanced AI throw away its tempo).
  */
 const dashesToCell = (plan: Plan) =>
   plan.act?.kind === 'technique' &&

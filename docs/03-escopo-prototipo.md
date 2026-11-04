@@ -39,11 +39,11 @@
 | Derrota | Perda de XP; sem durabilidade |
 | Combate | Barra de tempo completa; altura, flanco, linha de visão; terreno temporário |
 | Assets | Packs prontos CC0/licenciados, com ajustes |
-| Personagem | 2 corpos-base (masculino e feminino) com rig compartilhado |
+| Personagem | 2 corpos-base (masculino e feminino) em spritesheet pixel art; na fatia 1, formas temporárias (ADR-022) |
 | Animações | idle, walk, run, cast, hit, defeat |
 | Áudio | SFX de técnicas e UI + 1–2 músicas CC0 |
 | Plataforma e input | Desktop; clique para mover |
-| Interface | React (telas) + Babylon GUI (no mundo) |
+| Interface | React (telas) + Phaser (elementos no mundo) |
 | Tutorial | Primeira batalha guiada + dicas contextuais |
 | Idioma | Português, com textos externalizados |
 | Save | Backend: Node.js + PostgreSQL |
