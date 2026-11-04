@@ -234,13 +234,13 @@
   - [x] Métricas: taxa de vitória, rodadas médias, turnos médios do jogador, duração estimada (turnos do jogador × 20 s + turnos de IA × 3 s), dano por técnica, frequência de uso de cada técnica.
   - [x] Parâmetros por linha de comando (`--battles`, `--preset`, `--enemies`).
 
-### [ ] SRV-01 — Servidor Colyseus base (monólito modular)
+### [x] SRV-01 — Servidor Colyseus base (monólito modular)
 - **Epic:** server · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** INF-01
 - **Descrição:** bootstrap do Colyseus, `config.ts` com Zod, estrutura de `modules/`, rota `GET /health`, logs estruturados (pino ou o logger padrão), CORS configurável.
 - **Critérios de aceite:**
-  - [ ] `/health` responde `{ status: 'ok' }`.
-  - [ ] Uma sala de teste aceita conexão de um cliente de teste (`colyseus.js`) em teste automatizado.
-  - [ ] Servidor não sobe se faltar variável obrigatória.
+  - [x] `/health` responde `{ status: 'ok' }`.
+  - [x] Uma sala de teste aceita conexão de um cliente de teste (`colyseus.js`) em teste automatizado.
+  - [x] Servidor não sobe se faltar variável obrigatória.
 
 ### [ ] SRV-05 — Drizzle: schema inicial e migrações
 - **Epic:** server · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** INF-04

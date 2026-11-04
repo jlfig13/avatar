@@ -14,17 +14,24 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "dev": "echo \"server dev: not implemented yet (SRV-01)\"",
+    "dev": "node --conditions=@elemental/source --env-file-if-exists=../../.env --watch src/index.ts",
     "db:ping": "node --env-file-if-exists=../../.env scripts/dbPing.ts",
-    "sim": "node --conditions=@elemental/source scripts/simulate.ts"
+    "sim": "node --conditions=@elemental/source scripts/simulate.ts",
+    "start": "node --env-file-if-exists=../../.env dist/index.js"
   },
   "dependencies": {
+    "@colyseus/core": "0.18.26",
+    "@colyseus/schema": "5.0.43",
+    "@colyseus/ws-transport": "0.18.4",
     "@elemental/combat-core": "workspace:*",
     "@elemental/game-data": "workspace:*",
     "@elemental/shared": "workspace:*",
-    "pg": "8.23.1"
+    "pg": "8.23.1",
+    "pino": "10.4.0",
+    "zod": "4.6.7"
   },
   "devDependencies": {
+    "@colyseus/sdk": "0.18.9",
     "@types/pg": "^8.23.1"
   }
 }
