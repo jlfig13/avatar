@@ -305,11 +305,11 @@
   - [x] Projeção e projeção inversa são consistentes (teste com todas as células de uma grade 10 × 10 e 3 alturas).
 
 
-### [ ] CLI-11 — Painel de debug de desempenho
+### [x] CLI-11 — Painel de debug de desempenho
 - **Epic:** client · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** CLI-01
 - **Descrição:** painel React ligado/desligado com F3: FPS, objetos de jogo ativos, chamadas de desenho (quando o renderer informar), memória JS (quando disponível) e o último log de decisão da IA.
 - **Critérios de aceite:**
-  - [ ] F3 alterna o painel; valores atualizam a cada 500 ms.
+  - [x] F3 alterna o painel; valores atualizam a cada 500 ms.
 
 ### [ ] CLI-03 — Arena a partir da grade (procedural, com mapa Tiled opcional)
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CLI-02, CORE-03

@@ -1,4 +1,10 @@
 {
   "app.title": "Elemental",
-  "debug.cycleColor": "Trocar cor do losango"
+  "debug.cycleColor": "Trocar cor do losango",
+  "debug.fps": "FPS",
+  "debug.gameObjects": "Objetos de jogo",
+  "debug.drawCalls": "Chamadas de desenho/quadro",
+  "debug.memory": "Memória JS",
+  "debug.lastAiDecision": "Última decisão da IA",
+  "debug.sample": "Amostra"
 }
