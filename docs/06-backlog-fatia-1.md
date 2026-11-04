@@ -242,12 +242,12 @@
   - [x] Uma sala de teste aceita conexão de um cliente de teste (`colyseus.js`) em teste automatizado.
   - [x] Servidor não sobe se faltar variável obrigatória.
 
-### [ ] SRV-05 — Drizzle: schema inicial e migrações
+### [x] SRV-05 — Drizzle: schema inicial e migrações
 - **Epic:** server · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** INF-04
 - **Descrição:** schema de `docs/04`, seção 6; `drizzle.config.ts`; scripts `db:generate`, `db:migrate`, `db:seed` (convites de `INVITE_CODES`).
 - **Critérios de aceite:**
-  - [ ] Migração cria as 4 tabelas do zero num banco vazio.
-  - [ ] `db:seed` é idempotente.
+  - [x] Migração cria as 4 tabelas do zero num banco vazio.
+  - [x] `db:seed` é idempotente.
 
 ### [ ] SRV-04 — Conta anônima por token + código de convite
 - **Epic:** server · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** SRV-05

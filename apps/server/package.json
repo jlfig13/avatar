@@ -17,7 +17,10 @@
     "dev": "node --conditions=@elemental/source --env-file-if-exists=../../.env --watch src/index.ts",
     "db:ping": "node --env-file-if-exists=../../.env scripts/dbPing.ts",
     "sim": "node --conditions=@elemental/source scripts/simulate.ts",
-    "start": "node --env-file-if-exists=../../.env dist/index.js"
+    "start": "node --env-file-if-exists=../../.env dist/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node --env-file-if-exists=../../.env scripts/migrate.ts",
+    "db:seed": "node --env-file-if-exists=../../.env scripts/seed.ts"
   },
   "dependencies": {
     "@colyseus/core": "0.18.26",
@@ -26,12 +29,14 @@
     "@elemental/combat-core": "workspace:*",
     "@elemental/game-data": "workspace:*",
     "@elemental/shared": "workspace:*",
+    "drizzle-orm": "0.45.4",
     "pg": "8.23.1",
     "pino": "10.4.0",
     "zod": "4.6.7"
   },
   "devDependencies": {
     "@colyseus/sdk": "0.18.9",
-    "@types/pg": "^8.23.1"
+    "@types/pg": "^8.23.1",
+    "drizzle-kit": "0.31.11"
   }
 }

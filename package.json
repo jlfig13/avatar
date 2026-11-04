@@ -15,9 +15,10 @@
     "format": "biome format --write .",
     "typecheck": "pnpm -r run typecheck",
     "validate:data": "pnpm --filter @elemental/game-data run validate:data",
-    "db:generate": "echo \"db:generate: not implemented yet (SRV-05)\"",
-    "db:migrate": "echo \"db:migrate: not implemented yet (SRV-05)\"",
-    "db:ping": "pnpm --filter @elemental/server run db:ping"
+    "db:generate": "pnpm --filter @elemental/server run db:generate",
+    "db:migrate": "pnpm --filter @elemental/server run db:migrate",
+    "db:ping": "pnpm --filter @elemental/server run db:ping",
+    "db:seed": "pnpm --filter @elemental/server run db:seed"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.4",

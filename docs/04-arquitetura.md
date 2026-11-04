@@ -193,7 +193,7 @@ telemetry_events: id (bigserial pk), accountId (uuid null), sessionId (uuid), ty
 ```
 
 - Token: string aleatória de 32 bytes, entregue ao cliente uma vez; no banco guarda-se só o hash SHA-256.
-- Convites iniciais via seed (`pnpm db:seed`) a partir de `INVITE_CODES` no `.env`.
+- Convites iniciais via seed (`pnpm db:seed`, idempotente) a partir de `INVITE_CODES` no `.env`: `CODIGO` (1 uso) ou `CODIGO:N` (N usos).
 - Telemetria (fatia 1): `battle_started`, `battle_ended` (resultado, duração em s, rodadas, turnos do jogador, timeouts).
 
 ## 7. Variáveis de ambiente
