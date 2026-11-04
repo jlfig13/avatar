@@ -35,9 +35,13 @@ Nenhum destes está no `LICENSES.csv` até passar no checklist acima.
 
 | Necessidade | Candidato | Fonte | Situação |
 | --- | --- | --- | --- |
-| Humanoide | KayKit Adventurers | <https://kaylousberg.itch.io/kaykit-adventurers> | Candidato principal; verificar licença do download |
-| Animações do humanoide | KayKit Character Animations | <https://kaylousberg.itch.io/kaykit-character-animations> | Candidato principal; confirmar compatibilidade de rig com Adventurers |
-| Natureza | KayKit Forest Nature Pack **ou** Kenney Nature Kit | <https://kenney.nl/assets/nature-kit> | Comparar estilo com KayKit antes de escolher |
-| Animações (alternativa) | Quaternius Universal Animation Library | <https://quaternius.itch.io/universal-animation-library> | Só se faltar animação no KayKit; exige retarget de rig |
-| Quadrúpede | — | — | **Pendente:** nenhum candidato validado |
+| Humanoide | KayKit Adventurers | <https://kaylousberg.itch.io/kaykit-adventurers> | Candidato principal. **Não verificado (2026-11-04):** download bloqueado pela política de rede do ambiente (`kaylousberg.itch.io` → 403). Licença, formatos e rig pendentes |
+| Animações do humanoide | KayKit Character Animations | <https://kaylousberg.itch.io/kaykit-character-animations> | Candidato principal. **Não verificado (2026-11-04):** download bloqueado (403). Teste de compatibilidade de rig com Adventurers não executado |
+| Natureza | KayKit Forest Nature Pack **ou** Kenney Nature Kit | <https://kaylousberg.itch.io/kaykit-forest> · <https://kenney.nl/assets/nature-kit> | **Não verificado (2026-11-04):** ambos os hosts bloqueados (403). Comparação de estilo não feita; sem recomendação |
+| Animações (alternativa) | Quaternius Universal Animation Library | <https://quaternius.itch.io/universal-animation-library> | Só se faltar animação no KayKit; exige retarget. **Não verificado (2026-11-04):** `quaternius.itch.io` bloqueado (403) |
+| Quadrúpede | — | — | **Pendente:** nenhum candidato validado; pesquisa nas fontes oficiais bloqueada (403). Ver `docs/09-pendencias.md` |
 | Texturas de terreno | Kenney ou KayKit | — | Baixa prioridade: a arena da fatia 1 usa cor por terreno (ADR-011) |
+
+### Tentativa de validação de 2026-11-04
+
+Download autorizado pelo dono para inspeção, mas a política de rede do ambiente de nuvem recusou a conexão (HTTP 403 no `CONNECT`) para `kaylousberg.itch.io`, `kenney.nl` e `quaternius.itch.io`. Nada foi baixado nem verificado; nenhuma licença foi copiada e o `LICENSES.csv` continua vazio. Para concluir: liberar esses domínios em *Network access → Allowed domains* do ambiente (ver <https://code.claude.com/docs/en/cloud-environments#network-access>) e repetir a validação, ou baixar os pacotes manualmente e salvar a licença de cada um nesta pasta.
