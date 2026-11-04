@@ -19,7 +19,7 @@
     "id": "preset.fire",
     "nameKey": "preset.fire.name",
     "element": "fire",
-    "maxHp": 95,
+    "maxHp": 122,
     "attributes": {
       "power": 14,
       "control": 10,

@@ -302,7 +302,7 @@ Dados: `packages/game-data/data/monsters/clawbeast.json` e `packages/game-data/d
 | id | Elemento | maxHp | power | control | resistance | mobility | spirit | focus | Técnicas | Passiva |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `preset.water` | água | 140 | 10 | 14 | 10 | 12 | 12 | 12 | as 4 de água | `water.backflow` |
-| `preset.fire` | fogo | 95 | 14 | 10 | 9 | 13 | 10 | 10 | as 4 de fogo | `fire.ember` |
+| `preset.fire` | fogo | 122 | 14 | 10 | 9 | 13 | 10 | 10 | as 4 de fogo | `fire.ember` |
 
 Schema (`PresetSchema` em `@elemental/shared`): `id`, `nameKey` (i18n, ex.: `preset.water.name`), `element`, `maxHp`, `attributes`, `techniqueIds`, `passiveIds`. Arquivo: `packages/game-data/data/combatants/player-presets.json` (lista).
 
