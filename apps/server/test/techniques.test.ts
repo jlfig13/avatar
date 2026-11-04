@@ -2,6 +2,7 @@ import {
   type Action,
   applyAction,
   type BattleState,
+  type Combatant,
   createBattle,
   damageAmount,
   type Grid,
@@ -109,9 +110,10 @@ describe('real slice-1 techniques', () => {
       { x: 4, y: 5 },
       flat([{ x: 4, y: 5 }]),
     );
-    const [me, foe] = dry.combatants as [never, never];
-    const base = 10 + 10 * 0.8; // power + attacker.power × scaling (docs/05 §4.1, preset.water)
-    const resistance = 8 * 0.5;
+    const [me, foe] = dry.combatants as [Combatant, Combatant];
+    // power + attacker.power × scaling (docs/02 §6.6); values read from the data (QA-01 tunes them)
+    const base = technique.power + me.attributes.power * technique.powerScaling;
+    const resistance = foe.attributes.resistance * gameData.rules.damage.resistanceFactor;
     expect(damageAmount(dry.grid, technique, me, foe, gameData)).toBe(
       Math.round(base - resistance),
     );
