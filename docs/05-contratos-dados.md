@@ -280,7 +280,7 @@ Lembrete: máximo de 1 reação por combatente por rodada; reação não provoca
   "id": "monster.clawbeast",
   "nameKey": "monster.clawbeast.name",
   "role": "melee",
-  "maxHp": 90,
+  "maxHp": 160,
   "attributes": { "power": 12, "control": 10, "resistance": 8, "mobility": 12, "spirit": 5, "focus": 5 },
   "techniqueIds": ["monster.claw", "monster.pounce"],
   "passiveIds": ["monster.counter"],
@@ -290,7 +290,7 @@ Lembrete: máximo de 1 reação por combatente por rodada; reação não provoca
 
 | id | Alcance | Área | Custo | Atraso | Precisão | Poder | Escala | Efeito |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `monster.claw` | 1 | single | 0 | 0 | 90 | 10 | 0,8 | dano |
+| `monster.claw` | 1 | single | 0 | 0 | 90 | 8 | 0,8 | dano |
 | `monster.pounce` | 2–3 | single | 10 | 10 | 80 | 8 | 0,6 | `dash` até o alvo + dano |
 
 Monstros usam energia igual aos jogadores (`maxEnergy = 40 + spirit*2`).
