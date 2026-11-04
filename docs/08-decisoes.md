@@ -8,6 +8,7 @@
 - **Consequências:** lore e nomes finais ficam para documento à parte; o sistema de jogo não depende do IP.
 
 ## ADR-002 — 3D isométrico com Babylon.js
+> **Substituída pela ADR-022 (2026-11-04).**
 - **Contexto:** GDD v1.0 previa 2D/Phaser; o manual de arte, 3D.
 - **Decisão:** 3D estilizado, câmera ortográfica isométrica, Babylon.js + TypeScript.
 - **Consequências:** personagens modulares em 3D; sprites pré-renderizados só no pós-protótipo.
@@ -87,6 +88,7 @@
 - **Consequências:** regras determinísticas para IA e cliente; pendentes de confirmação em `docs/09`.
 
 ## ADR-018 — Direção de arte anime 3D como alvo de produção, fora da fatia 1
+> **Substituída pela ADR-022 (2026-11-04).**
 - **Contexto:** o GDD previa "3D estilizado" low-mid poly. O dono definiu como identidade visual um JRPG com acabamento anime 3D (personagens com proporções de anime, materiais toon, texturas pintadas). Não há pacote CC0 que entregue isso pronto, e o pipeline (rosto, cabelo, roupas, materiais, animações) é trabalho grande para uma pessoa com menos de 10 h/semana. A fatia 1 valida o combate, não a arte.
 - **Decisão:** anime 3D com câmera isométrica ortográfica é o alvo de produção (`docs/01`, §7). A fatia 1 mantém a ART-01 com escopo e critérios originais, usando assets CC0 como **auxiliares** e placeholders como **temporários**. O pipeline anime fica na nova issue ART-04, fora da fatia 1, iniciada só depois da validação do combate. O sombreado toon e o contorno são implementados no Babylon (o GLB não carrega o Toon BSDF do Blender).
 - **Consequências:** a fatia 1 não atrasa por arte; assets são classificados em produção, auxiliares e temporários (`assets-src/09_LICENSES/README.md`); referências visuais de jogos de terceiros servem só como inspiração e nenhum modelo extraído ou fan-made entra no projeto.
@@ -106,3 +108,8 @@
 ## ADR-023 — Sala de batalha: sessão separada do transporte e reconexão no single-player (SRV-02)
 - **Decisão:** a lógica de estado da sala fica em `BattleSession` (estado + ações registradas + `replay`), sem dependência do Colyseus; a `BattleRoom` cuida de transporte, timers e IA. O `snapshot` omite `seed` e `rngState` (o cliente poderia prever rolagens). A seed vem de `crypto.randomInt` no servidor. Na fatia 1 há um único jogador, então a queda dele cai na regra "todos os jogadores caem" de `docs/02` §10: a batalha pausa (timers e IA param) por `disconnect.allDisconnectedPauseSeconds` e, sem retorno, a sala encerra como `abandoned` (telemetria). A regra de "3 rodadas" fica para o multiplayer, quando houver outro jogador ativo. O cliente é `@colyseus/sdk` (sucessor do `colyseus.js` na 0.18).
 - **Consequências:** replay por seed + ações em log; testes da sala sem banco (autenticação injetável).
+
+## ADR-022 — 2D isométrico em pixel art com Phaser 4 (substitui ADR-002 e ADR-018)
+- **Contexto:** o dono definiu como identidade visual definitiva um JRPG em pixel art (inspiração de paleta e leitura: Breath of Fire IV), em mundo 2D isométrico. A decisão foi tomada antes da CLI-01, quando o cliente ainda não tinha código de engine; o `combat-core` não depende de engine. Custos conhecidos e aceitos: cada direção e cada animação de personagem é desenhada à mão, e a altura do tático exige empilhar tiles e ordenar profundidade.
+- **Decisão:** cliente em **Phaser 4** (canvas/WebGL, `pixelArt: true`, zoom inteiro) com overlay React + Zustand; mapas no **Tiled**; sprites e tiles no **Aseprite**. Projeção isométrica 2:1. Personagens, NPCs e criaturas finais são **arte original**; packs de terceiros entram só como auxiliares/temporários, depois da verificação de licença (`assets-src/09_LICENSES`). O personagem de referência (ART-04) define o padrão de todos os demais. Valores de tamanho e direções são PROVISÓRIOS (ver `docs/09`).
+- **Consequências:** `docs/01`, `docs/03`, `docs/04`, o backlog do cliente (CLI-*) e de arte (ART-01–04) foram revisados; o pipeline Blender/GLB sai do projeto e a ART-02/ART-03 passam a usar Tiled. Os packs KayKit 3D aprovados na ART-01 deixam de ser usados (saem do `LICENSES.csv`; as licenças ficam arquivadas). Nada muda no `combat-core`, no servidor nem nos contratos de dados: `Facing` continua `N/E/S/W` e mapeia para as 4 diagonais da tela. A ADR-011 (arena gerada a partir da grade) e a ADR-021 (monstro como placeholder) continuam valendo, agora em 2D.

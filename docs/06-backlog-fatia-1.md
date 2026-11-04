@@ -43,7 +43,7 @@
   - [x] `pnpm install`, `pnpm build`, `pnpm lint`, `pnpm typecheck` e `pnpm test` passam com pacotes vazios (cada um com 1 teste trivial).
   - [x] Pacotes importam uns aos outros pelo nome (`@elemental/shared` etc.) via `workspace:*`.
   - [x] `.nvmrc`, `.gitignore` (inclui `.env`, `dist`, `node_modules`), `.env.example` e `README.md` com instruções de setup.
-  - [x] Regra no Biome (ou script) que falha se `combat-core` importar `babylonjs`, `react`, `colyseus`, `node:*`.
+  - [x] Regra no Biome (ou script) que falha se `combat-core` importar `babylonjs`, `react`, `colyseus`, `node:*` (a ADR-022 acrescentou `phaser`).
 
 ### [ ] INF-02 — CI no GitHub Actions
 - **Epic:** infra · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** INF-01
@@ -96,14 +96,14 @@
 - **Critérios de aceite:**
   - [x] Monstro carrega dos dados e pode ser passado a `createBattle`.
 
-### [x] ART-01 — Selecionar packs CC0 e registrar licenças
+### [ ] ART-01 — Selecionar packs CC0 e registrar licenças
 - **Epic:** art · **Estimativa:** 2 h · **Executor:** Misto · **Depende de:** —
-- **Descrição:** o Claude Code cria `assets-src/09_LICENSES/README.md` e o modelo `LICENSES.csv` (asset, autor, origem/URL, licença, data, uso). O humano escolhe os packs (sugestões a avaliar: Quaternius, Kenney, KayKit — conferir licença de cada um) para: 1 humanoide com animações idle/walk/run/cast/hit/defeat (ou próximas), 1 criatura quadrúpede, props de natureza (pedras, árvores, arbustos) e texturas de terreno.
+- **Descrição:** o Claude Code cria `assets-src/09_LICENSES/README.md` e o modelo `LICENSES.csv` (asset, autor, origem/URL, licença, data, uso). O humano escolhe os packs **2D em pixel art** (ADR-022) para uso auxiliar ou temporário: 1 humanoide em spritesheet com idle/walk/cast/hit/defeat (ou próximas) em pelo menos 4 direções, 1 criatura, tiles isométricos de terreno (grama, terra, água, rocha) e objetos de natureza. A licença é conferida no arquivo do download.
 - **Critérios de aceite:**
-  - [x] Cada asset usado tem linha no `LICENSES.csv`.
-  - [x] Nenhum asset com licença que proíba uso comercial.
+  - [ ] Cada asset usado tem linha no `LICENSES.csv`.
+  - [ ] Nenhum asset com licença que proíba uso comercial.
 - **Parada do Claude Code:** depois de criar os modelos, avisar o humano e seguir para outras issues; não baixar assets por conta própria.
-- **Situação (2026-11-04):** concluída. Humanoide (KayKit Adventurers), animações (KayKit Character Animations) e natureza (KayKit Forest) verificados e no `LICENSES.csv`, todos CC0. Quadrúpede: placeholder temporário na fatia 1; texturas de terreno adiadas (ADR-011, ADR-021).
+- **Situação (2026-11-04):** reaberta pela ADR-022. Os packs KayKit 3D aprovados antes deixaram de servir (licenças arquivadas, fora do CSV). Candidatos 2D e situação em `assets-src/09_LICENSES/README.md`. A fatia 1 não depende desta issue: arena e combatentes usam formas temporárias (ADR-011, ADR-021).
 
 ---
 
@@ -290,36 +290,37 @@
 
 ## Onda 4 — Cliente
 
-### [ ] CLI-01 — App Vite com canvas Babylon, overlay React e Zustand
+### [ ] CLI-01 — App Vite com canvas Phaser, overlay React e Zustand
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** INF-01
-- **Descrição:** estrutura de `docs/04`, seção 8. `main.tsx` monta o canvas em tela cheia e o overlay React por cima. Store Zustand inicial. Carregamento de `i18n/pt-BR.json` com função `t(key)`.
+- **Descrição:** estrutura de `docs/04`, seção 8. `main.tsx` monta o jogo Phaser 4 em tela cheia (`pixelArt: true`) e o overlay React por cima. Store Zustand inicial. Carregamento de `i18n/pt-BR.json` com função `t(key)`.
 - **Critérios de aceite:**
-  - [ ] Botão React altera algo na cena via store (ex.: cor de uma caixa).
-  - [ ] Redimensionar a janela ajusta o canvas sem distorção.
+  - [ ] Botão React altera algo na cena via store (ex.: cor de um losango).
+  - [ ] Redimensionar a janela ajusta o canvas sem distorção nem borrão (pixels nítidos).
 
-### [ ] CLI-02 — Câmera isométrica ortográfica
+### [ ] CLI-02 — Projeção isométrica e câmera
 - **Epic:** client · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** CLI-01
-- **Descrição:** câmera conforme `docs/04`, seção 8: azimute 45°, elevação ≈ 35,26°, zoom com roda do mouse dentro de limites, sem rotação livre (rotação em passos de 90° com Q/E é opcional e fica desligada).
+- **Descrição:** funções puras de projeção conforme `docs/04`, seção 8 (célula + altura → tela e tela → célula), com testes Vitest; câmera Phaser sem rotação, pan e zoom pela roda do mouse em passos inteiros dentro de limites. Tamanho do tile e degrau de altura lidos de configuração (valores PROVISÓRIOS de `docs/01`, §7).
 - **Critérios de aceite:**
   - [ ] Arena 10 × 10 inteira visível no zoom padrão em 1366 × 768.
-  - [ ] Cubos de 1 × 1 aparecem com faces iguais (sem perspectiva).
+  - [ ] Projeção e projeção inversa são consistentes (teste com todas as células de uma grade 10 × 10 e 3 alturas).
+
 
 ### [ ] CLI-11 — Painel de debug de desempenho
 - **Epic:** client · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** CLI-01
-- **Descrição:** painel React ligado/desligado com F3: FPS, draw calls, malhas ativas, memória JS (quando disponível) e o último log de decisão da IA.
+- **Descrição:** painel React ligado/desligado com F3: FPS, objetos de jogo ativos, chamadas de desenho (quando o renderer informar), memória JS (quando disponível) e o último log de decisão da IA.
 - **Critérios de aceite:**
   - [ ] F3 alterna o painel; valores atualizam a cada 500 ms.
 
-### [ ] CLI-03 — Arena a partir da grade (procedural, com GLB opcional)
+### [ ] CLI-03 — Arena a partir da grade (procedural, com mapa Tiled opcional)
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CLI-02, CORE-03
-- **Descrição:** carregar `test-arena.grid.json` e gerar a geometria: uma coluna por célula com a altura correta, cor/material por terreno, água semitransparente, rochas como blocos. Se existir `assets/maps/test-arena.glb`, usar o GLB e manter a grade só como camada lógica.
+- **Descrição:** carregar `test-arena.grid.json` e desenhar a arena em 2D isométrico: blocos empilhados por nível de altura, cor por terreno, água semitransparente, rochas como blocos, ordenação por profundidade conforme `docs/04`, seção 8. Se existir `assets/maps/test-arena.tmj`, usar o mapa do Tiled e manter a grade só como camada lógica.
 - **Critérios de aceite:**
-  - [ ] Células do arquivo alinham com a geometria (marcador de debug em `(0,0)` e `(9,9)`).
-  - [ ] Funciona sem nenhum GLB no repositório.
+  - [ ] Células do arquivo alinham com o desenho (marcador de debug em `(0,0)` e `(9,9)`).
+  - [ ] Funciona sem nenhum mapa do Tiled nem imagem no repositório.
 
 ### [ ] CLI-04 — Overlay da grade: movimento, alcance e área
 - **Epic:** client · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CLI-03, CORE-07
-- **Descrição:** usando o `combat-core` no cliente para previews: destacar células alcançáveis, alvos válidos da técnica selecionada e área afetada sob o cursor. Picking de célula pelo mouse. Cores distintas por tipo de destaque, legíveis sobre todos os terrenos.
+- **Descrição:** usando o `combat-core` no cliente para previews: destacar células alcançáveis, alvos válidos da técnica selecionada e área afetada sob o cursor. Picking de célula pelo mouse com a projeção inversa (respeitando altura). Cores distintas por tipo de destaque, legíveis sobre todos os terrenos.
 - **Critérios de aceite:**
   - [ ] Passar o mouse numa célula-alvo mostra as células afetadas pela técnica.
   - [ ] Células sem linha de visão aparecem diferenciadas.
@@ -334,10 +335,10 @@
 
 ### [ ] CLI-05 — Personagem e monstro com animações
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Misto · **Depende de:** CLI-03, ART-01
-- **Descrição:** carregar os GLB escolhidos em ART-01 e mapear animações para `idle`, `walk`, `cast`, `hit`, `defeat`. Enquanto não houver assets, usar placeholders (cápsula para humano, caixa achatada para monstro) com animação procedural simples. Seta/indicador de `facing`.
+- **Descrição:** carregar as spritesheets/atlas escolhidas em ART-01 (PNG + JSON) e mapear animações para `idle`, `walk`, `cast`, `hit`, `defeat` em 4 direções (`N/E/S/W` → diagonais da tela). Enquanto não houver assets, usar formas temporárias desenhadas no código (losango/coluna para humano, bloco achatado para monstro) com animação procedural simples. Indicador de `facing`.
 - **Critérios de aceite:**
-  - [ ] Animações trocam conforme o estado (parado, andando, conjurando, atingido, derrotado).
-  - [ ] Funciona com placeholders sem nenhum asset.
+  - [ ] Animações trocam conforme o estado (parado, andando, conjurando, atingido, derrotado) e a direção.
+  - [ ] Funciona com formas temporárias sem nenhum asset.
 
 ### [ ] CLI-07 — Fila de eventos animados
 - **Epic:** client · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CLI-05, CLI-06
@@ -348,7 +349,7 @@
 
 ### [ ] CLI-08 — Efeitos visuais das 8 técnicas
 - **Epic:** client · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CLI-07
-- **Descrição:** sistemas de partículas do Babylon para cada técnica de água e fogo e para as do monstro, com paleta por elemento. Limite global de partículas simultâneas.
+- **Descrição:** emissores de partículas e sprites do Phaser para cada técnica de água e fogo e para as do monstro, com paleta por elemento. Limite global de partículas simultâneas.
 - **Critérios de aceite:**
   - [ ] Cada técnica tem efeito distinguível das outras.
   - [ ] FPS ≥ 60 no painel de debug durante `fire.burst` em notebook médio.
@@ -371,15 +372,15 @@
 
 ## Onda 5 — Entrega
 
-### [ ] ART-02 — Arena de teste no Blender
+### [ ] ART-02 — Arena de teste no Tiled
 - **Epic:** art · **Estimativa:** 4 h · **Executor:** Humano · **Depende de:** ART-01
-- **Descrição:** o Claude Code escreve `assets-src/07_MAPS/arenas/README.md` com o passo a passo: escala 1 unidade = 1 célula, origem em `(0,0)`, custom properties por célula (`cell_x`, `cell_y`, `height`, `terrain`, `blocked`), como reproduzir o layout do `test-arena.grid.json`, como exportar o GLB. O humano modela.
+- **Descrição:** o Claude Code escreve `assets-src/07_MAPS/arenas/README.md` com o passo a passo: mapa isométrico no Tiled com o tamanho de tile de `docs/01`, §7, origem em `(0,0)`, propriedades por célula (`height`, `terrain`, `blocked`), como reproduzir o layout do `test-arena.grid.json` e como salvar em `.tmj`. O humano monta o mapa.
 - **Critérios de aceite:**
   - [ ] Arena 10 × 10 com os 4 terrenos e 3 níveis de altura, coerente com o `grid.json`.
 
-### [ ] ART-03 — Exportador Blender → `*.grid.json`
-- **Epic:** art · **Estimativa:** 8 h · **Executor:** Misto · **Depende de:** ART-02, CORE-03
-- **Descrição:** o Claude Code escreve `tools/blender/export_grid.py` (API `bpy`) que lê as custom properties e gera o arquivo no formato de `docs/05`, seção 3, mais um teste de formato em Node que valida a saída contra o schema. O humano roda no Blender.
+### [ ] ART-03 — Exportador Tiled → `*.grid.json`
+- **Epic:** art · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** ART-02, CORE-03
+- **Descrição:** o Claude Code escreve `tools/tiled/export-grid.ts`, que lê o `.tmj` (JSON do Tiled) e gera o arquivo no formato de `docs/05`, seção 3, mais um teste em Node que valida a saída contra o schema.
 - **Critérios de aceite:**
   - [ ] Exportação gera grade válida pelo schema (`pnpm validate:data`).
   - [ ] Instruções de uso no cabeçalho do script.
@@ -414,12 +415,11 @@
 
 ## Fora da fatia 1 (não conta nas 47 issues)
 
-### [ ] ART-04 — Pipeline de personagem anime 3D
-- **Epic:** art · **Estimativa:** a definir · **Executor:** Misto · **Depende de:** QA-03 (combate validado), ART-01
-- **Descrição:** padronizar o acabamento anime 3D (ADR-018): proporções, rosto, cabelo em mechas, roupas, rig compartilhado e exportação GLB; material toon no Babylon (sombreado em faixas + contorno seletivo); peça de teste com 1 personagem e 1 criatura na câmera isométrica. O Claude Code escreve o material/shader, o carregamento e o guia de exportação; o humano modela e ajusta no Blender.
+### [ ] ART-04 — Personagem de referência em pixel art
+- **Epic:** art · **Estimativa:** a definir · **Executor:** Humano (com apoio do Claude Code) · **Depende de:** —
+- **Descrição:** criar no Aseprite o personagem que define o padrão artístico (ADR-022): 64 × 96 px, 8 direções, idle e caminhada, cabelo e roupas detalhados, paleta inspirada em Breath of Fire IV (sem copiar sprites de outros jogos). O Claude Code escreve o guia de exportação (PNG + JSON de atlas, nomes de animação e direção) e o carregamento no cliente; o humano desenha.
 - **Critérios de aceite:**
-  - [ ] 1 personagem e 1 criatura com material toon renderizados na arena, com as animações de `docs/03`.
-  - [ ] Guia em `assets-src/README.md` (ou documento próprio) com o padrão de modelagem, materiais e exportação.
-  - [ ] FPS ≥ 60 no painel de debug em notebook médio com 4 combatentes em cena.
-  - [ ] Todo asset de terceiros usado registrado no `LICENSES.csv`.
-- **Nota:** incluir o estudo de estilo em pixel art 2D registrado em `docs/09-pendencias.md` (ART-04, 2026-11-04); a decisão entre anime 3D e pixel art fica para depois da fatia 1.
+  - [ ] Personagem com idle e caminhada nas 8 direções exportado e animando na arena.
+  - [ ] Guia em `assets-src/README.md` (ou documento próprio) com tamanho, paleta, nomes e exportação.
+  - [ ] Paleta-base registrada para os demais personagens, NPCs e criaturas.
+- **Nota:** pode começar a qualquer momento; não bloqueia a fatia 1.

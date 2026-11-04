@@ -10,9 +10,9 @@
 | Universo | Fan game de Avatar | Universo próprio; nomes neutros provisórios |
 | Objetivo | Não definido | Jogo para publicação |
 | Equipe | Não definida | Solo, com apoio de IA |
-| Visual | GDD: 2D isométrico; Manual: 3D | 3D estilizado com câmera isométrica ortográfica |
-| Motor | GDD: Phaser 4 + Tiled; Manual: Babylon.js | Babylon.js + TypeScript |
-| Personagens | Spritesheets ou 3D | Jogador e NPCs próximos em 3D em tempo real; sprites pré-renderizados só no pós-protótipo |
+| Visual | GDD: 2D isométrico; Manual: 3D | 2D isométrico em pixel art (ADR-022; antes 3D, ADR-002) |
+| Motor | GDD: Phaser 4 + Tiled; Manual: Babylon.js | Phaser 4 + Tiled + TypeScript (ADR-022) |
+| Personagens | Spritesheets ou 3D | Spritesheets em pixel art desenhadas no Aseprite (ADR-022) |
 | Arena tática | Sem regra | Recorte do mapa atual com grade lógica sobreposta |
 | Combinações entre elementos | Sinergias entre jogadores | **Removidas.** Cada personagem atua apenas com o seu elemento |
 | Monetização | Não definida | Decidida após o protótipo. Princípio fixo: nada que venda poder no PvP |
@@ -21,11 +21,11 @@
 
 ## 1. Visão geral
 
-MMORPG 3D isométrico para navegador, em mundo próprio dividido entre quatro nações elementais. Cada personagem domina um único elemento — água, terra, fogo ou ar — e evolui aprendendo técnicas e especializações com mestres espalhados pelo mundo.
+MMORPG 2D isométrico em pixel art para navegador, em mundo próprio dividido entre quatro nações elementais. Cada personagem domina um único elemento — água, terra, fogo ou ar — e evolui aprendendo técnicas e especializações com mestres espalhados pelo mundo.
 
 | Item | Definição |
 | --- | --- |
-| Gênero | MMORPG 3D isométrico |
+| Gênero | MMORPG 2D isométrico (pixel art) |
 | Combate | Híbrido: exploração em tempo real + batalhas táticas por turnos |
 | Plataforma | Navegador desktop (Chrome, Edge, Firefox) |
 | Multiplayer | Mundo compartilhado e persistente (após o protótipo) |
@@ -106,13 +106,13 @@ O mundo segue funcionando enquanto jogadores estão em batalhas instanciadas.
 
 ## 5. Combate híbrido (resumo)
 
-Exploração em tempo real alterna com batalha tática por turnos. A arena é um **recorte do mapa** onde o encontro aconteceu, com uma **grade lógica** sobreposta ao terreno 3D. Regras completas em `docs/02-regras-combate.md`.
+Exploração em tempo real alterna com batalha tática por turnos. A arena é um **recorte do mapa** onde o encontro aconteceu, com uma **grade lógica** sobreposta ao terreno. Regras completas em `docs/02-regras-combate.md`.
 
 ## 6. Multiplayer, economia e interface
 
 - **Multiplayer (pós-protótipo):** grupos, guildas, chat, comércio, eventos, chefes de mundo, arenas PvP. Batalhas em instâncias separadas. PvP balanceado à parte.
 - **Economia:** no protótipo, troca por materiais (sem moeda). Economia completa no pós-protótipo. Equipamento nunca substitui maestria.
-- **Interface:** 2D sobre o mundo 3D. Telas complexas em React; elementos presos ao mundo (barras flutuantes, marcadores) em Babylon GUI.
+- **Interface:** telas complexas em React sobre o canvas; elementos presos ao mundo (barras flutuantes, marcadores) desenhados no Phaser.
 
 | Tela | Elementos |
 | --- | --- |
@@ -122,24 +122,23 @@ Exploração em tempo real alterna com batalha tática por turnos. A arena é um
 
 ## 7. Direção de arte
 
-**Anime 3D** visto por câmera isométrica ortográfica (ADR-018): personagens com proporções e silhueta de anime, cabelo em mechas, materiais toon com sombras em faixas suaves, contorno seletivo, texturas pintadas à mão e cenários de fantasia com acabamento ilustrado. Sem realismo fotográfico, sem pixel art.
+**Pixel art JRPG em 2D isométrico** (ADR-022), com paleta e leitura inspiradas em Breath of Fire IV (só inspiração: nada de copiar sprites, personagens ou cenários de outros jogos). Personagens expressivos, cabelo e roupas detalhados, cenários de fantasia com paletas distintas por região. Sem realismo e sem 3D.
 
-| Área | Padrão |
+| Área | Padrão (valores PROVISÓRIOS, ver `docs/09`) |
 | --- | --- |
-| Câmera | Ortográfica, azimute 45°, elevação ≈ 35,26°, zoom limitado |
-| Personagens | Low-mid poly, altura-base 1,7 unidade, rig humanoide compartilhado, material toon (sombreado em faixas + contorno seletivo, implementado no Babylon), texturas pintadas 512²–2048² |
-| Modularidade | Corpo, cabeça, cabelo, rosto, roupas e acessórios separados |
-| Cenários | Módulos 3D: terreno 1 × 1, construções de 1/2/4 unidades, vegetação instanciada, colisão simplificada |
-| Efeitos | Partículas, shaders e sprites 2D, independentes dos personagens |
-| Paletas | Distintas por elemento; cores controladas, sem texturas PBR fotográficas como acabamento final |
-| Formatos | `.blend` (fonte) → GLB; texturas KTX2; Git LFS |
-| Desempenho | LOD, instanciamento, atlas, compressão, limite de partículas, sombras seletivas, carregamento por zona |
+| Projeção | Isométrica 2:1; tile de chão 64 × 32 px; degrau de altura de 16 px |
+| Câmera | Phaser, sem rotação; pan e zoom em passos inteiros (pixel perfeito) |
+| Personagens | Sprite de referência 64 × 96 px; 8 direções na exploração; no combate 4 direções (as diagonais que correspondem a `N/E/S/W`), com espelhamento quando possível |
+| Animações | idle, walk, run, cast, hit, defeat (ver `docs/03`) |
+| Cenários | Tilesets isométricos montados no Tiled; vegetação e objetos como sprites com ordenação por profundidade |
+| Efeitos | Partículas e sprites do Phaser, independentes dos personagens |
+| Paletas | Distintas por elemento e por região; paleta-base definida pelo personagem de referência (ART-04) |
+| Formatos | `.aseprite` (fonte) → PNG + JSON de atlas; mapas `.tmj` do Tiled; Git LFS para binários |
+| Desempenho | Atlas de texturas, culling por câmera, limite de partículas, carregamento por zona |
 
-Pipeline por asset: concept → modelagem → texturas → rig/animação → exportação GLB → validação no motor.
+Pipeline por asset: concept → sprite no Aseprite → animação → exportação PNG + JSON → validação no motor.
 
-**Protótipo:** assets prontos CC0/licenciados com ajustes (ver `docs/03`). Na fatia 1 esses assets são **auxiliares** (geometria, rig, animação, teste de câmera), não o visual final. O acabamento anime 3D é definido pela ART-04, depois da validação do combate.
-
-**Toon no motor:** o GLB exporta apenas materiais Principled BSDF; o Toon BSDF do Blender não chega ao jogo. Sombreado toon e contorno são feitos no Babylon (NodeMaterial/shader próprio e contorno por malha ou pós-processamento).
+**Protótipo:** na fatia 1 a arena e os combatentes podem usar formas temporárias desenhadas no código (ADR-011, ADR-021). Packs de terceiros só entram como auxiliares ou temporários, depois da verificação de licença. Personagens, NPCs e criaturas finais são arte original; o padrão nasce do personagem de referência da ART-04.
 
 ## 8. Princípios de design
 

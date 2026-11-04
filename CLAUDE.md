@@ -5,7 +5,7 @@
 
 ## 1. O que é este projeto
 
-MMORPG 3D isométrico para navegador, em **universo próprio** (não é fan game), com quatro elementos (água, terra, fogo, ar). Cada personagem domina **um único elemento**, aprende técnicas e especializações com mestres, explora o mundo em tempo real e luta em **batalhas táticas por turnos** numa arena recortada do próprio mapa.
+MMORPG 2D isométrico em pixel art para navegador, em **universo próprio** (não é fan game), com quatro elementos (água, terra, fogo, ar). Cada personagem domina **um único elemento**, aprende técnicas e especializações com mestres, explora o mundo em tempo real e luta em **batalhas táticas por turnos** numa arena recortada do próprio mapa.
 
 - **Referências:** Ragnarok Online (leitura de mundo isométrico) e Final Fantasy Tactics (combate tático).
 - **Objetivo do projeto:** publicação. Hoje estamos no **protótipo**, que é single-player e roda com servidor autoritativo.
@@ -31,7 +31,7 @@ MMORPG 3D isométrico para navegador, em **universo próprio** (não é fan game
 1. **A fila de trabalho é `docs/06-backlog-fatia-1.md`.** Execute uma issue por vez, na ordem das ondas, respeitando dependências. Use o comando `/proxima-issue`.
 2. **Não invente regra de jogo.** Se algo não está em `docs/02` ou `docs/05`, não decida sozinho: use o valor marcado como `PROVISÓRIO` se houver; se não houver, pare, registre a dúvida em `docs/09-pendencias.md` e pergunte ao dono.
 3. **Valores numéricos de balanceamento nunca ficam no código.** Ficam nos arquivos de dados (`packages/game-data/data/*.json`) ou em `packages/game-data/data/rules.json`. O código lê os valores.
-4. **O pacote `@elemental/combat-core` é TypeScript puro.** Proibido importar Babylon.js, React, Colyseus, Node APIs (`fs`, `crypto` etc.) ou qualquer coisa com efeito colateral. Ele roda igual no servidor, no cliente e nos testes.
+4. **O pacote `@elemental/combat-core` é TypeScript puro.** Proibido importar Phaser, Babylon.js, React, Colyseus, Node APIs (`fs`, `crypto` etc.) ou qualquer coisa com efeito colateral. Ele roda igual no servidor, no cliente e nos testes.
 5. **Estado de batalha é imutável.** Toda mudança acontece por `applyAction(state, action) → { state, events }`. Nada de mutar o estado recebido.
 6. **Toda aleatoriedade usa o RNG com seed do core.** `Math.random()` é proibido em `combat-core`, `server` (lógica de jogo) e `game-data`.
 7. **O servidor é autoritativo.** O cliente envia **intenções**; o servidor valida no core e devolve **eventos**. O cliente nunca calcula resultado de combate por conta própria (pode calcular *previews* de alcance para UI, usando o mesmo core).
@@ -76,7 +76,7 @@ docker compose up -d  # PostgreSQL local
 
 ## 7. Issues que exigem o humano
 
-Algumas issues não podem ser concluídas só pelo Claude Code (estão marcadas como **Executor: Humano** ou **Misto** no backlog): escolher packs de arte, modelar a arena no Blender, criar contas de deploy, configurar Sentry e conduzir o teste com jogadores. Para essas, o Claude Code prepara tudo o que puder (scripts, instruções passo a passo, placeholders) e **para**, avisando exatamente o que o humano precisa fazer.
+Algumas issues não podem ser concluídas só pelo Claude Code (estão marcadas como **Executor: Humano** ou **Misto** no backlog): escolher packs de arte, montar a arena no Tiled, desenhar sprites no Aseprite, criar contas de deploy, configurar Sentry e conduzir o teste com jogadores. Para essas, o Claude Code prepara tudo o que puder (scripts, instruções passo a passo, placeholders) e **para**, avisando exatamente o que o humano precisa fazer.
 
 ## 8. Estado atual
 
