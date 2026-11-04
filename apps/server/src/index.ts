@@ -1,9 +1,13 @@
+import { defineRoom } from '@colyseus/core';
+import { gameData } from '@elemental/game-data';
 import { createApp } from './app.ts';
 import { ConfigError, loadConfig } from './config.ts';
 import { connect } from './db/client.ts';
 import { createLogger } from './logger.ts';
 import { createRateLimiter } from './modules/account/rateLimit.ts';
+import { requireAccount } from './modules/account/roomAuth.ts';
 import { createRedeemEndpoint } from './modules/account/routes.ts';
+import { createBattleRoom } from './modules/combat/BattleRoom.ts';
 
 // Bootstrap. Rooms and routes are registered per module (combat, account, telemetry).
 async function main() {
@@ -26,7 +30,16 @@ async function main() {
   const app = createApp({
     config,
     logger,
-    rooms: {},
+    rooms: {
+      battle: defineRoom(
+        createBattleRoom({
+          data: gameData,
+          logger,
+          aiActionDelayMs: config.AI_ACTION_DELAY_MS,
+          authenticate: (token) => requireAccount(database.db, token),
+        }),
+      ),
+    },
     endpoints: { redeem: createRedeemEndpoint({ db: database.db, limiter, logger }) },
   });
   await app.listen();

@@ -257,14 +257,14 @@
   - [x] Conexão à sala sem token ou com token inválido é recusada.
   - [x] Token nunca aparece em log.
 
-### [ ] SRV-02 — Sala de batalha
+### [x] SRV-02 — Sala de batalha
 - **Epic:** server · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** SRV-01, CORE-06, CORE-14
 - **Descrição:** `BattleRoom` conforme `docs/04`, seções 4 e 5: cria estado com `test-arena`, preset escolhido e monstros; seed aleatória do servidor; valida intenções com Zod; chama `applyAction`; envia `events`, `rejected`, `snapshot`, `turnTimer`; timer de 60 s/10 s (AFK) que gera a ação `timeout`; reconexão com `allowReconnection` dentro de 3 rodadas; registra seed e ações para replay em log.
 - **Critérios de aceite:**
-  - [ ] Intenção inválida é rejeitada com o motivo do core.
-  - [ ] Timer esgotado aplica defesa e passa o turno.
-  - [ ] Reconectar recebe `snapshot` com `lastEventSeq` correto.
-  - [ ] Replay: seed + lista de ações registradas reproduz o mesmo estado final (teste).
+  - [x] Intenção inválida é rejeitada com o motivo do core.
+  - [x] Timer esgotado aplica defesa e passa o turno.
+  - [x] Reconectar recebe `snapshot` com `lastEventSeq` correto.
+  - [x] Replay: seed + lista de ações registradas reproduz o mesmo estado final (teste).
 
 ### [ ] SRV-03 — Turnos da IA no servidor
 - **Epic:** server · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** SRV-02, IA-01
