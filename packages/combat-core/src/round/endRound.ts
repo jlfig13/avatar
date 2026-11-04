@@ -13,15 +13,17 @@ export function endRound(
 ): { state: BattleState; events: BattleEventBody[] } {
   const events: BattleEventBody[] = [];
   const combatants = state.combatants.map((c) => {
-    if (c.status.length === 0) return c;
-    const status = c.status.flatMap((s) => {
+    // docs/02 §7 — one reaction per round: reset for the new round.
+    const fresh = c.reactionUsedThisRound ? { ...c, reactionUsedThisRound: false } : c;
+    if (fresh.status.length === 0) return fresh;
+    const status = fresh.status.flatMap((s) => {
       if (TURN_BOUND.has(s.id)) return [s];
       const roundsLeft = s.roundsLeft - 1;
       if (roundsLeft > 0) return [{ ...s, roundsLeft }];
       events.push({ type: 'statusExpired', targetId: c.id, statusId: s.id });
       return [];
     });
-    return { ...c, status };
+    return { ...fresh, status };
   });
   const terrain = tickCellEffects({ ...state, combatants });
   return { state: terrain.state, events: [...events, ...terrain.events] };

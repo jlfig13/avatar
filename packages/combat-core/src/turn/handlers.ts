@@ -2,6 +2,7 @@ import type { GameData } from '@elemental/shared';
 import { finishTurn } from '../ct/ct.ts';
 import { accept, type BattleEventBody, reject, type StepResult } from '../events.ts';
 import { findPath } from '../pathfinding/pathfinding.ts';
+import { reactToApproach } from '../reactions/reactions.ts';
 import { requireCombatant, updateCombatant } from '../state.ts';
 import { travel } from '../techniques/movement.ts';
 import type { Action, BattleState, TurnState } from '../types.ts';
@@ -27,7 +28,12 @@ export function handleMove(state: BattleState, action: Of<'move'>, data: GameDat
   const result = findPath(state, action.actorId, action.to, data);
   if (!result) return reject('unreachable');
   const moved = travel(resetTimeouts(state, action.actorId), action.actorId, result.path, data);
-  return accept({ ...moved.state, turn: { ...turn, hasMoved: true } }, moved.events);
+  const from = requireCombatant(state, action.actorId).position;
+  const approached = reactToApproach(moved.state, action.actorId, from, data);
+  return accept({ ...approached.state, turn: { ...turn, hasMoved: true } }, [
+    ...moved.events,
+    ...approached.events,
+  ]);
 }
 
 /** Defending lasts until the defender's next turn (removed in startTurn), not by rounds. */

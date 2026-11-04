@@ -1,6 +1,7 @@
 import type { GameData } from '@elemental/shared';
 import type { BattleEventBody } from '../events.ts';
 import { requireCombatant, updateCombatant } from '../state.ts';
+import { applyDamage } from '../techniques/hp.ts';
 import { fireDamageAt } from '../terrain/terrain.ts';
 import type { BattleState, Combatant } from '../types.ts';
 
@@ -39,5 +40,12 @@ export function startTurn(
   const burned = fireDamageAt(next, actorId, actor.position, data);
   next = burned.state;
   events.splice(1, 0, ...burned.events);
+  // fire.ember — `burning` deals its magnitude at the start of each of the owner's turns.
+  const burning = requireCombatant(next, actorId).status.find((st) => st.id === 'burning');
+  if (burning && requireCombatant(next, actorId).alive) {
+    const hurt = applyDamage(next, actorId, burning.magnitude, 'reaction');
+    next = hurt.state;
+    events.splice(1 + burned.events.length, 0, ...hurt.events);
+  }
   return { state: next, events };
 }

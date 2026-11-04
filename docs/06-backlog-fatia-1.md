@@ -188,13 +188,13 @@
   - [x] Entrar em célula com fogo durante o movimento causa dano (o caminho continua).
   - [x] Gelo custa +1 de movimento e é considerado pelo A*.
 
-### [ ] CORE-12 — Reações (1 por rodada)
+### [x] CORE-12 — Reações (1 por rodada)
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-09
 - **Descrição:** gatilhos e efeitos das passivas de `docs/05`, seção 5. Controle de `reactionUsedThisRound`, reset no início da rodada. Reação não dispara reação.
 - **Critérios de aceite:**
-  - [ ] Segunda reação na mesma rodada não dispara.
-  - [ ] Contra-ataque do monstro não ativa a "Brasa" do jogador (sem cadeia).
-  - [ ] Reações não disparam se o reagente foi derrotado pelo ataque.
+  - [x] Segunda reação na mesma rodada não dispara.
+  - [x] Contra-ataque do monstro não ativa a "Brasa" do jogador (sem cadeia).
+  - [x] Reações não disparam se o reagente foi derrotado pelo ataque.
 
 ### [ ] CORE-13 — Fim de batalha e fuga
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-06

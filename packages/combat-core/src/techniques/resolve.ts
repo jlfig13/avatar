@@ -2,6 +2,7 @@ import type { GameData, Technique } from '@elemental/shared';
 import { accept, type BattleEventBody, reject, type StepResult } from '../events.ts';
 import { facingOf, manhattan } from '../grid/grid.ts';
 import { isHostile } from '../pathfinding/pathfinding.ts';
+import { type HitRecord, reactToApproach, reactToHits } from '../reactions/reactions.ts';
 import { rollInt } from '../rng.ts';
 import { requireCombatant, samePosition, updateCombatant } from '../state.ts';
 import { areaCells, checkTarget } from '../targeting/targeting.ts';
@@ -96,6 +97,7 @@ export function handleTechnique(
 
   if (dashPath) {
     take(travel(next, user.id, dashPath, data));
+    take(reactToApproach(next, user.id, user.position, data));
     if (technique.target === 'enemy' && requireCombatant(next, user.id).alive) {
       const landed = requireCombatant(next, user.id);
       const toward = facingOf(landed.position, action.target, landed.facing);
@@ -119,6 +121,7 @@ export function handleTechnique(
     hits.push(victim.id);
   }
 
+  const damaged: HitRecord[] = [];
   for (const effect of technique.effects) {
     if (effect.kind === 'cellEffect') {
       // Terrain goes on every affected cell regardless of hits (docs/02 §8).
@@ -140,6 +143,7 @@ export function handleTechnique(
               'technique',
             ),
           );
+          damaged.push({ victimId: id, melee: manhattan(caster.position, victim.position) === 1 });
           break;
         case 'heal':
           take(applyHeal(next, id, healAmount(technique, caster)));
@@ -175,5 +179,7 @@ export function handleTechnique(
       }
     }
   }
+  // docs/02 §7 — reactions fire after the action is resolved.
+  take(reactToHits(next, caster.id, damaged, data));
   return accept(next, events);
 }
