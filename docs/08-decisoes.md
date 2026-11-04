@@ -93,3 +93,7 @@
 ## ADR-019 — Detalhes das reações (CORE-12)
 - **Decisão:** "corpo a corpo" = atacante a 1 célula do alvo no momento do acerto. Só acertos de dano disparam `hitByMelee`/`hitByAny` (erro não dispara). O contra-ataque usa o ataque básico (primeira técnica do reagente), com teste de acerto normal, e causa `max(minDamage, round(dano × damageMultiplier))`. `Refluxo` empurra o atacante na direção reagente → atacante. `burning` causa `magnitude` de dano no início de cada turno do dono (evento `damaged` com `source: 'reaction'`). A reação conta como usada mesmo se o contra-ataque errar; o reset acontece no fim da rodada. `enemyEntersAdjacent` dispara quando um inimigo termina movimento ou `dash` adjacente, vindo de uma posição não adjacente.
 - **Consequências:** sem cadeias (efeitos de reação nunca avaliam gatilhos); pendente de confirmação em `docs/09`.
+
+## ADR-020 — IA por utilidade: pesos em `rules.json` e validação por simulação (IA-01)
+- **Decisão:** pesos por perfil em `rules.json` (`ai.profiles`), cada consideração é uma função pura registrada por id. A escolha final é validada simulando as ações com `applyAction` (o mesmo core do servidor), o que garante nunca devolver ação inválida sem duplicar regras de validação na IA. O desempate usa um RNG derivado do estado e não consome o RNG da batalha.
+- **Consequências:** a IA não altera a sequência aleatória da batalha; novos perfis/considerações entram por dados + registro.

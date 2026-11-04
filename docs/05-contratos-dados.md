@@ -169,7 +169,8 @@ Todo evento tem `seq` (inteiro crescente na batalha) e `type`.
   },
   "flee": { "base": 30, "perMobility": 2, "perAdjacentEnemy": 10, "min": 10, "max": 90 },
   "disconnect": { "graceRounds": 3, "allDisconnectedPauseSeconds": 300 },
-  "arena": { "common": 10, "boss": 16, "masterTrial": 12 }
+  "arena": { "common": 10, "boss": 16, "masterTrial": 12 },
+  "ai": { "profiles": { "aggressive_melee": { "expectedDamage": 1.0, "...": 0 }, "balanced": { "...": 0 } } }
 }
 ```
 
@@ -315,7 +316,7 @@ A batalha de teste da fatia 1 aceita escolher **um preset** (1 jogador contra 1 
 ## 8. IA por utilidade — contrato
 
 ```ts
-export interface AiContext { state: BattleState; actorId: string; data: GameData; rng: Rng; }
+export interface AiContext { state: BattleState; actorId: string; data: GameData; rng?: RngState; profile?: string; }
 export interface Candidate { actions: Action[]; score: number; debug: Record<string, number>; }
 export function chooseActions(ctx: AiContext): Action[];   // sequência do turno (ex.: move + technique + endTurn)
 ```
@@ -325,6 +326,10 @@ export function chooseActions(ctx: AiContext): Action[];   // sequência do turn
 - Considerações iniciais (fatia 1): dano esperado (`chance × dano`), chance de abater o alvo, risco (dano esperado que o inimigo pode causar na célula de destino), distância ao alvo preferido, vantagem de altura, ataque pelas costas/lado, evitar célula com `fire`.
 - Empate: desempate com o RNG da batalha (determinístico).
 - Limite de desempenho: a decisão deve levar < 50 ms numa arena 10 × 10 com 4 combatentes.
+- Pesos: `rules.json` → `ai.profiles[perfil][idDaConsideração]` (PROVISÓRIO). O chamador informa o perfil (monstros: `ai.profile` do arquivo do monstro); padrão `balanced`.
+- `rng` (opcional) só desempata; padrão = `state.rngState`, sem consumir o RNG da batalha.
+- Garantia de validade: a sequência escolhida é simulada com `applyAction` antes de ser devolvida; se falhar, o próximo candidato é tentado. Se a batalha terminar no meio da sequência, devolve-se só o prefixo válido.
+- `chooseActionsWithDebug(ctx)` devolve também os candidatos com `score` e `debug` (valor de cada consideração).
 
 ## 9. API pública do `combat-core`
 

@@ -1,5 +1,8 @@
 import { SHARED_PACKAGE } from '@elemental/shared';
 
+export { chooseActions, chooseActionsWithDebug } from './ai/chooseActions.ts';
+export { CONSIDERATIONS } from './ai/considerations.ts';
+export type { AiContext, Candidate, Consideration } from './ai/types.ts';
 export { applyAction } from './apply.ts';
 export {
   type CombatantInput,

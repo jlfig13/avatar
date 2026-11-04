@@ -30,6 +30,7 @@
 | Duração dos efeitos de terreno | 2–3 rodadas | Playtest |
 | Perda de XP na derrota | 5% do próximo nível | Fatia 3 |
 | Atraso entre ações da IA | 400 ms | Playtest |
+| Pesos dos perfis de IA (`ai.profiles` em `rules.json`) | definidos em IA-01/IA-02 | QA-01 + playtest |
 
 ## Riscos registrados
 

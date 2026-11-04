@@ -208,13 +208,13 @@
 
 ## Onda 3 — IA e servidor
 
-### [ ] IA-01 — Framework de avaliação de utilidade
+### [x] IA-01 — Framework de avaliação de utilidade
 - **Epic:** ai · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CORE-06, CORE-09
 - **Descrição:** `chooseActions` conforme `docs/05`, seção 8: geração de candidatos, pontuação por considerações ponderadas, escolha com desempate pelo RNG. Saída com `debug` por candidato (para log e para o painel de debug do cliente).
 - **Critérios de aceite:**
-  - [ ] Com seed fixa, escolhe sempre a mesma sequência.
-  - [ ] Nunca devolve ação inválida (teste com 500 estados aleatórios válidos).
-  - [ ] Decisão < 50 ms numa arena 10 × 10 com 4 combatentes.
+  - [x] Com seed fixa, escolhe sempre a mesma sequência.
+  - [x] Nunca devolve ação inválida (teste com 500 estados aleatórios válidos).
+  - [x] Decisão < 50 ms numa arena 10 × 10 com 4 combatentes.
 
 ### [ ] IA-02 — Considerações iniciais da IA
 - **Epic:** ai · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** IA-01, CORE-08, CORE-11

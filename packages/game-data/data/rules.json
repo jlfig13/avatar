@@ -89,5 +89,15 @@
     "common": 10,
     "boss": 16,
     "masterTrial": 12
+  },
+  "ai": {
+    "profiles": {
+      "aggressive_melee": {
+        "expectedDamage": 1.0
+      },
+      "balanced": {
+        "expectedDamage": 1.0
+      }
+    }
   }
 }

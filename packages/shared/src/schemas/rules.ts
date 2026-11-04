@@ -55,6 +55,8 @@ export const RulesSchema = z.strictObject({
   }),
   disconnect: z.strictObject({ graceRounds: int, allDisconnectedPauseSeconds: int }),
   arena: z.strictObject({ common: int, boss: int, masterTrial: int }),
+  /** docs/05 §8 — utility AI weights per profile (consideration id → weight). PROVISÓRIO. */
+  ai: z.strictObject({ profiles: z.record(z.string(), z.record(z.string(), num)) }),
 });
 
 export type Rules = z.infer<typeof RulesSchema>;

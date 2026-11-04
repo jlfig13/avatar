@@ -112,6 +112,7 @@ export const testRules: Rules = {
   flee: { base: 30, perMobility: 2, perAdjacentEnemy: 10, min: 10, max: 90 },
   disconnect: { graceRounds: 3, allDisconnectedPauseSeconds: 300 },
   arena: { common: 10, boss: 16, masterTrial: 12 },
+  ai: { profiles: { balanced: { expectedDamage: 1 } } },
 };
 
 export function makeTechnique(overrides: Partial<Technique> & { id: string }): Technique {
