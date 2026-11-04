@@ -54,6 +54,7 @@ Downloads feitos pela página oficial (tier gratuito, "pague quanto quiser" com 
 | Quadrúpede | Quaternius Farm Animals Animated (`lowpoly-animated-animals`) | <https://quaternius.itch.io/lowpoly-animated-animals> | **Sem arquivo de licença no download** (só a página diz CC0) | FBX, OBJ, .blend (sem GLB) | **Reprovado:** licença não comprovada no download; animações só idle/walk/run/jump/death, sem attack nem hit |
 | Quadrúpede | Quaternius Monster Pack Animated (`lowpoly-animated-monsters`) | <https://quaternius.itch.io/lowpoly-animated-monsters> | **Sem arquivo de licença no download** | FBX, OBJ, .blend | **Reprovado:** nenhuma criatura quadrúpede (Bat, Dragon voador, Skeleton, Slime) e licença não comprovada |
 | Quadrúpede | — | — | — | — | **Decidido (ADR-021):** placeholder temporário (caixa achatada) na fatia 1; reavaliar na ART-04 |
+| Terreno (avaliado a pedido do dono) | Newc42 Pixel Art Isometric Map Tileset | <https://newc-42.itch.io/pixel-art-isometric-map-tileset> | **Sem arquivo de licença no download** (só a página diz CC0, sem atribuição) | 1 spritesheet PNG 432×384, 1 .aseprite, unitypackage (69 tiles 2D, 6 biomas) | **Reprovado:** licença não comprovada no download; sprites 2D em pixel art com perspectiva já desenhada, incompatíveis com a arena 3D e com o GDD ("sem pixel art", ADR-018). Serve só como referência de paleta de biomas |
 | Texturas de terreno | — | — | — | — | **Adiado:** a arena da fatia 1 usa cor por terreno (ADR-011, ADR-021) |
 
 ### Teste de rig (Adventurers × Character Animations)
