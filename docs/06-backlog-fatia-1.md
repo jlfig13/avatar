@@ -422,3 +422,4 @@
   - [ ] Guia em `assets-src/README.md` (ou documento próprio) com o padrão de modelagem, materiais e exportação.
   - [ ] FPS ≥ 60 no painel de debug em notebook médio com 4 combatentes em cena.
   - [ ] Todo asset de terceiros usado registrado no `LICENSES.csv`.
+- **Nota:** incluir o estudo de estilo em pixel art 2D registrado em `docs/09-pendencias.md` (ART-04, 2026-11-04); a decisão entre anime 3D e pixel art fica para depois da fatia 1.
