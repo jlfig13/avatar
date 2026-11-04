@@ -1,11 +1,12 @@
 import type { GameData } from '@elemental/shared';
 import type { BattleEventBody } from '../events.ts';
+import { tickCellEffects } from '../terrain/terrain.ts';
 import type { BattleState } from '../types.ts';
 
 /** Statuses whose lifetime is not counted in rounds (removed at the owner's next turn). */
 const TURN_BOUND = new Set(['defending']);
 
-/** End-of-round upkeep: status durations tick down (docs/02 §4 — rounds count durations). */
+/** End-of-round upkeep: statuses and cell effects tick down (docs/02 §4, §8). */
 export function endRound(
   state: BattleState,
   _data: GameData,
@@ -22,5 +23,6 @@ export function endRound(
     });
     return { ...c, status };
   });
-  return { state: { ...state, combatants }, events };
+  const terrain = tickCellEffects({ ...state, combatants });
+  return { state: terrain.state, events: [...events, ...terrain.events] };
 }

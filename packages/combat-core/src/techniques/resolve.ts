@@ -5,11 +5,12 @@ import { isHostile } from '../pathfinding/pathfinding.ts';
 import { rollInt } from '../rng.ts';
 import { requireCombatant, samePosition, updateCombatant } from '../state.ts';
 import { areaCells, checkTarget } from '../targeting/targeting.ts';
+import { applyCellEffect } from '../terrain/terrain.ts';
 import { resetTimeouts } from '../turn/handlers.ts';
 import type { Action, BattleState, Combatant, Position } from '../types.ts';
 import { damageAmount, effectiveCost, healAmount, hitChance } from './formulas.ts';
 import { applyDamage, applyHeal } from './hp.ts';
-import { dashPathToCell, dashPathToEnemy, moveAlong, push } from './movement.ts';
+import { dashPathToCell, dashPathToEnemy, push, travel } from './movement.ts';
 
 type TechniqueAction = Extract<Action, { type: 'technique' }>;
 
@@ -94,8 +95,8 @@ export function handleTechnique(
   };
 
   if (dashPath) {
-    take(moveAlong(next, user.id, dashPath));
-    if (technique.target === 'enemy') {
+    take(travel(next, user.id, dashPath, data));
+    if (technique.target === 'enemy' && requireCombatant(next, user.id).alive) {
       const landed = requireCombatant(next, user.id);
       const toward = facingOf(landed.position, action.target, landed.facing);
       next = updateCombatant(next, user.id, (c) => ({ ...c, facing: toward }));
@@ -119,6 +120,13 @@ export function handleTechnique(
   }
 
   for (const effect of technique.effects) {
+    if (effect.kind === 'cellEffect') {
+      // Terrain goes on every affected cell regardless of hits (docs/02 §8).
+      for (const cell of affected) {
+        take(applyCellEffect(next, cell, effect.effect, caster.id, data, caster.facing));
+      }
+      continue;
+    }
     for (const id of hits) {
       const victim = requireCombatant(next, id);
       if (!victim.alive) continue;
@@ -163,7 +171,6 @@ export function handleTechnique(
           );
           break;
         case 'dash':
-        case 'cellEffect': // CORE-11
           break;
       }
     }

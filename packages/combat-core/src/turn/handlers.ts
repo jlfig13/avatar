@@ -1,9 +1,9 @@
 import type { GameData } from '@elemental/shared';
 import { finishTurn } from '../ct/ct.ts';
 import { accept, type BattleEventBody, reject, type StepResult } from '../events.ts';
-import { facingOf } from '../grid/grid.ts';
 import { findPath } from '../pathfinding/pathfinding.ts';
 import { requireCombatant, updateCombatant } from '../state.ts';
+import { travel } from '../techniques/movement.ts';
 import type { Action, BattleState, TurnState } from '../types.ts';
 
 type Of<T extends Action['type']> = Extract<Action, { type: T }>;
@@ -26,14 +26,8 @@ export function handleMove(state: BattleState, action: Of<'move'>, data: GameDat
   if (turn.hasMoved) return reject('already_moved');
   const result = findPath(state, action.actorId, action.to, data);
   if (!result) return reject('unreachable');
-  const actor = requireCombatant(state, action.actorId);
-  const last = result.path.at(-1) ?? actor.position;
-  const beforeLast = result.path.at(-2) ?? actor.position;
-  const facing = facingOf(beforeLast, last, actor.facing);
-  let next = updateCombatant(state, actor.id, (c) => ({ ...c, position: last, facing }));
-  next = resetTimeouts(next, actor.id);
-  next = { ...next, turn: { ...turn, hasMoved: true } };
-  return accept(next, [{ type: 'moved', combatantId: actor.id, path: result.path, facing }]);
+  const moved = travel(resetTimeouts(state, action.actorId), action.actorId, result.path, data);
+  return accept({ ...moved.state, turn: { ...turn, hasMoved: true } }, moved.events);
 }
 
 /** Defending lasts until the defender's next turn (removed in startTurn), not by rounds. */

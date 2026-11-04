@@ -3,6 +3,7 @@ import type { BattleEventBody } from '../events.ts';
 import { facingOf, getCell, inBounds, manhattan, neighbors4, step } from '../grid/grid.ts';
 import { findPath, isHostile, stepCost } from '../pathfinding/pathfinding.ts';
 import { requireCombatant, samePosition, updateCombatant } from '../state.ts';
+import { fireDamageAt } from '../terrain/terrain.ts';
 import type { BattleState, Combatant, Facing, Position } from '../types.ts';
 
 type Dash = Extract<TechniqueEffect, { kind: 'dash' }>;
@@ -76,18 +77,43 @@ export function dashPathToEnemy(
   return best?.path ?? null;
 }
 
-/** Moves the combatant along `path` (already validated), facing the last step. */
-export function moveAlong(
+/**
+ * Moves the combatant along a validated path, facing the last step (docs/02 §8): entering a
+ * burning cell deals fire damage and the path continues — unless the mover is defeated, which
+ * stops it on that cell. Ending the movement on a gust cell pushes the mover with the wind.
+ */
+export function travel(
   state: BattleState,
   id: string,
   path: readonly Position[],
+  data: GameData,
 ): { state: BattleState; events: BattleEventBody[] } {
   const mover = requireCombatant(state, id);
-  const last = path.at(-1);
-  if (!last) return { state, events: [] };
-  const facing = facingOf(path.at(-2) ?? mover.position, last, mover.facing);
-  const next = updateCombatant(state, id, (c) => ({ ...c, position: last, facing }));
-  return { state: next, events: [{ type: 'moved', combatantId: id, path, facing }] };
+  if (path.length === 0) return { state, events: [] };
+  let next = state;
+  const damage: BattleEventBody[] = [];
+  const walked: Position[] = [];
+  for (const cell of path) {
+    walked.push(cell);
+    const burned = fireDamageAt(next, id, cell, data);
+    next = burned.state;
+    damage.push(...burned.events);
+    if (!requireCombatant(next, id).alive) break;
+  }
+  const last = walked.at(-1) ?? mover.position;
+  const facing = facingOf(walked.at(-2) ?? mover.position, last, mover.facing);
+  next = updateCombatant(next, id, (c) => ({ ...c, position: last, facing }));
+  const events: BattleEventBody[] = [
+    { type: 'moved', combatantId: id, path: walked, facing },
+    ...damage,
+  ];
+  const gust = getCell(next.grid, last)?.effect;
+  if (gust?.kind === 'gust' && gust.direction && requireCombatant(next, id).alive) {
+    const pushed = push(next, id, gust.direction, data.rules.cellEffects.gust.pushCells, data);
+    next = pushed.state;
+    events.push(...pushed.events);
+  }
+  return { state: next, events };
 }
 
 /**
@@ -112,9 +138,13 @@ export function push(
     current = next;
   }
   if (samePosition(current, target.position)) return { state, events: [] };
-  const next = updateCombatant(state, id, (c) => ({ ...c, position: current }));
+  const moved = updateCombatant(state, id, (c) => ({ ...c, position: current }));
+  const burned = fireDamageAt(moved, id, current, data);
   return {
-    state: next,
-    events: [{ type: 'pushed', combatantId: id, from: target.position, to: current }],
+    state: burned.state,
+    events: [
+      { type: 'pushed', combatantId: id, from: target.position, to: current },
+      ...burned.events,
+    ],
   };
 }

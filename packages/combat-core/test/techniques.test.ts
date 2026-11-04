@@ -244,7 +244,7 @@ describe('the 8 slice-1 techniques and the 2 monster techniques (shapes)', () =>
     expect(hp(ok(cast(far, 't.blast', { x: 6, y: 5 })).state, 'e1')).toBe(85);
   });
 
-  it('fire.wall: targets a line of 3 cells perpendicular to the user, no damage', () => {
+  it('fire.wall: sets fire on a line of 3 cells perpendicular to the user, no damage', () => {
     const r = ok(
       cast(battle([player(), enemy({ position: { x: 9, y: 9 } })]), 't.wall', { x: 4, y: 5 }),
     );
@@ -256,6 +256,21 @@ describe('the 8 slice-1 techniques and the 2 monster techniques (shapes)', () =>
           { x: 4, y: 5 },
           { x: 4, y: 6 },
         ],
+      }),
+      expect.objectContaining({
+        type: 'cellEffectApplied',
+        position: { x: 4, y: 4 },
+        kind: 'fire',
+      }),
+      expect.objectContaining({
+        type: 'cellEffectApplied',
+        position: { x: 4, y: 5 },
+        kind: 'fire',
+      }),
+      expect.objectContaining({
+        type: 'cellEffectApplied',
+        position: { x: 4, y: 6 },
+        kind: 'fire',
       }),
     ]);
   });

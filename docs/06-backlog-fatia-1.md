@@ -179,14 +179,14 @@
   - [x] Regeneração no início do turno bate com a fórmula e não passa do máximo.
   - [x] Técnica sem energia suficiente retorna `not_enough_energy`.
 
-### [ ] CORE-11 — Terreno elemental temporário
+### [x] CORE-11 — Terreno elemental temporário
 - **Epic:** core · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CORE-03, CORE-09
 - **Descrição:** efeitos `ice` e `fire` completos (custos, dano ao entrar/iniciar turno, bônus de precisão, duração, regra de vegetação e de água rasa); `earth_wall` e `gust` implementados e testados mesmo sem técnicas que os usem na fatia 1. Substituição pelo mais recente. Expiração no fim da rodada com eventos.
 - **Critérios de aceite:**
-  - [ ] Gelo seguido de fogo na mesma célula resulta em fogo.
-  - [ ] Fogo não é aplicado em água rasa; em vegetação dura 3 rodadas.
-  - [ ] Entrar em célula com fogo durante o movimento causa dano (o caminho continua).
-  - [ ] Gelo custa +1 de movimento e é considerado pelo A*.
+  - [x] Gelo seguido de fogo na mesma célula resulta em fogo.
+  - [x] Fogo não é aplicado em água rasa; em vegetação dura 3 rodadas.
+  - [x] Entrar em célula com fogo durante o movimento causa dano (o caminho continua).
+  - [x] Gelo custa +1 de movimento e é considerado pelo A*.
 
 ### [ ] CORE-12 — Reações (1 por rodada)
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-09

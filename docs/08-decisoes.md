@@ -81,3 +81,7 @@
   - Estados contam duração em rodadas e expiram no fim da rodada (`statusExpired`), exceto `defending`, que sai no início do próximo turno do dono.
   - `dash` não consome o movimento do turno (`water.glide`) e gasta a ação.
 - **Consequências:** comportamento previsível para a IA e os testes; tudo marcado como pendente de confirmação em `docs/09`.
+
+## ADR-017 — Detalhes do terreno temporário (CORE-11)
+- **Decisão:** dano de `fire` ao entrar vale para movimento, `dash` e empurrão; o caminho continua, mas quem cai para na célula em que caiu. `gust` só empurra quem **termina** movimento ou `dash` na célula (empurrão não encadeia `gust`). `earth_wall` não é erguido em célula ocupada. Quem cai por fogo no início do próprio turno perde o turno na hora. Efeitos de célula vindos de técnica valem em todas as células afetadas, independentemente de acerto; `gust` usa a direção do usuário.
+- **Consequências:** regras determinísticas para IA e cliente; pendentes de confirmação em `docs/09`.

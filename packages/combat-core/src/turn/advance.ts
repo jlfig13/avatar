@@ -1,6 +1,7 @@
 import type { GameData } from '@elemental/shared';
-import { tickUntilReady } from '../ct/ct.ts';
+import { finishTurn, tickUntilReady } from '../ct/ct.ts';
 import { accept, type BattleEventBody, reject, type StepResult } from '../events.ts';
+import { requireCombatant } from '../state.ts';
 import type { BattleState } from '../types.ts';
 import { startTurn } from './startTurn.ts';
 
@@ -20,5 +21,9 @@ export function handleAdvance(state: BattleState, _action: unknown, data: GameDa
     turn: { combatantId: actorId, hasMoved: false, hasActed: false, usedTechniqueId: null },
   };
   const started = startTurn(next, actorId, data);
-  return accept(started.state, [...events, ...started.events]);
+  events.push(...started.events);
+  if (requireCombatant(started.state, actorId).alive) return accept(started.state, events);
+  // Defeated at the start of its own turn (fire): the turn passes immediately.
+  const ended = finishTurn(started.state, data);
+  return accept(ended.state, [...events, ...ended.events]);
 }
