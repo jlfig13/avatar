@@ -333,12 +333,12 @@
   - [ ] Mensagem `rejected` mostra o motivo traduzido.
   - [ ] Recarregar a página durante a batalha reconecta e recebe `snapshot`.
 
-### [ ] CLI-05 — Personagem e monstro com animações
+### [x] CLI-05 — Personagem e monstro com animações
 - **Epic:** client · **Estimativa:** 4 h · **Executor:** Misto · **Depende de:** CLI-03, ART-01
 - **Descrição:** carregar as spritesheets/atlas escolhidas em ART-01 (PNG + JSON) e mapear animações para `idle`, `walk`, `cast`, `hit`, `defeat` em 4 direções (`N/E/S/W` → diagonais da tela). Enquanto não houver assets, usar formas temporárias desenhadas no código (losango/coluna para humano, bloco achatado para monstro) com animação procedural simples. Indicador de `facing`.
 - **Critérios de aceite:**
-  - [ ] Animações trocam conforme o estado (parado, andando, conjurando, atingido, derrotado) e a direção.
-  - [ ] Funciona com formas temporárias sem nenhum asset.
+  - [x] Animações trocam conforme o estado (parado, andando, conjurando, atingido, derrotado) e a direção.
+  - [x] Funciona com formas temporárias sem nenhum asset.
 
 ### [ ] CLI-07 — Fila de eventos animados
 - **Epic:** client · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CLI-05, CLI-06

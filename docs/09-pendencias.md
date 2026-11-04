@@ -59,3 +59,4 @@
 | 2026-11-04 | QA-01 | QA-01: 2 monstros = 0% de vitória; recalibrar na fatia 2. | Pendente (fatia 2) |
 | 2026-11-04 | CLI-03 | O caminho do mapa Tiled (`assets/maps/test-arena.tmj`) está implementado, mas não foi verificado com um mapa real: só o desenho procedural foi testado. Verificar quando a ART-02 entregar o mapa (origem da camada e alinhamento com a grade). | Pendente (ART-02) |
 | 2026-11-04 | CLI-04 | Nomes de exibição de `monster.claw` e `monster.pounce` não existem em `docs/05`; usei "Garra" e "Bote" (provisórios, em `pt-BR.json`). Confirmar junto com os nomes finais das técnicas. | Pendente |
+| 2026-11-04 | CLI-05 | Personagens e monstro usam placeholders gerados em código no contrato de sprite (64 × 96, âncora (32, 90), `setOrigin(0.5, 90/96)`, E/N desenhados e S/W espelhados). Falta o passo humano: atlas do Aseprite (ART-01/ART-04) e o schema do manifesto (`docs/10` §11) para o cliente carregá-los no lugar dos placeholders. | Pendente (humano) |

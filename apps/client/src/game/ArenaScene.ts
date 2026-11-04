@@ -1,10 +1,10 @@
 import { type Grid, gridFromFile } from '@elemental/combat-core';
 import { gameData } from '@elemental/game-data';
 import * as Phaser from 'phaser';
+import { CombatantSprites } from '../characters/CombatantSprites.ts';
 import { RENDER } from '../config/render.ts';
 import { type ClientStore, watch } from '../store/store.ts';
 import { arenaShapes, type CellShape, maxHeightOf } from './arenaGeometry.ts';
-import { CombatantTokens } from './CombatantTokens.ts';
 import { CameraController } from './cameraController.ts';
 import { cellToScreen, depthOf, gridBounds, LAYER, screenToCell } from './iso.ts';
 import { OverlayLayer } from './OverlayLayer.ts';
@@ -26,6 +26,8 @@ export class ArenaScene extends Phaser.Scene {
   private readonly tiledMap: object | null;
   readonly grid: Grid;
   private markers: Phaser.GameObjects.Container | null = null;
+  /** Combatant sprites (exposed for the event queue, CLI-07, and dev checks). */
+  sprites: CombatantSprites | null = null;
 
   constructor(store: ClientStore, tiledMap: object | null = null) {
     super('arena');
@@ -44,7 +46,8 @@ export class ArenaScene extends Phaser.Scene {
       gridBounds(this.grid.width, this.grid.height, maxHeightOf(this.grid) + 1, RENDER),
     );
     const overlay = new OverlayLayer(this, this.grid);
-    const tokens = new CombatantTokens(this, this.grid);
+    const sprites = new CombatantSprites(this, this.grid);
+    this.sprites = sprites;
     const maxHeight = maxHeightOf(this.grid);
     const heightAt = (c: { x: number; y: number }) =>
       this.grid.cells[c.y * this.grid.width + c.x]?.height ?? -1;
@@ -62,7 +65,7 @@ export class ArenaScene extends Phaser.Scene {
     this.input.on(Phaser.Input.Events.GAME_OUT, () => this.store.getState().setHoverCell(null));
     const redraw = () => {
       const { battle, actorId, selectedTechniqueId, hoverCell } = this.store.getState();
-      tokens.render(battle);
+      sprites.sync(battle);
       if (battle)
         overlay.render(computeOverlay(battle, actorId, selectedTechniqueId, hoverCell, gameData));
     };
@@ -79,6 +82,7 @@ export class ArenaScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       for (const unwatch of unwatchers) unwatch();
       camera.destroy();
+      sprites.destroy();
     });
   }
 

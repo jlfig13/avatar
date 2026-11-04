@@ -23,7 +23,11 @@ export interface RenderConfig {
       { fill: string; alpha: number; line: string }
     >
   >;
-  readonly combatantColors: Readonly<Record<'players' | 'enemies' | 'third_party', string>>;
+  readonly characterPalettes: Readonly<
+    Record<string, { body: string; dark: string; light: string }>
+  > & {
+    readonly neutral: { body: string; dark: string; light: string };
+  };
 }
 
 export const RENDER: RenderConfig = render;

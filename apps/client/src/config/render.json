@@ -62,9 +62,26 @@
       "line": "#ffffff"
     }
   },
-  "combatantColors": {
-    "players": "#f1ede3",
-    "enemies": "#c0392b",
-    "third_party": "#8e44ad"
+  "characterPalettes": {
+    "water": {
+      "body": "#3d7fc4",
+      "dark": "#284f80",
+      "light": "#9cc9f2"
+    },
+    "fire": {
+      "body": "#c4503d",
+      "dark": "#7d2f25",
+      "light": "#f2a48f"
+    },
+    "monster": {
+      "body": "#8a6a45",
+      "dark": "#5c452b",
+      "light": "#c29a6b"
+    },
+    "neutral": {
+      "body": "#9a9a9a",
+      "dark": "#5f5f5f",
+      "light": "#d4d4d4"
+    }
   }
 }
