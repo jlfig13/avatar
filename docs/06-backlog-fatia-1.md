@@ -408,3 +408,16 @@
 - **Critérios de aceite:**
   - [ ] Resultados registrados contra os critérios: batalhas de 3–6 min, vontade de continuar, FPS.
   - [ ] Decisões de calibração registradas em `docs/08-decisoes.md` e valores atualizados em `rules.json`.
+
+---
+
+## Fora da fatia 1 (não conta nas 47 issues)
+
+### [ ] ART-04 — Pipeline de personagem anime 3D
+- **Epic:** art · **Estimativa:** a definir · **Executor:** Misto · **Depende de:** QA-03 (combate validado), ART-01
+- **Descrição:** padronizar o acabamento anime 3D (ADR-018): proporções, rosto, cabelo em mechas, roupas, rig compartilhado e exportação GLB; material toon no Babylon (sombreado em faixas + contorno seletivo); peça de teste com 1 personagem e 1 criatura na câmera isométrica. O Claude Code escreve o material/shader, o carregamento e o guia de exportação; o humano modela e ajusta no Blender.
+- **Critérios de aceite:**
+  - [ ] 1 personagem e 1 criatura com material toon renderizados na arena, com as animações de `docs/03`.
+  - [ ] Guia em `assets-src/README.md` (ou documento próprio) com o padrão de modelagem, materiais e exportação.
+  - [ ] FPS ≥ 60 no painel de debug em notebook médio com 4 combatentes em cena.
+  - [ ] Todo asset de terceiros usado registrado no `LICENSES.csv`.

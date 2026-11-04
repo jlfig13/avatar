@@ -9,6 +9,17 @@ Registro de origem e licença de **todo** asset de terceiros usado no jogo (ART-
 3. Proibido qualquer asset cuja licença impeça uso comercial (ex.: CC BY-NC, "free for personal use"). Licenças aceitas: CC0; CC BY (exige crédito no jogo); licenças comerciais compradas, com o comprovante guardado fora do repositório.
 4. Guarde uma cópia do arquivo de licença do pacote nesta pasta: `<autor>-<pacote>-LICENSE.txt`.
 5. Assets modificados continuam com a linha do original; anote a modificação na coluna `usage`.
+6. **Proibido usar modelos extraídos de jogos ou fan-made** (ex.: The Models Resource, recriações de personagens de outras franquias), mesmo como base. Imagens de outros jogos servem só como referência de estilo e não entram no repositório.
+
+## Classes de asset (ADR-018)
+
+| Classe | O que é | Exemplo |
+| --- | --- | --- |
+| Produção | Acabamento anime 3D aprovado (ART-04) | Personagem final com material toon |
+| Auxiliar | Asset CC0 usado para geometria, rig, animação ou teste de câmera | Humanoide e criatura CC0 da fatia 1 |
+| Temporário | Forma simples gerada no código | Cápsula do jogador, caixa do monstro |
+
+Na fatia 1 só existem assets **auxiliares** e **temporários**. Informe a classe na coluna `usage` (ex.: `auxiliary: rig test`).
 
 ## Colunas do `LICENSES.csv`
 

@@ -122,22 +122,24 @@ Exploração em tempo real alterna com batalha tática por turnos. A arena é um
 
 ## 7. Direção de arte
 
-3D estilizado visto por câmera isométrica ortográfica: volume, iluminação, sombras suaves. Sem realismo fotográfico, sem pixel art.
+**Anime 3D** visto por câmera isométrica ortográfica (ADR-018): personagens com proporções e silhueta de anime, cabelo em mechas, materiais toon com sombras em faixas suaves, contorno seletivo, texturas pintadas à mão e cenários de fantasia com acabamento ilustrado. Sem realismo fotográfico, sem pixel art.
 
 | Área | Padrão |
 | --- | --- |
 | Câmera | Ortográfica, azimute 45°, elevação ≈ 35,26°, zoom limitado |
-| Personagens | Low-mid poly, altura-base 1,7 unidade, rig humanoide compartilhado, PBR simplificado, texturas 512²–2048² |
+| Personagens | Low-mid poly, altura-base 1,7 unidade, rig humanoide compartilhado, material toon (sombreado em faixas + contorno seletivo, implementado no Babylon), texturas pintadas 512²–2048² |
 | Modularidade | Corpo, cabeça, cabelo, rosto, roupas e acessórios separados |
 | Cenários | Módulos 3D: terreno 1 × 1, construções de 1/2/4 unidades, vegetação instanciada, colisão simplificada |
 | Efeitos | Partículas, shaders e sprites 2D, independentes dos personagens |
-| Paletas | Distintas por elemento |
+| Paletas | Distintas por elemento; cores controladas, sem texturas PBR fotográficas como acabamento final |
 | Formatos | `.blend` (fonte) → GLB; texturas KTX2; Git LFS |
 | Desempenho | LOD, instanciamento, atlas, compressão, limite de partículas, sombras seletivas, carregamento por zona |
 
 Pipeline por asset: concept → modelagem → texturas → rig/animação → exportação GLB → validação no motor.
 
-**Protótipo:** assets prontos CC0/licenciados com ajustes (ver `docs/03`).
+**Protótipo:** assets prontos CC0/licenciados com ajustes (ver `docs/03`). Na fatia 1 esses assets são **auxiliares** (geometria, rig, animação, teste de câmera), não o visual final. O acabamento anime 3D é definido pela ART-04, depois da validação do combate.
+
+**Toon no motor:** o GLB exporta apenas materiais Principled BSDF; o Toon BSDF do Blender não chega ao jogo. Sombreado toon e contorno são feitos no Babylon (NodeMaterial/shader próprio e contorno por malha ou pós-processamento).
 
 ## 8. Princípios de design
 
