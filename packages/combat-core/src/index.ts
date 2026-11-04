@@ -51,6 +51,13 @@ export {
   hasLineOfSight,
   lineCells,
 } from './targeting/targeting.ts';
+export {
+  basePower,
+  damageAmount,
+  effectiveCost,
+  healAmount,
+  hitChance,
+} from './techniques/formulas.ts';
 export { turnTimeoutSeconds } from './turn/handlers.ts';
 export type * from './types.ts';
 

@@ -163,14 +163,14 @@
 
 ## Onda 2 — Técnicas
 
-### [ ] CORE-09 — Resolução de técnicas: acerto, dano, cura, estados, dash
+### [x] CORE-09 — Resolução de técnicas: acerto, dano, cura, estados, dash
 - **Epic:** core · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** CORE-07, CORE-08, CORE-14
 - **Descrição:** handler `technique`: validações (energia, alcance, LoS, alvo), fórmulas de `docs/02`, seções 6.5 e 6.6, efeitos `damage`, `heal`, `status`, `dash`, `push`, aplicação a todos os alvos da área (inclusive aliados em `fire.burst`), derrota ao chegar a 0 de vida.
 - **Critérios de aceite:**
-  - [ ] As 8 técnicas da fatia 1 e as 2 do monstro funcionam conforme `docs/05` (1 teste por técnica).
-  - [ ] Com seed fixa, o resultado de acerto/dano é sempre o mesmo.
-  - [ ] `water.whip` em alvo sobre `shallow_water` causa 20% a mais.
-  - [ ] `water.glide` não consome o movimento do turno.
+  - [x] As 8 técnicas da fatia 1 e as 2 do monstro funcionam conforme `docs/05` (1 teste por técnica).
+  - [x] Com seed fixa, o resultado de acerto/dano é sempre o mesmo.
+  - [x] `water.whip` em alvo sobre `shallow_water` causa 20% a mais.
+  - [x] `water.glide` não consome o movimento do turno.
 
 ### [ ] CORE-10 — Energia: máximo, regeneração e custo efetivo
 - **Epic:** core · **Estimativa:** 2 h · **Executor:** Claude · **Depende de:** CORE-09

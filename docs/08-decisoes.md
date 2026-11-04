@@ -68,3 +68,16 @@
 - **Contexto:** o `TechniqueSchema` de `docs/05` §4 exigia `element`, mas os monstros podem não ter elemento (`Combatant.element: Element | null`) e `monster.claw`/`monster.pounce` não têm um.
 - **Decisão:** `element` da técnica passa a ser anulável; técnicas de monstro usam `null`. `CombatantInput` (citado em `docs/05` §9 sem forma) foi definido com `template: { kind: 'preset' | 'monster', id }` e `facing` obrigatório.
 - **Consequências:** regras ligadas a elemento (ex.: bônus de água em água rasa) simplesmente não se aplicam a técnicas sem elemento. Mudança pendente de confirmação do dono (registrada em `docs/09`).
+
+## ADR-016 — Interpretações da resolução de técnicas (CORE-09)
+- **Contexto:** `docs/02` §6 e `docs/05` §4 deixam lacunas que a implementação precisa fechar.
+- **Decisão:**
+  - `dash` ganha o campo opcional `straightLine` (usado por `fire.surge`, "em linha reta").
+  - Dano após `dash`: alvo `enemy` (`monster.pounce`) → o próprio alvo; alvo `cell` (`fire.surge`) → inimigos adjacentes à célula de chegada.
+  - `monster.pounce` pousa na célula adjacente ao alvo de menor custo de caminho (empate: N, E, S, O) e termina virado para o alvo.
+  - Área atinge todos os combatentes vivos nas células afetadas (aliados inclusive); técnicas de alvo `enemy`/`cell` nunca atingem o próprio usuário.
+  - Um teste de acerto por alvo, só em técnicas de alvo `enemy`/`cell`; `ally`/`self` sempre acertam. Efeitos não-dano (estado, empurrão) só valem nos alvos atingidos.
+  - `shielded` multiplica o dano recebido por `1 − magnitude` (`water.shield`: 0,3 → −30%), junto com `multDefender`.
+  - Estados contam duração em rodadas e expiram no fim da rodada (`statusExpired`), exceto `defending`, que sai no início do próximo turno do dono.
+  - `dash` não consome o movimento do turno (`water.glide`) e gasta a ação.
+- **Consequências:** comportamento previsível para a IA e os testes; tudo marcado como pendente de confirmação em `docs/09`.

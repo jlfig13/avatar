@@ -25,6 +25,8 @@ export const TechniqueEffectSchema = z.discriminatedUnion('kind', [
     kind: z.literal('dash'),
     maxCells: z.number().int(),
     ignoresTerrainCost: z.boolean(),
+    /** dash only in a straight line from the user (fire.surge) — ADR-016 */
+    straightLine: z.boolean().optional(),
   }),
   z.strictObject({ kind: z.literal('push'), cells: z.number().int() }),
 ]);

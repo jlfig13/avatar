@@ -1,5 +1,6 @@
 import type { GameData } from '@elemental/shared';
 import { type ApplyResult, type BattleEvent, reject, type StepResult } from './events.ts';
+import { handleTechnique } from './techniques/resolve.ts';
 import { handleAdvance } from './turn/advance.ts';
 import { handleDefend, handleEndTurn, handleMove, handleTimeout } from './turn/handlers.ts';
 import type { Action, ActorAction, BattleState } from './types.ts';
@@ -18,7 +19,7 @@ const notImplemented = (): StepResult => reject('invalid_target');
 const handlers: HandlerMap = {
   advance: handleAdvance,
   move: handleMove,
-  technique: notImplemented,
+  technique: handleTechnique,
   defend: handleDefend,
   flee: notImplemented,
   endTurn: handleEndTurn,

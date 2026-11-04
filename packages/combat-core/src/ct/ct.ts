@@ -1,5 +1,6 @@
 import type { GameData } from '@elemental/shared';
 import type { BattleEventBody } from '../events.ts';
+import { endRound } from '../round/endRound.ts';
 import { requireCombatant, updateCombatant } from '../state.ts';
 import type { BattleState, Combatant } from '../types.ts';
 
@@ -57,9 +58,10 @@ export function finishTurn(
     : [...next.actedThisRound, actor.id];
   next = { ...next, turn: null, actedThisRound: acted };
   if (next.combatants.filter(isActive).every((c) => acted.includes(c.id))) {
+    const upkeep = endRound(next, data);
     const round = next.round + 1;
-    next = { ...next, round, actedThisRound: [] };
-    events.push({ type: 'roundStarted', round });
+    next = { ...upkeep.state, round, actedThisRound: [] };
+    events.push(...upkeep.events, { type: 'roundStarted', round });
   }
   return { state: next, events };
 }

@@ -104,7 +104,8 @@
       {
         "kind": "dash",
         "maxCells": 3,
-        "ignoresTerrainCost": false
+        "ignoresTerrainCost": false,
+        "straightLine": true
       },
       {
         "kind": "damage"

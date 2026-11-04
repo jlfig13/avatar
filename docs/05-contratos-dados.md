@@ -220,7 +220,8 @@ export const TechniqueSchema = z.object({
     z.object({ kind: z.literal('heal') }),
     z.object({ kind: z.literal('status'), statusId: z.string(), rounds: z.number().int(), magnitude: z.number() }),
     z.object({ kind: z.literal('cellEffect'), effect: z.enum(['ice','fire','earth_wall','gust']) }),
-    z.object({ kind: z.literal('dash'), maxCells: z.number().int(), ignoresTerrainCost: z.boolean() }),
+    z.object({ kind: z.literal('dash'), maxCells: z.number().int(), ignoresTerrainCost: z.boolean(),
+               straightLine: z.boolean().optional() }),   // straightLine: só em linha reta (fire.surge) — ADR-016
     z.object({ kind: z.literal('push'), cells: z.number().int() }),
   ])),
 });
