@@ -46,7 +46,7 @@ pnpm lint && pnpm typecheck && pnpm validate:data && pnpm test && pnpm build
 | `packages/combat-core` | `@elemental/combat-core` | Regras de combate em TypeScript puro (sem Node, Babylon, React ou Colyseus — o Biome bloqueia) |
 | `packages/game-data` | `@elemental/game-data` | Dados de jogo em JSON validados |
 | `apps/server` | `@elemental/server` | Servidor Colyseus autoritativo |
-| `apps/client` | `@elemental/client` | Cliente Vite + Babylon.js + React |
+| `apps/client` | `@elemental/client` | Cliente Vite + Phaser 4 + React (ADR-022) |
 | `tools/` | — | Ferramentas (ex.: exportador do Blender) |
 | `assets-src/` | — | Fontes de arte (Git LFS) |
 
