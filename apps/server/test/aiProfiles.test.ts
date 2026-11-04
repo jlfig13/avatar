@@ -72,20 +72,17 @@ describe('AI performance with real data', () => {
       });
     };
     for (const id of ['p1', 'e1']) decide(id); // warm-up (JIT)
+    // Median of 5 runs per actor: measures the decision itself, not a GC pause or a busy CI box.
     let worst = 0;
-    for (const actorId of ['p1', 'p2', 'e1', 'e2', 'p1', 'e1']) {
-      const withTurn = {
-        ...state,
-        turn: { combatantId: actorId, hasMoved: false, hasActed: false, usedTechniqueId: null },
-      };
-      const start = performance.now();
-      chooseActions({
-        state: withTurn,
-        actorId,
-        data: gameData,
-        profile: actorId.startsWith('e') ? 'aggressive_melee' : 'balanced',
-      });
-      worst = Math.max(worst, performance.now() - start);
+    for (const actorId of ['p1', 'p2', 'e1', 'e2']) {
+      const runs: number[] = [];
+      for (let i = 0; i < 5; i++) {
+        const start = performance.now();
+        decide(actorId);
+        runs.push(performance.now() - start);
+      }
+      runs.sort((x, y) => x - y);
+      worst = Math.max(worst, runs[2] ?? 0);
     }
     expect(worst).toBeLessThan(50);
   });
