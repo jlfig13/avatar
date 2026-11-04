@@ -10,6 +10,7 @@ import {
 import { WebSocketTransport } from '@colyseus/ws-transport';
 import type { Config } from './config.ts';
 import type { Logger } from './logger.ts';
+import { CLIENT_IP_HEADER } from './modules/account/routes.ts';
 import { healthEndpoint } from './modules/health/routes.ts';
 
 export interface AppOptions {
@@ -37,6 +38,10 @@ export function createApp(options: AppOptions): App {
     Vary: 'Origin',
   });
   const http = createServer();
+  // Record the socket address for rate limiting, overwriting anything the client sent.
+  http.prependListener('request', (req) => {
+    req.headers[CLIENT_IP_HEADER] = req.socket.remoteAddress ?? 'unknown';
+  });
   const server = defineServer({
     greet: false,
     gracefullyShutdown: false,

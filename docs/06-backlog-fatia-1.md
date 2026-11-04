@@ -249,13 +249,13 @@
   - [x] Migração cria as 4 tabelas do zero num banco vazio.
   - [x] `db:seed` é idempotente.
 
-### [ ] SRV-04 — Conta anônima por token + código de convite
+### [x] SRV-04 — Conta anônima por token + código de convite
 - **Epic:** server · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** SRV-05
 - **Descrição:** `POST /auth/redeem { inviteCode }` → cria conta e devolve token (uma vez); guarda só o hash. `onAuth` das salas valida o token. Limite simples de tentativas por IP.
 - **Critérios de aceite:**
-  - [ ] Sem convite válido: 403. Convite esgotado: 403.
-  - [ ] Conexão à sala sem token ou com token inválido é recusada.
-  - [ ] Token nunca aparece em log.
+  - [x] Sem convite válido: 403. Convite esgotado: 403.
+  - [x] Conexão à sala sem token ou com token inválido é recusada.
+  - [x] Token nunca aparece em log.
 
 ### [ ] SRV-02 — Sala de batalha
 - **Epic:** server · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** SRV-01, CORE-06, CORE-14

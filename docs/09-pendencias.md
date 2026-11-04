@@ -49,3 +49,4 @@
 | 2026-11-04 | CORE-11 | Detalhes de terreno: fogo ao entrar também em dash/empurrão, quem cai para na célula, `earth_wall` não em célula ocupada, morte por fogo no início do turno passa a vez (ADR-017). Confirmar. | Pendente |
 | 2026-11-04 | CORE-12 | Detalhes das reações: definição de corpo a corpo, contra-ataque com teste de acerto e 50% do dano final, dano de `burning` no início do turno (ADR-019). Confirmar. | Pendente |
 | 2026-11-04 | SRV-05 | `INVITE_CODES` não define quantos usos tem cada convite. Adotado: 1 uso por padrão, com sintaxe opcional `CODIGO:N` (ex.: `ALPHA-001:5`). Confirmar. | Pendente |
+| 2026-11-04 | SRV-04 | O limite por IP usa o endereço do socket; atrás de proxy no deploy (INF-06) vira o IP do proxy. Decidir se confiamos em `X-Forwarded-For` do provedor. | Pendente (INF-06) |

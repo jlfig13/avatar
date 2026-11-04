@@ -9,6 +9,9 @@ const ConfigSchema = z.object({
   SENTRY_DSN: z.string().default(''),
   /** SRV-03 — delay between AI actions so the client can follow (0 in tests). */
   AI_ACTION_DELAY_MS: z.coerce.number().int().min(0).default(400),
+  /** SRV-04 — simple per-IP limit for POST /auth/redeem. */
+  AUTH_RATE_LIMIT_MAX: z.coerce.number().int().min(1).default(10),
+  AUTH_RATE_LIMIT_WINDOW_MS: z.coerce.number().int().min(1).default(60_000),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
 });
 

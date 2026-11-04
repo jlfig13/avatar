@@ -1,6 +1,9 @@
 import { createApp } from './app.ts';
 import { ConfigError, loadConfig } from './config.ts';
+import { connect } from './db/client.ts';
 import { createLogger } from './logger.ts';
+import { createRateLimiter } from './modules/account/rateLimit.ts';
+import { createRedeemEndpoint } from './modules/account/routes.ts';
 
 // Bootstrap. Rooms and routes are registered per module (combat, account, telemetry).
 async function main() {
@@ -15,11 +18,22 @@ async function main() {
     throw error;
   }
   const logger = createLogger(config.LOG_LEVEL);
-  const app = createApp({ config, logger, rooms: {} });
+  const database = connect(config.DATABASE_URL);
+  const limiter = createRateLimiter({
+    max: config.AUTH_RATE_LIMIT_MAX,
+    windowMs: config.AUTH_RATE_LIMIT_WINDOW_MS,
+  });
+  const app = createApp({
+    config,
+    logger,
+    rooms: {},
+    endpoints: { redeem: createRedeemEndpoint({ db: database.db, limiter, logger }) },
+  });
   await app.listen();
   const shutdown = async () => {
     logger.info('shutting down');
     await app.close();
+    await database.close();
     process.exit(0);
   };
   process.on('SIGINT', shutdown);
