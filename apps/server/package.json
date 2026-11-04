@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "dev": "echo \"server dev: not implemented yet (SRV-01)\"",
-    "db:ping": "node --env-file-if-exists=../../.env scripts/dbPing.ts"
+    "db:ping": "node --env-file-if-exists=../../.env scripts/dbPing.ts",
+    "sim": "node --conditions=@elemental/source scripts/simulate.ts"
   },
   "dependencies": {
     "@elemental/combat-core": "workspace:*",

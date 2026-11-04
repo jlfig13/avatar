@@ -10,7 +10,7 @@
     "dev": "pnpm --parallel --filter @elemental/client --filter @elemental/server run dev",
     "build": "pnpm -r run build",
     "test": "pnpm -r run test",
-    "test:sim": "echo \"test:sim: not implemented yet (QA-01)\"",
+    "test:sim": "pnpm --filter @elemental/server run sim",
     "lint": "biome check . && node tools/checkNoMathRandom.mjs",
     "format": "biome format --write .",
     "typecheck": "pnpm -r run typecheck",

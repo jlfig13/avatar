@@ -226,13 +226,13 @@
   - [x] Não termina o movimento em célula com fogo se houver alternativa equivalente.
   - [x] Usa `monster.pounce` quando o alvo está a 2–3 células e não alcançável a pé.
 
-### [ ] QA-01 — Simulador de balanceamento IA × IA
+### [x] QA-01 — Simulador de balanceamento IA × IA
 - **Epic:** qa · **Estimativa:** 8 h · **Executor:** Claude · **Depende de:** IA-02, CORE-13
 - **Descrição:** `pnpm test:sim` roda N batalhas com seeds sequenciais, jogador também controlado por uma IA genérica (perfil `balanced`), para cada preset × quantidade de inimigos. Gera relatório em Markdown e CSV em `reports/` (ignorado no git).
 - **Critérios de aceite:**
-  - [ ] Relatório de 1.000 batalhas em menos de 1 min.
-  - [ ] Métricas: taxa de vitória, rodadas médias, turnos médios do jogador, duração estimada (turnos do jogador × 20 s + turnos de IA × 3 s), dano por técnica, frequência de uso de cada técnica.
-  - [ ] Parâmetros por linha de comando (`--battles`, `--preset`, `--enemies`).
+  - [x] Relatório de 1.000 batalhas em menos de 1 min.
+  - [x] Métricas: taxa de vitória, rodadas médias, turnos médios do jogador, duração estimada (turnos do jogador × 20 s + turnos de IA × 3 s), dano por técnica, frequência de uso de cada técnica.
+  - [x] Parâmetros por linha de comando (`--battles`, `--preset`, `--enemies`).
 
 ### [ ] SRV-01 — Servidor Colyseus base (monólito modular)
 - **Epic:** server · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** INF-01
