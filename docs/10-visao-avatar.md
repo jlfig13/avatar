@@ -37,10 +37,10 @@ Protagonista humano jovem e aventureiro, com proporções estilizadas de JRPG, s
 | Exploração | 8 direções |
 | Combate | 4 direções lógicas (`N/E/S/W`) |
 | Fonte / exportação | `.aseprite` → PNG + JSON |
-| Âncora | Centro dos pés |
+| Âncora | Centro dos pés em (32, 90) (ADR-025) |
 
 - A conversão de coordenada lógica para tela é do cliente (`docs/04` §8), não dos sprites. O desenho não simula câmera girando em volta do personagem.
-- **Âncora:** idêntica em todos os quadros, sem oscilação vertical e coerente com o chão. A postura não desloca a posição lógica. Os efeitos têm âncoras próprias. A âncora fica registrada nos metadados.
+- **Âncora:** centro dos pés no pixel (32, 90) do canvas, deixando 6 px abaixo para o pé mais próximo da câmera, que em isométrico aparece abaixo do ponto de apoio. No Phaser, `setOrigin(0.5, 90 / 96)`. Idêntica em todos os quadros, sem oscilação vertical e coerente com o chão. A postura não desloca a posição lógica. Os efeitos têm âncoras próprias. A âncora fica registrada nos metadados.
 
 ## 4. Direções
 
@@ -168,7 +168,7 @@ Exemplo ilustrativo (o schema definitivo nasce na ART-04):
   "characterId": "protagonistBase",
   "canvas": { "width": 64, "height": 96 },
   "tile": { "width": 64, "height": 32 },
-  "anchor": { "x": 32, "y": 96, "type": "feetCenter" },
+  "anchor": { "x": 32, "y": 90, "type": "feetCenter" },
   "projection": "isometric2to1",
   "atlas": "protagonist_base.json",
   "animations": {

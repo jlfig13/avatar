@@ -422,7 +422,7 @@
   - [ ] Protagonista humano com identidade visual própria, sem personagens ou elementos identificáveis de outras franquias (`docs/10` §2).
   - [ ] Exploração: `idle` e `walk` nas 8 direções.
   - [ ] Combate: `combatReady`, `cast`, `hit` e `defeat` nas 4 direções lógicas (`N/E/S/W`), projetadas nas diagonais da tela.
-  - [ ] Canvas 64 × 96, tile 64 × 32, degrau de 16 px e âncora no centro dos pés usados, ou ajuste registrado com justificativa.
+  - [ ] Canvas 64 × 96, tile 64 × 32, degrau de 16 px e âncora no centro dos pés em (32, 90) (ADR-025) usados, ou ajuste registrado com justificativa.
   - [ ] Espelhamento testado por direção e animação, com o registro de onde funciona e onde exige desenho próprio.
   - [ ] Pelo menos um teste de troca de paleta (pré-processada) sem alterar pele, contorno e sombra.
   - [ ] Pelo menos um efeito elemental separado do sprite do corpo, sincronizado com a animação `cast`.
