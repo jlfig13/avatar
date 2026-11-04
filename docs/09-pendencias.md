@@ -20,17 +20,18 @@
 
 | Valor | Valor provisório | Como calibrar |
 | --- | --- | --- |
-| Turno de 60 s versus meta de batalhas de 3–6 min | 60 s | QA-01 (duração estimada) + QA-03 |
+| Turno de 60 s versus meta de batalhas de 3–6 min | 60 s | QA-01 (2026-11-04): duração estimada 3:05 (fogo) e 3:40 (água) contra 1 monstro, com 20 s por turno de jogador. Confirmar no QA-03 com tempo real |
 | Tamanho das arenas | 10 / 16 / 12 | Playtest |
 | Raio de entrada do grupo | 8 células | Fatia 2 |
 | Chance de fuga | 30 + 2×mob − 10×adj | QA-01 |
 | Energia máxima e regeneração | 40 + 2×esp; 2 + esp/10 + conc/10 | QA-01 (uso por técnica) |
-| Dano, precisão e custo das técnicas | `docs/05` §4 | QA-01 (taxa de vitória 60–75% contra 1 monstro como alvo inicial) |
+| Dano, precisão e custo das técnicas | `docs/05` §4 | QA-01 (2026-11-04): `water.whip` power 10 → 14; `monster.claw` power 10 → 8. Vitória contra 1 monstro: fogo 68–69%, água 65–68% (1.000 batalhas, seeds 1 e 10001) |
+| Vida dos presets e do monstro | água 100, fogo 95, Fera 90 | QA-01 (2026-11-04): água 140, fogo 122, Fera de garra 160. Contra 2 monstros: 0% (sem meta) |
 | Bônus de flanco e altura | `docs/02` §6.3–6.4 | QA-01 + playtest |
 | Duração dos efeitos de terreno | 2–3 rodadas | Playtest |
 | Perda de XP na derrota | 5% do próximo nível | Fatia 3 |
 | Atraso entre ações da IA | 400 ms | Playtest |
-| Pesos dos perfis de IA (`ai.profiles` em `rules.json`) | definidos em IA-01/IA-02 | QA-01 + playtest |
+| Pesos dos perfis de IA (`ai.profiles` em `rules.json`) | definidos em IA-01/IA-02 | QA-01 (2026-11-04): nova consideração `protection` (peso 1,0 no `balanced`, ADR-022). Pesos dos perfis mantidos; playtest |
 
 ## Riscos registrados
 
@@ -51,4 +52,4 @@
 | 2026-11-04 | SRV-05 | `INVITE_CODES` não define quantos usos tem cada convite. Adotado: 1 uso por padrão, com sintaxe opcional `CODIGO:N` (ex.: `ALPHA-001:5`). Confirmar. | Pendente |
 | 2026-11-04 | SRV-04 | O limite por IP usa o endereço do socket; atrás de proxy no deploy (INF-06) vira o IP do proxy. Decidir se confiamos em `X-Forwarded-For` do provedor. | Pendente (INF-06) |
 | 2026-11-04 | ART-04 | Proposta do dono: direção 2D em pixel art (Phaser 4 + Tiled + Aseprite), com personagem de referência 64×96 px, 8 direções, idle/caminhada e paleta inspirada em Breath of Fire IV. Decisão: **manter 3D (ADR-002/018) na fatia 1**; fazer o personagem de referência como estudo de estilo na ART-04 e, se convencer, abrir nova ADR depois da fatia 1. LPC (CC-BY-SA/GPL), PtDesigns e 0x72 DungeonTileset II ficam só como referência, não aprovados (ver `assets-src/09_LICENSES/README.md`). | Decidir após a fatia 1 |
-| 2026-11-04 | QA-01 | Simulador (1.000 batalhas, IA × IA): fogo × 1 monstro 96,8% de vitória; água × 1 35,6%; contra 2 monstros ≈ 0–2%. Meta é 60–75% contra 1. Também: a IA nunca usa `water.shield` (nenhuma consideração valoriza defesa) e o dano do `fire.surge` não entra na estimativa (alvo = inimigos adjacentes à chegada). Calibrar números e/ou considerações. | Pendente (balanceamento) |
+| 2026-11-04 | QA-01 | Simulador (1.000 batalhas, IA × IA): fogo × 1 monstro 96,8% de vitória; água × 1 35,6%; contra 2 monstros ≈ 0–2%. Meta é 60–75% contra 1. Também: a IA nunca usa `water.shield` (nenhuma consideração valoriza defesa) e o dano do `fire.surge` não entra na estimativa (alvo = inimigos adjacentes à chegada). Calibrar números e/ou considerações. | Calibrado (2026-11-04, ADR-022): IA passou a usar `water.shield` e a estimar o dano do `fire.surge`; vida e dano ajustados (`docs/05`). Resultado: fogo × 1 68–69%, água × 1 65–68%, 3–3,7 min; × 2 = 0%. **Para o dono decidir:** meta para 2 monstros (hoje inviável sem mudar regra ou preset — ver relatório QA-01). |
