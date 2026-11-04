@@ -81,4 +81,4 @@ Algumas issues não podem ser concluídas só pelo Claude Code (estão marcadas 
 ## 8. Estado atual
 
 - Etapas de design concluídas: GDD v1.1, regras de combate, escopo do protótipo, backlog técnico da fatia 1.
-- Código: monorepo base pronto (INF-01). Próximas issues: onda 0 do backlog.
+- Código: ondas 0–3 da fatia 1 prontas (infra, core de combate completo, IA, simulador e servidor Colyseus com conta, sala, telemetria). Pendente na onda 0: confirmar o CI no GitHub (INF-02). Próxima: onda 4 (cliente), começando por CLI-01.
