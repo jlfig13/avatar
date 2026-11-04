@@ -179,7 +179,7 @@ describe('reactions', () => {
       combatants: [player(), beast({ hp: 5, passiveIds: ['p.counter'] })],
     });
     const r = attack(state, 'p1', 't.claw', { x: 4, y: 5 });
-    expect(types(r.events)).toEqual(['techniqueUsed', 'damaged', 'defeated']);
+    expect(types(r.events)).toEqual(['techniqueUsed', 'damaged', 'defeated', 'battleEnded']);
   });
 
   it('does not fire on a miss', () => {

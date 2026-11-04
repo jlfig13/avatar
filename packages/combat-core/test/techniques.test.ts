@@ -349,7 +349,7 @@ describe('technique resolution rules', () => {
   it('a combatant reaching 0 hp is defeated', () => {
     const r = ok(cast(battle([player(), enemy({ hp: 10 })]), 't.whip', { x: 4, y: 5 }));
     expect(getCombatant(r.state, 'e1')).toMatchObject({ hp: 0, alive: false });
-    expect(types(r.events)).toEqual(['techniqueUsed', 'damaged', 'defeated']);
+    expect(types(r.events)).toEqual(['techniqueUsed', 'damaged', 'defeated', 'battleEnded']);
   });
 
   it('statuses expire at the end of the round after their duration', () => {

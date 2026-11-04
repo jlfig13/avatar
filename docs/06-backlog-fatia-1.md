@@ -196,13 +196,13 @@
   - [x] Contra-ataque do monstro não ativa a "Brasa" do jogador (sem cadeia).
   - [x] Reações não disparam se o reagente foi derrotado pelo ataque.
 
-### [ ] CORE-13 — Fim de batalha e fuga
+### [x] CORE-13 — Fim de batalha e fuga
 - **Epic:** core · **Estimativa:** 4 h · **Executor:** Claude · **Depende de:** CORE-06
 - **Descrição:** handler `flee` (só em célula de fuga, gasta a ação, chance de `docs/02`, seção 9); checagens de vitória, derrota e fuga após cada ação; evento `battleEnded`; ações após o fim retornam `battle_over`.
 - **Critérios de aceite:**
-  - [ ] Falha na fuga consome a ação do turno.
-  - [ ] Fuga fora de célula de fuga retorna `not_on_escape_cell`.
-  - [ ] Teste de batalha completa (script de ações) termina em vitória com eventos esperados.
+  - [x] Falha na fuga consome a ação do turno.
+  - [x] Fuga fora de célula de fuga retorna `not_on_escape_cell`.
+  - [x] Teste de batalha completa (script de ações) termina em vitória com eventos esperados.
 
 ---
 

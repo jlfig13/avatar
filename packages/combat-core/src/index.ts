@@ -28,6 +28,7 @@ export {
   flankPosition,
   heightAccuracyBonus,
 } from './modifiers/position.ts';
+export { fleeChance } from './outcome/outcome.ts';
 export {
   findPath,
   getReachableCells,

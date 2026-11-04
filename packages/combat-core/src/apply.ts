@@ -1,5 +1,6 @@
 import type { GameData } from '@elemental/shared';
-import { type ApplyResult, type BattleEvent, reject, type StepResult } from './events.ts';
+import type { ApplyResult, BattleEvent, StepResult } from './events.ts';
+import { checkOutcome, handleFlee } from './outcome/outcome.ts';
 import { handleTechnique } from './techniques/resolve.ts';
 import { handleAdvance } from './turn/advance.ts';
 import { handleDefend, handleEndTurn, handleMove, handleTimeout } from './turn/handlers.ts';
@@ -13,15 +14,12 @@ export type ActionHandler<A extends Action> = (
 
 type HandlerMap = { [K in Action['type']]: ActionHandler<Extract<Action, { type: K }>> };
 
-// Handlers not implemented yet reject; each issue replaces its stub.
-const notImplemented = (): StepResult => reject('invalid_target');
-
 const handlers: HandlerMap = {
   advance: handleAdvance,
   move: handleMove,
   technique: handleTechnique,
   defend: handleDefend,
-  flee: notImplemented,
+  flee: handleFlee,
   endTurn: handleEndTurn,
   timeout: handleTimeout,
 };
@@ -48,5 +46,13 @@ export function applyAction(state: BattleState, action: Action, data: GameData):
     return { ok: false, reason: 'not_your_turn' };
   }
   const handler = handlers[action.type] as ActionHandler<Action>;
-  return finalize(handler(state, action, data));
+  const result = handler(state, action, data);
+  if (!result.ok) return result;
+  // docs/02 §11 step 7 — check victory, defeat or retreat after every action.
+  const outcome = checkOutcome(result.state);
+  return finalize({
+    ok: true,
+    state: outcome.state,
+    events: [...result.events, ...outcome.events],
+  });
 }

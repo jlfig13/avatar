@@ -121,7 +121,7 @@ describe('cell effects', () => {
       ),
     );
     expect(getCombatant(r.state, 'p1')).toMatchObject({ position: { x: 1, y: 0 }, alive: false });
-    expect(r.events.map((e) => e.type)).toEqual(['moved', 'damaged', 'defeated']);
+    expect(r.events.map((e) => e.type)).toEqual(['moved', 'damaged', 'defeated', 'battleEnded']);
   });
 
   it('starting the turn on fire deals damage', () => {
