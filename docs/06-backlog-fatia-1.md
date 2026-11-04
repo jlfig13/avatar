@@ -422,4 +422,5 @@
   - [ ] Personagem com idle e caminhada nas 8 direções exportado e animando na arena.
   - [ ] Guia em `assets-src/README.md` (ou documento próprio) com tamanho, paleta, nomes e exportação.
   - [ ] Paleta-base registrada para os demais personagens, NPCs e criaturas.
+  - [ ] Parâmetros provisórios (tile 64 × 32, degrau 16 px, sprite 64 × 96, 4/8 direções) validados numa pequena área jogável, com o espelhamento das direções opostas avaliado; resultado registrado em `docs/08`.
 - **Nota:** pode começar a qualquer momento; não bloqueia a fatia 1.
